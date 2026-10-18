@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="description" content="这个页面暂时找不到了。返回首页，了解 Liangzhenjie 的 AI 落地服务。" />
+    <title>页面未找到 | Liangzhenjie</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="not-found-page">
+    <header class="error-header">
+      <a class="brand" href="/" aria-label="Liangzhenjie 首页">Liangzhenjie <span>AI 落地顾问</span></a>
+    </header>
+    <main id="main-content" class="error-main">
+      <div class="error-content">
+        <p class="error-code" aria-label="错误代码 404">404</p>
+        <div class="gold-rule" aria-hidden="true"></div>
+        <h1>这个页面暂时找不到了</h1>
+        <p class="error-description">链接可能已失效，或地址输入有误。<br />回到首页，继续了解我的服务与案例。</p>
+        <nav class="error-actions" aria-label="下一步">
+          <a class="btn btn-primary" href="/">返回首页 <span aria-hidden="true">→</span></a>
+          <a class="btn btn-outline" href="/#contact">联系咨询</a>
+        </nav>
+      </div>
+    </main>
+    <footer class="error-footer">liangzhenjie.cn</footer>
+  </body>
+</html>
+
+<style>
+  .not-found-page {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(ellipse at 50% 42%, rgba(201, 165, 92, 0.07), transparent 62%), var(--bg);
+  }
+  .error-header { padding: 24px clamp(20px, 5vw, 72px); border-bottom: 1px solid var(--border); }
+  .brand { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 14px; min-height: 48px; color: var(--text-primary); font-weight: 700; font-size: 20px; }
+  .brand span { padding-left: 14px; border-left: 1px solid var(--border-light); color: var(--accent); font-size: 13px; font-weight: 500; }
+  .error-main { flex: 1; display: grid; place-items: center; padding: 48px 24px 64px; text-align: center; }
+  .error-content { width: 100%; max-width: 620px; }
+  .error-code { font-family: var(--font-mono); font-size: clamp(96px, 17vw, 160px); line-height: 1.1; letter-spacing: -0.06em; color: var(--accent); }
+  .gold-rule { width: 48px; height: 1px; margin: 28px auto; background: var(--accent); }
+  h1 { font-size: clamp(24px, 4vw, 36px); line-height: 1.4; letter-spacing: -0.02em; }
+  .error-description { margin-top: 20px; color: var(--text-secondary); font-size: 16px; line-height: 1.9; }
+  .error-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+  .error-actions a { min-height: 48px; min-width: 156px; }
+  .error-footer { padding: 20px 24px; color: var(--text-muted); text-align: center; font-size: 13px; letter-spacing: 0.04em; }
+  @media (max-width: 380px) {
+    .error-header { padding-block: 16px; }
+    .brand { gap: 10px; font-size: 18px; }
+    .brand span { padding-left: 10px; font-size: 12px; }
+    .error-main { padding-inline: 20px; }
+    .error-description { font-size: 14px; }
+    .error-actions { flex-direction: column; }
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  input: string;
+  output: string;
+  check: string;
+}
+const { title, input, output, check } = Astro.props;
+---
+
+<details class="service-example">
+  <summary><span><span class="example-label">交付样例</span>{title}</span><span class="example-toggle" aria-hidden="true">+</span></summary>
+  <dl>
+    <div><dt>你提供</dt><dd>{input}</dd></div>
+    <div><dt>你拿到</dt><dd>{output}</dd></div>
+    <div><dt>一起核对</dt><dd>{check}</dd></div>
+  </dl>
+</details>
+
+<style>
+  .service-example { min-width:0; border-bottom:1px solid var(--border); }
+  summary { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:44px; padding:8px 0 12px; cursor:pointer; list-style:none; color:var(--text-primary); font-size:13px; }
+  summary::-webkit-details-marker { display:none; }
+  summary > span:first-child { display:flex; flex-wrap:wrap; gap:4px 12px; }
+  .example-label { color:var(--text-muted); font-size:12px; }
+  .example-toggle { color:var(--accent); font-size:20px; font-weight:400; line-height:1; transition:transform .2s ease; }
+  details[open] .example-toggle { transform:rotate(45deg); }
+  dl { padding:4px 0 16px; display:grid; gap:12px; }
+  dl > div { display:grid; grid-template-columns:52px minmax(0,1fr); gap:12px; font-size:12px; line-height:1.8; }
+  dt { color:var(--accent); }
+  dd { color:var(--text-secondary); }
+  @media (prefers-reduced-motion:reduce) { .example-toggle { transition:none; } }
+</style>

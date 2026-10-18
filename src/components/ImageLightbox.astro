@@ -1,0 +1,120 @@
+<dialog id="imageLightbox" class="image-lightbox" data-image-lightbox aria-label="图片放大预览" aria-describedby="imageLightboxCaption">
+  <div class="image-lightbox-toolbar">
+    <button type="button" class="image-lightbox-size" data-image-size aria-pressed="false">原尺寸查看</button>
+    <button type="button" class="image-lightbox-close" data-image-close aria-label="关闭图片预览" autofocus>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+    </button>
+  </div>
+  <div class="image-lightbox-viewport" data-image-viewport tabindex="0" aria-label="图片区域，原尺寸模式可滚动查看">
+    <img data-image-full alt="" decoding="async" />
+  </div>
+  <p id="imageLightboxCaption" class="image-lightbox-caption" data-image-caption></p>
+</dialog>
+
+<style>
+  :global(html.image-lightbox-open), :global(body.image-lightbox-open) { overflow: hidden; }
+  :global(.image-preview) { position: relative; display: block; border-radius: 6px; cursor: zoom-in; }
+  :global(.image-preview::after) { content: '点击放大'; position: absolute; right: 8px; bottom: 8px; padding: 3px 8px; border: 1px solid rgba(201,165,92,.4); border-radius: 4px; background: rgba(10,10,10,.86); color: var(--accent); font-size: 11px; line-height: 1.6; pointer-events: none; }
+  :global(.image-preview:focus-visible) { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .image-lightbox { --image-frame-space: 26px; width: calc(var(--image-fit-width, 950px) + var(--image-frame-space)); max-width: min(1400px, calc(100% - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 12px; border: 1px solid var(--border-light); border-radius: 12px; background: var(--bg-surface); color: var(--text-primary); overflow: hidden; }
+  .image-lightbox::backdrop { background: rgba(0,0,0,.88); }
+  .image-lightbox-toolbar { display: flex; justify-content: flex-end; align-items: center; gap: 12px; padding-bottom: 10px; }
+  .image-lightbox-toolbar button { min-height: 44px; border: 1px solid var(--border-light); border-radius: 6px; background: var(--bg-card); color: var(--accent); font: inherit; font-size: 13px; cursor: pointer; }
+  .image-lightbox-toolbar button:hover { border-color: var(--accent); }
+  .image-lightbox-toolbar button:focus-visible, .image-lightbox-viewport:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .image-lightbox-size { padding: 8px 14px; }
+  .image-lightbox-close { width: 44px; display: grid; place-items: center; }
+  .image-lightbox-viewport { height: var(--image-fit-height, min(74dvh, 880px)); max-height: calc(100dvh - 180px); display: flex; overflow: auto; overscroll-behavior: contain; border-radius: 6px; background: #0a0a0a; }
+  .image-lightbox-viewport img { display: block; flex: 0 0 auto; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; }
+  .image-lightbox.is-original .image-lightbox-viewport img { width: var(--image-original-width); max-width: none; max-height: none; }
+  .image-lightbox.is-original { width: calc(var(--image-original-width, 950px) + var(--image-frame-space)); }
+  .image-lightbox.is-original .image-lightbox-viewport { height: min(74dvh, 880px); }
+  .image-lightbox-caption { padding: 12px 4px 2px; color: var(--text-secondary); font-size: 13px; line-height: 1.6; }
+  @media (max-width: 640px) {
+    .image-lightbox { --image-frame-space: 22px; max-width: calc(100% - 16px); max-height: calc(100dvh - 16px); padding: 10px; border-radius: 8px; }
+    .image-lightbox-caption { font-size: 12px; }
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-image-lightbox]');
+  const fullImage = dialog?.querySelector<HTMLImageElement>('[data-image-full]');
+  const caption = dialog?.querySelector<HTMLElement>('[data-image-caption]');
+  const viewport = dialog?.querySelector<HTMLElement>('[data-image-viewport]');
+  const sizeButton = dialog?.querySelector<HTMLButtonElement>('[data-image-size]');
+  const closeButton = dialog?.querySelector<HTMLButtonElement>('[data-image-close]');
+
+  if (dialog && fullImage && caption && viewport && sizeButton && closeButton) {
+    let activeTrigger: HTMLAnchorElement | null = null;
+    let backdropPointerDown = false;
+    const fitImage = (width: number, height: number) => {
+      const availableWidth = Math.min(1374, window.innerWidth - (window.innerWidth <= 640 ? 38 : 58));
+      const availableHeight = Math.min(window.innerHeight * .74, 880, window.innerHeight - 180);
+      const scale = Math.min(1, availableWidth / width, availableHeight / height);
+      dialog.style.setProperty('--image-fit-width', `${Math.max(280, width * scale)}px`);
+      dialog.style.setProperty('--image-fit-height', `${height * scale}px`);
+    };
+    const setOriginalSize = (original: boolean) => {
+      dialog.classList.toggle('is-original', original);
+      sizeButton.setAttribute('aria-pressed', String(original));
+      sizeButton.textContent = original ? '适应窗口' : '原尺寸查看';
+      viewport.scrollTo({ left: 0, top: 0, behavior: 'instant' });
+    };
+    document.querySelectorAll<HTMLAnchorElement>('[data-image-open]').forEach(trigger => {
+      trigger.addEventListener('click', event => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const thumbnail = trigger.querySelector<HTMLImageElement>('img');
+        if (!thumbnail) return;
+        event.preventDefault();
+        activeTrigger = trigger;
+        fitImage(thumbnail.naturalWidth || thumbnail.width, thumbnail.naturalHeight || thumbnail.height);
+        setOriginalSize(false);
+        sizeButton.disabled = true;
+        fullImage.alt = thumbnail.alt;
+        caption.textContent = trigger.dataset.imageCaption || thumbnail.alt;
+        fullImage.src = trigger.href;
+        dialog.showModal();
+        document.documentElement.classList.add('image-lightbox-open');
+        document.body.classList.add('image-lightbox-open');
+        closeButton.focus({ preventScroll: true });
+      });
+    });
+    fullImage.addEventListener('load', () => {
+      dialog.style.setProperty('--image-original-width', `${fullImage.naturalWidth}px`);
+      fitImage(fullImage.naturalWidth, fullImage.naturalHeight);
+      sizeButton.disabled = false;
+    });
+    window.addEventListener('resize', () => {
+      if (dialog.open && fullImage.naturalWidth) fitImage(fullImage.naturalWidth, fullImage.naturalHeight);
+    });
+    sizeButton.addEventListener('click', () => setOriginalSize(!dialog.classList.contains('is-original')));
+    closeButton.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('keydown', event => {
+      if (event.key !== 'Tab') return;
+      const first = sizeButton.disabled ? closeButton : sizeButton;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        viewport.focus();
+      } else if (!event.shiftKey && document.activeElement === viewport) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+    const outsideDialog = (event: MouseEvent) => {
+      const bounds = dialog.getBoundingClientRect();
+      return event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
+    };
+    dialog.addEventListener('pointerdown', event => { backdropPointerDown = event.target === dialog && outsideDialog(event); });
+    dialog.addEventListener('click', event => {
+      if (backdropPointerDown && event.target === dialog && outsideDialog(event)) dialog.close();
+      backdropPointerDown = false;
+    });
+    dialog.addEventListener('close', () => {
+      document.documentElement.classList.remove('image-lightbox-open');
+      document.body.classList.remove('image-lightbox-open');
+      if (activeTrigger?.isConnected && !activeTrigger.closest('[aria-hidden="true"], [hidden]')) activeTrigger.focus({ preventScroll: true });
+      activeTrigger = null;
+      fullImage.removeAttribute('src');
+    });
+  }
+</script>

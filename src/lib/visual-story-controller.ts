@@ -99,6 +99,9 @@ export function createVisualStoryController({
   window.addEventListener('scroll', scheduleUpdate, { passive: true });
   window.addEventListener('resize', scheduleUpdate);
   window.addEventListener('orientationchange', scheduleUpdate);
+  const layoutObserver = new ResizeObserver(scheduleUpdate);
+  const main = document.querySelector('main');
+  if (main) layoutObserver.observe(main);
   scheduleUpdate();
 
   return {
@@ -110,6 +113,7 @@ export function createVisualStoryController({
       window.removeEventListener('scroll', scheduleUpdate);
       window.removeEventListener('resize', scheduleUpdate);
       window.removeEventListener('orientationchange', scheduleUpdate);
+      layoutObserver.disconnect();
     },
   };
 }

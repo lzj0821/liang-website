@@ -21,8 +21,8 @@
   <text x="80" y="320" font-family="system-ui,-apple-system,sans-serif" font-size="56" font-weight="800" fill="#f0f0f0" letter-spacing="-1">帮传统企业</text>
   <text x="80" y="390" font-family="system-ui,-apple-system,sans-serif" font-size="56" font-weight="800" fill="url(#accent)" letter-spacing="-1">用 AI 解决真问题</text>
   <!-- Subtitle -->
-  <text x="80" y="445" font-family="system-ui,-apple-system,sans-serif" font-size="20" fill="#888888">LIANG · FDE 前沿部署工程师</text>
+  <text x="80" y="445" font-family="system-ui,-apple-system,sans-serif" font-size="20" fill="#888888">Liangzhenjie · AI 落地顾问</text>
   <!-- Bottom bar -->
   <rect x="0" y="600" width="1200" height="30" fill="rgba(201,165,92,0.08)"/>
-  <text x="80" y="620" font-family="monospace" font-size="14" fill="#555555">liang.dev</text>
+  <text x="80" y="620" font-family="monospace" font-size="14" fill="#888888">liangzhenjie.cn</text>
 </svg>

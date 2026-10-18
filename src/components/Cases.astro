@@ -1,5 +1,14 @@
 ---
-// Cases Section — Real achievements with data
+import { featuredCases } from '../data/featured-cases';
+import { Image } from 'astro:assets';
+import crm from '../assets/refresh/crm-demo-anonymized.png';
+import jutu from '../assets/refresh/jutu-input-output.png';
+import workbench from '../assets/refresh/workbench-comparison.png';
+const previews: Record<string, { image: typeof crm; alt: string; caption: string }> = {
+  crm: { image: crm, alt: '客户管理系统匿名演示界面', caption: '匿名演示界面' },
+  jutu: { image: jutu, alt: '居图 AI 空间原图与效果图', caption: '真实输入与生成结果' },
+  workbench: { image: workbench, alt: 'A3 内容工作台两版样片对比', caption: '两版样片对比' },
+};
 ---
 
 <section class="section cases" id="cases" data-story-section="cases">
@@ -7,273 +16,63 @@
     <div class="section-header reveal">
       <span class="section-label">实战案例</span>
       <h2 class="section-title">用结果说话</h2>
-      <p class="section-desc">
-        每一个案例都是一线实战，不是 PPT 里的概念。
-      </p>
+      <p class="section-desc">从客户跟进到内容制作，看看具体做成了什么。</p>
     </div>
-
-    <div class="cases-track" aria-hidden="true">
-      <span></span>
-      <span></span>
-    </div>
-
+    <div class="cases-track" aria-hidden="true"><span></span><span></span></div>
     <div class="cases-grid">
-      <!-- Case 1: MPE 智能床 -->
-      <div class="case-card card reveal" data-case-story="0">
-        <div class="case-header">
-          <div class="case-header-left">
-            <span class="case-brand" style="--brand-color: #2d8cf0">MPE</span>
-            <span class="tag">AI + 投放</span>
+      {featuredCases.map((item, index) => (
+        <article class="case-card card reveal" id={'case-' + item.id} data-case-story={index}>
+          <div class="case-header">
+            <div class="case-header-left">
+              <span class="case-brand" style="--brand-color: #c9a55c">{item.category}</span>
+              <span class="case-period">{item.brand}</span>
+            </div>
           </div>
-          <span class="case-period">2025.11 — 至今</span>
-        </div>
-        <h3 class="case-title">MPE 智能床 · 获客成本最高降 80%</h3>
-        <p class="case-desc">
-          把每天 2 小时的数据整理压到 10 分钟，冷启动 2 个月累计高意向线索 200+ 条。AI 工作流重构了整个投放流程。
-        </p>
-        <div class="case-metrics">
-          <div class="case-metric">
-            <span class="case-metric-value">200→50</span>
-            <span class="case-metric-label">深圳单条成本（元）</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">30-40</span>
-            <span class="case-metric-label">全国单条成本（元）</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">90%</span>
-            <span class="case-metric-label">数据整理时间降幅</span>
-          </div>
-        </div>
-        <button
-          type="button"
-          class="case-detail-trigger"
-          data-case-detail-trigger="mpe"
-          aria-haspopup="dialog"
-          aria-controls="caseStudyDrawer"
-          aria-expanded="false"
-        >
-          查看案例拆解
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Case 2: 爱汤米家居 -->
-      <div class="case-card card reveal reveal-delay-1" data-case-story="1">
-        <div class="case-header">
-          <div class="case-header-left">
-            <span class="case-brand" style="--brand-color: #e85d26">爱汤米</span>
-            <span class="tag">直播获客</span>
-          </div>
-          <span class="case-period">2022.10 — 2024.03</span>
-        </div>
-        <h3 class="case-title">爱汤米家居 · 团队 3→40+ 人</h3>
-        <p class="case-desc">
-          公司第一个员工，从零搭建直播获客体系。起号 7 个成功 6 个，单月单账号最高 1000+ 留资，最高单月变现 150 万。
-        </p>
-        <div class="case-metrics">
-          <div class="case-metric">
-            <span class="case-metric-value counter" data-target="5000" data-suffix="万">5,000万</span>
-            <span class="case-metric-label">2023 年全年销售额</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">86%</span>
-            <span class="case-metric-label">起号成功率（6/7）</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value counter" data-target="1000" data-suffix="+">1,000+</span>
-            <span class="case-metric-label">单月最高留资</span>
-          </div>
-        </div>
-        <button
-          type="button"
-          class="case-detail-trigger"
-          data-case-detail-trigger="aitangmi"
-          aria-haspopup="dialog"
-          aria-controls="caseStudyDrawer"
-          aria-expanded="false"
-        >
-          查看案例拆解
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Case 3: YouTube Shorts -->
-      <div class="case-card card reveal reveal-delay-2" data-case-story="2">
-        <div class="case-header">
-          <div class="case-header-left">
-            <span class="case-brand" style="--brand-color: #ff0000">YT</span>
-            <span class="tag">AI 内容</span>
-          </div>
-          <span class="case-period">2026.04</span>
-        </div>
-        <h3 class="case-title">YouTube Shorts · 半个月 500 万+ 播放</h3>
-        <p class="case-desc">
-          一个人 + AI，15 天做出 500 万播放。用 Seedance 2.0 批量生成游戏 IP 二创视频，验证了 AI 内容的规模化产出能力。
-        </p>
-        <div class="case-metrics">
-          <div class="case-metric">
-            <span class="case-metric-value counter" data-target="500" data-suffix="万+">500万+</span>
-            <span class="case-metric-label">总播放量</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">15天</span>
-            <span class="case-metric-label">达成周期</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">1人</span>
-            <span class="case-metric-label">独立操盘</span>
-          </div>
-        </div>
-        <button
-          type="button"
-          class="case-detail-trigger"
-          data-case-detail-trigger="youtube"
-          aria-haspopup="dialog"
-          aria-controls="caseStudyDrawer"
-          aria-expanded="false"
-        >
-          查看案例拆解
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Case 4: 欧派家居 -->
-      <div class="case-card card reveal reveal-delay-3" data-case-story="3">
-        <div class="case-header">
-          <div class="case-header-left">
-            <span class="case-brand" style="--brand-color: #003399">欧派</span>
-            <span class="tag">投放优化</span>
-          </div>
-          <span class="case-period">2024.07 — 2025.04</span>
-        </div>
-        <h3 class="case-title">欧派家居 · 获客成本低于行业 30%+</h3>
-        <p class="case-desc">
-          首月超额完成 200 条线索，创造 30 万业绩。获客成本 130-140 元/条，远低于行业平均水平。账号粉丝从数百增至 10000+，25 倍增长。
-        </p>
-        <div class="case-metrics">
-          <div class="case-metric">
-            <span class="case-metric-value">30万</span>
-            <span class="case-metric-label">首月业绩</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">30%+</span>
-            <span class="case-metric-label">低于行业成本</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">25×</span>
-            <span class="case-metric-label">粉丝增长</span>
-          </div>
-        </div>
-        <button
-          type="button"
-          class="case-detail-trigger"
-          data-case-detail-trigger="oppein"
-          aria-haspopup="dialog"
-          aria-controls="caseStudyDrawer"
-          aria-expanded="false"
-        >
-          查看案例拆解
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Case 5: 栖案柜小程序 -->
-      <div class="case-card card reveal reveal-delay-4" data-case-story="4">
-        <div class="case-header">
-          <div class="case-header-left">
-            <span class="case-brand" style="--brand-color: #52c41a">栖案柜</span>
-            <span class="tag">AI 产品</span>
-          </div>
-          <span class="case-period">2026</span>
-        </div>
-        <h3 class="case-title">栖案柜 · 0 编程独立上线微信小程序</h3>
-        <p class="case-desc">
-          全屋定制 AI 效果图 Prompt 生成器，0 编程基础全程 AI 协作完成，已通过微信审核上线。技术栈：OpenCode + Codex + GitHub + Vercel。
-        </p>
-        <div class="case-metrics">
-          <div class="case-metric">
-            <span class="case-metric-value">0</span>
-            <span class="case-metric-label">编程基础</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">已上线</span>
-            <span class="case-metric-label">微信审核通过</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">全AI</span>
-            <span class="case-metric-label">协作完成</span>
-          </div>
-        </div>
-        <button
-          type="button"
-          class="case-detail-trigger"
-          data-case-detail-trigger="qian"
-          aria-haspopup="dialog"
-          aria-controls="caseStudyDrawer"
-          aria-expanded="false"
-        >
-          查看案例拆解
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Case 6: OrbitOS -->
-      <div class="case-card card reveal reveal-delay-5" data-case-story="5">
-        <div class="case-header">
-          <div class="case-header-left">
-            <span class="case-brand" style="--brand-color: #c9a55c">OrbitOS</span>
-            <span class="tag">系统基建</span>
-          </div>
-          <span class="case-period">2025.11 — 至今</span>
-        </div>
-        <h3 class="case-title">OrbitOS · 多 AI 协作知识管理系统</h3>
-        <p class="case-desc">
-          12 类目录架构 + 5 套模板 + 30+ Skill + Hook 自动化 + 多 AI 协作规范。不是用 AI，是让 AI 成为你的操作系统。
-        </p>
-        <div class="case-metrics">
-          <div class="case-metric">
-            <span class="case-metric-value counter" data-target="30" data-suffix="+">30+</span>
-            <span class="case-metric-label">Skill 数量</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">12类</span>
-            <span class="case-metric-label">目录架构</span>
-          </div>
-          <div class="case-metric">
-            <span class="case-metric-value">5套</span>
-            <span class="case-metric-label">模板</span>
-          </div>
-        </div>
-        <button
-          type="button"
-          class="case-detail-trigger"
-          data-case-detail-trigger="orbitos"
-          aria-haspopup="dialog"
-          aria-controls="caseStudyDrawer"
-          aria-expanded="false"
-        >
-          查看案例拆解
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </button>
-      </div>
+          <h3 class="case-title">{item.title}</h3>
+          {previews[item.id] ? (
+            <figure class={'case-proof case-proof-' + item.id}>
+              <Image src={previews[item.id].image} alt={previews[item.id].alt} width={640} loading="lazy" />
+              <figcaption>{previews[item.id].caption}</figcaption>
+            </figure>
+          ) : item.metrics ? (
+            <div class="case-proof case-proof-metric"><strong>{item.metrics[0].value === '15 天' ? '500 万+' : item.metrics[0].value}</strong><span>{item.id === 'youtube' ? '15 天累计播放 · 个人内容实践' : '历史项目获客成本降幅'}</span></div>
+          ) : (
+            <div class="case-proof case-proof-flow"><span>两个独立场景</span><ol><li>活动上报<span>→</span>核对与周榜</li><li>网页信息<span>→</span>查重与录入</li></ol></div>
+          )}
+          <p class="case-desc">{item.id === 'youtube' ? '系列选题、辅助制作、人工筛选后发布。' : item.id === 'growth' ? '结合线索质量调整投放，用 AI 辅助整理数据。' : item.summary}</p>
+          <button type="button" class="case-detail-trigger" data-case-detail-trigger={item.id}
+            aria-label={'了解案例：' + item.title} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">
+            了解这个案例
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
+        </article>
+      ))}
     </div>
   </div>
 </section>
 
 <style>
+  .case-card { min-width: 0; }
+  .case-proof { height:96px; margin:0; position:relative; overflow:hidden; border:1px solid var(--border); border-radius:6px; background:#0c0c0c; }
+  .case-proof img { width:100%; height:100%; object-fit:cover; object-position:top; transition:transform .5s var(--ease-out); }
+  .case-proof-jutu img { object-position:50% 16%; }
+  .case-proof-crm img { object-position:50% 57%; }
+  .case-proof-workbench img { object-fit:contain; }
+  .case-proof figcaption { position:absolute; bottom:0; left:0; right:0; padding:14px 10px 5px; background:linear-gradient(transparent,#000c); color:#eee; font-size:10px; }
+  .case-proof-metric { display:flex; flex-direction:column; justify-content:center; padding:16px 20px; background:linear-gradient(115deg,#c9a55c12,transparent); }
+  .case-proof-metric strong { color:var(--accent-hover); font-size:34px; line-height:1.1; font-weight:650; letter-spacing:-.04em; }
+  .case-proof-metric span { font-size:11px; color:var(--text-muted); margin-top:10px; }
+  .case-proof-flow { padding:12px 16px; }
+  .case-proof-flow > span { font-size:10px; color:var(--text-muted); }
+  .case-proof-flow ol { list-style:none; display:grid; gap:8px; margin-top:8px; font-size:12px; color:var(--text-secondary); }
+  .case-proof-flow li { display:flex; align-items:center; gap:12px; }
+  .case-proof-flow li span { color:var(--accent); }
+  .case-header-left { flex-wrap: wrap; }
+  .case-outcome { border-top: 1px solid var(--border); padding-top: 16px; display: grid; gap: 6px; }
+  .case-outcome span { color: var(--text-muted); font-size: 11px; }
+  .case-outcome strong { color: var(--accent); font-size: 14px; font-weight: 600; line-height: 1.6; }
+  .cases-grid { align-items: stretch; }
+
   .cases {
     overflow: hidden;
   }
@@ -318,20 +117,19 @@
 
   .cases-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
-    perspective: 1400px;
   }
 
   .case-card {
-    --case-depth: 20px;
-    padding: 32px;
+    scroll-margin-top: 100px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     position: relative;
     overflow: hidden;
-    transform: perspective(1200px) translate3d(0, 26px, var(--case-depth));
+    transform: translateY(16px);
     border-color: rgba(201, 165, 92, 0.08);
     transition:
       transform 0.68s var(--ease-out),
@@ -340,9 +138,7 @@
       background 0.45s ease;
   }
 
-  .case-card:nth-child(even) {
-    --case-depth: -34px;
-  }
+  .case-card.visible { transform: translateY(0); }
 
   .case-card::before {
     content: '';
@@ -363,8 +159,8 @@
   }
 
   .case-card.story-active {
-    transform: perspective(1200px) translate3d(0, 0, 0);
-    border-color: rgba(201, 165, 92, 0.3);
+    transform: translateY(0);
+    border-color: rgba(201, 165, 92, 0.13);
     background:
       linear-gradient(145deg, rgba(201, 165, 92, 0.045), transparent 42%),
       var(--bg-card);
@@ -374,56 +170,11 @@
   }
 
   .case-card.story-active::before {
-    opacity: 1;
+    opacity: 0.35;
     transform: scaleY(1);
   }
 
-  .case-card.story-active .case-metric-value {
-    text-shadow: 0 0 22px rgba(201, 165, 92, 0.24);
-  }
 
-  .case-card:first-child {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
-    column-gap: 52px;
-    padding: 42px;
-  }
-
-  .case-card:first-child .case-header,
-  .case-card:first-child .case-title,
-  .case-card:first-child .case-desc {
-    grid-column: 1;
-  }
-
-  .case-card:first-child .case-title {
-    font-size: 26px;
-  }
-
-  .case-card:first-child .case-desc {
-    font-size: 15px;
-    max-width: 680px;
-  }
-
-  .case-card:first-child .case-metrics {
-    grid-column: 2;
-    grid-row: 1 / 4;
-    align-self: stretch;
-    flex-direction: column;
-    justify-content: center;
-    padding: 8px 0 8px 36px;
-    border-top: 0;
-    border-left: 1px solid var(--border);
-  }
-
-  .case-card:first-child .case-detail-trigger {
-    grid-column: 1;
-    justify-self: start;
-  }
-
-  .case-card:first-child .case-metric-value {
-    font-size: 30px;
-  }
 
   .case-header {
     display: flex;
@@ -460,7 +211,7 @@
   }
 
   .case-title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: -0.01em;
     line-height: 1.3;
@@ -473,41 +224,12 @@
     flex: 1;
   }
 
-  .case-metrics {
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    flex-wrap: wrap;
-  }
-
-  .case-metric {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 80px;
-  }
-
-  .case-metric-value {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .case-metric-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
   .case-detail-trigger {
     display: inline-flex;
     align-items: center;
     align-self: flex-start;
     gap: 8px;
-    min-height: 36px;
+    min-height: 44px;
     padding: 0;
     border: 0;
     background: transparent;
@@ -542,53 +264,33 @@
 
   @media (max-width: 1024px) {
     .cases-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
     }
   }
 
-  @media (max-width: 768px) {
+  @media (hover: hover) and (pointer: fine) {
+    .case-card.visible:hover, .case-card.visible:focus-within { transform:translateY(-4px); border-color:rgba(201,165,92,.5); box-shadow:0 18px 40px #0005; }
+    .case-card:hover .case-proof img { transform:scale(1.025); }
+  }
+
+  @media (max-width: 640px) {
     .cases-track {
       display: none;
     }
 
     .cases-grid {
       grid-template-columns: 1fr;
+      gap: 16px;
     }
 
     .case-card {
-      padding: 24px;
+      padding: 20px;
+      gap: 10px;
       transform: translateY(18px);
     }
 
-    .case-card:first-child {
-      display: flex;
-      grid-column: auto;
-      padding: 24px;
-    }
-
-    .case-card:first-child .case-title {
-      font-size: 18px;
-    }
-
-    .case-card:first-child .case-desc {
-      font-size: 14px;
-    }
-
-    .case-card:first-child .case-metrics {
-      flex-direction: row;
-      justify-content: space-between;
-      padding: 20px 0 0;
-      border-top: 1px solid var(--border);
-      border-left: 0;
-    }
-
-    .case-card:first-child .case-detail-trigger {
-      align-self: flex-start;
-    }
-
-    .case-card:first-child .case-metric-value {
-      font-size: 18px;
-    }
+    .case-outcome { padding-top: 12px; gap: 4px; }
 
     .case-card.story-active {
       transform: translateY(0);
@@ -598,13 +300,6 @@
       font-size: 18px;
     }
 
-    .case-metrics {
-      gap: 16px;
-    }
-
-    .case-metric-value {
-      font-size: 18px;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -628,7 +323,7 @@
       if (detail.section !== 'cases') return;
 
       cards.forEach((card, index) => {
-        const threshold = 0.04 + index * 0.13;
+        const threshold = 0.04 + (index / Math.max(1, cards.length - 1)) * 0.7;
         card.classList.toggle('story-active', reducedMotion || detail.progress >= threshold);
       });
     });

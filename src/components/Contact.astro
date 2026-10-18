@@ -5,34 +5,39 @@ import wechatQR from '../assets/images/wechat-qr.png';
 ---
 
 <section class="section contact" id="contact" data-story-section="contact">
-  <div class="contact-convergence" aria-hidden="true">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
   <div class="container">
     <div class="contact-layout">
       <!-- Left: CTA -->
       <div class="contact-cta reveal">
         <span class="section-label">联系我</span>
-        <h2 class="section-title">让我们一起，<br />用 AI 解决真问题</h2>
+        <h2 class="section-title">聊聊你最想<br />省下时间的那件事</h2>
         <p class="section-desc contact-desc">
-          无论你是想了解 AI 如何赋能你的业务，<br />
-          还是已经有明确的 AI 落地需求，都欢迎来聊。
+          告诉我：你做什么业务、哪一步最费时、现在怎么处理。<br />
+          发自测结果或去掉敏感信息的样本也可以。
         </p>
+        <div class="assessment-contact" data-assessment-contact hidden>
+          <span>你的自测建议</span>
+          <p data-assessment-contact-title></p>
+          <button type="button" class="wechat-copy" data-copy-assessment>复制自测结果</button>
+          <p data-assessment-copy-status role="status" aria-live="polite"></p>
+          <textarea data-assessment-copy-fallback hidden readonly aria-label="自测结果，可选中复制" rows="8"></textarea>
+        </div>
         <div class="contact-qr">
-          <div class="contact-qr-frame">
-            <Image src={wechatQR} alt="微信二维码 - 扫码添加阿杰" class="contact-qr-img" loading="lazy" />
+          <button type="button" class="contact-qr-frame" data-qr-open aria-label="放大微信二维码">
+            <Image src={wechatQR} alt="Liangzhenjie 的微信二维码" class="contact-qr-img" loading="lazy" />
             <span class="contact-qr-ring" aria-hidden="true"></span>
-          </div>
-          <span class="contact-qr-hint">扫码添加微信 · 请备注「来自网站」</span>
+          </button>
+          <span class="contact-qr-hint">微信内可长按识别，也可复制微信号添加</span>
+          <div class="wechat-id-row"><span>微信号 <strong id="wechat-id">C49909</strong></span><button type="button" data-copy-wechat class="wechat-copy">复制微信号</button></div>
+          <p class="wechat-copy-status" data-copy-status role="status" aria-live="polite"></p>
+          <span class="contact-qr-hint">添加时请备注业务或需求，方便开始沟通</span>
         </div>
       </div>
 
       <!-- Right: Social Links -->
       <div class="contact-social reveal reveal-delay-1">
-        <h3 class="social-title">在这些平台也能找到我</h3>
-        <p class="social-desc">我在这几个平台持续输出 AI 实战内容，关注任意平台都能获取最新动态。</p>
+        <h3 class="social-title">也可以看看我的日常分享</h3>
+        <p class="social-desc">AI 应用记录与内容创作实践。</p>
 
         <div class="social-grid">
           <!-- 小红书 -->
@@ -44,7 +49,7 @@ import wechatQR from '../assets/images/wechat-qr.png';
             </div>
             <div class="social-info">
               <span class="social-name">小红书</span>
-              <span class="social-handle">@Jcut · 1,249 粉丝</span>
+              <span class="social-handle">@Jcut</span>
             </div>
             <svg class="social-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M4 12l8-8M12 4v8M12 4H4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -60,7 +65,7 @@ import wechatQR from '../assets/images/wechat-qr.png';
             </div>
             <div class="social-info">
               <span class="social-name">抖音</span>
-              <span class="social-handle">@阿杰 Thinking · 3,700 粉丝</span>
+              <span class="social-handle">@阿杰 Thinking</span>
             </div>
             <svg class="social-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M4 12l8-8M12 4v8M12 4H4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -76,7 +81,7 @@ import wechatQR from '../assets/images/wechat-qr.png';
             </div>
             <div class="social-info">
               <span class="social-name">公众号</span>
-              <span class="social-handle">@Jcut · 111 关注</span>
+              <span class="social-handle">@Jcut</span>
             </div>
             <svg class="social-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M4 12l8-8M12 4v8M12 4H4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -92,7 +97,7 @@ import wechatQR from '../assets/images/wechat-qr.png';
             </div>
             <div class="social-info">
               <span class="social-name">YouTube</span>
-              <span class="social-handle">@zhenjie9267 · 2,235 订阅</span>
+              <span class="social-handle">@zhenjie9267</span>
             </div>
             <svg class="social-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M4 12l8-8M12 4v8M12 4H4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -102,9 +107,44 @@ import wechatQR from '../assets/images/wechat-qr.png';
       </div>
     </div>
   </div>
+  <dialog class="qr-lightbox" data-qr-dialog aria-labelledby="qr-dialog-title">
+    <div class="qr-dialog-panel">
+      <button type="button" class="qr-dialog-close" data-qr-close aria-label="关闭微信二维码">×</button>
+      <h3 id="qr-dialog-title">微信联系 Liangzhenjie</h3>
+      <img src={wechatQR.src} alt="Liangzhenjie 的微信二维码，微信号 C49909" width={wechatQR.width} height={wechatQR.height} />
+      <p>微信号 C49909<br />微信内可长按图片识别或保存</p>
+      <a href={wechatQR.src} download="Liangzhenjie-微信二维码.png" class="btn btn-primary">保存二维码</a>
+    </div>
+  </dialog>
 </section>
+<a href="#contact" class="mobile-contact" data-mobile-contact hidden>聊聊你的需求 <span>微信联系 →</span></a>
 
 <style>
+  .assessment-contact { border: 1px solid var(--border-light); border-radius: 8px; padding: 16px; margin-bottom: 24px; }
+  .assessment-contact[hidden], .assessment-contact [hidden] { display: none; }
+  .assessment-contact > span { color: var(--text-muted); font-size: 12px; }
+  .assessment-contact > p { margin: 6px 0 10px; font-size: 14px; color: var(--accent); }
+  .assessment-contact textarea { width: 100%; padding: 12px; background: var(--bg); border: 1px solid var(--border); color: var(--text-primary); font: inherit; font-size: 13px; }
+  .contact-qr-frame { cursor: zoom-in; }
+  .wechat-id-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; font-size: 14px; }
+  .wechat-id-row strong { color: var(--text-primary); user-select: all; }
+  .wechat-copy { min-height:44px; padding: 10px 12px; border: 1px solid var(--border-light); background: transparent; color: var(--accent); border-radius: 6px; font: inherit; cursor: pointer; }
+  .wechat-copy-status { min-height: 1.5em; font-size: 12px; color: var(--accent); text-align: center; }
+  .wechat-copy-status:empty { display: none; }
+  .qr-lightbox { width: min(92vw, 420px); max-height: 92dvh; margin: auto; border: 1px solid var(--border-light); border-radius: 12px; color: var(--text-primary); background: var(--bg-card); padding: 0; overflow: auto; }
+  .qr-lightbox::backdrop { background: rgba(0,0,0,.82); }
+  .qr-dialog-panel { position: relative; padding: 48px 24px 24px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .qr-dialog-panel img { width: min(100%, 280px); height: auto; border-radius: 8px; }
+  .qr-dialog-panel p { font-size: 13px; color: var(--text-secondary); text-align: center; }
+  .qr-dialog-close { position: absolute; top: 8px; right: 10px; width: 44px; height: 44px; border: 1px solid var(--border-light); border-radius: 8px; background: transparent; color: var(--text-primary); font-size: 28px; cursor: pointer; }
+  :global(html.qr-lightbox-open), :global(body.qr-lightbox-open) { overflow: hidden; }
+  .mobile-contact { display: none; }
+  @media (max-width: 768px) {
+    .mobile-contact { display: flex; position: fixed; left: 16px; right: 16px; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 80; align-items: center; justify-content: space-between; padding: 15px 20px; border-radius: 8px; background: var(--accent); color: #0a0a0a; font-size: 15px; font-weight: 700; box-shadow: 0 4px 24px rgba(0,0,0,.35); }
+    .mobile-contact span { font-size: 12px; font-weight: 500; }
+    .mobile-contact[hidden], :global(body.case-drawer-open) .mobile-contact, :global(body.cert-lightbox-open) .mobile-contact, :global(body.qr-lightbox-open) .mobile-contact, :global(body.image-lightbox-open) .mobile-contact { display: none; }
+  }
+
   .contact {
     background: var(--bg-surface);
     overflow: hidden;
@@ -277,20 +317,21 @@ import wechatQR from '../assets/images/wechat-qr.png';
   }
 
   .social-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
   .social-card {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
+    gap: 10px;
+    padding: 14px;
+    min-width: 0;
     text-decoration: none;
     color: var(--text-primary);
-    opacity: 0.46;
-    transform: translateX(18px);
+    opacity: 1;
+    transform: none;
     transition:
       opacity 0.45s ease,
       transform 0.5s var(--ease-out),
@@ -344,6 +385,8 @@ import wechatQR from '../assets/images/wechat-qr.png';
 
   .social-info {
     flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -371,6 +414,9 @@ import wechatQR from '../assets/images/wechat-qr.png';
   }
 
   @media (max-width: 1024px) {
+    .social-arrow { display: none; }
+    .social-icon { width: 28px; height: 28px; }
+    .social-icon svg { width: 20px; height: 20px; }
     .contact-layout {
       gap: 60px;
     }
@@ -387,7 +433,7 @@ import wechatQR from '../assets/images/wechat-qr.png';
 
     .contact-layout {
       grid-template-columns: 1fr;
-      gap: 60px;
+      gap: 32px;
     }
 
     .contact-cta {
@@ -444,6 +490,53 @@ import wechatQR from '../assets/images/wechat-qr.png';
 </style>
 
 <script>
+  const qrDialog = document.querySelector<HTMLDialogElement>('[data-qr-dialog]');
+  const qrTrigger = document.querySelector<HTMLButtonElement>('[data-qr-open]');
+  qrTrigger?.addEventListener('click', () => {
+    if (!qrDialog || qrDialog.open) return;
+    qrDialog.showModal();
+    document.documentElement.classList.add('qr-lightbox-open');
+    document.body.classList.add('qr-lightbox-open');
+  });
+  document.querySelector('[data-qr-close]')?.addEventListener('click', () => qrDialog?.close());
+  qrDialog?.addEventListener('click', event => { if (event.target === qrDialog) qrDialog.close(); });
+  qrDialog?.addEventListener('close', () => {
+    document.documentElement.classList.remove('qr-lightbox-open');
+    document.body.classList.remove('qr-lightbox-open');
+    qrTrigger?.focus();
+  });
+  document.querySelector('[data-copy-wechat]')?.addEventListener('click', async () => {
+    const status = document.querySelector<HTMLElement>('[data-copy-status]');
+    try {
+      await navigator.clipboard.writeText('C49909');
+      if (status) status.textContent = '已复制 C49909，可到微信添加好友';
+    } catch {
+      const id = document.querySelector('#wechat-id');
+      if (id) { const range = document.createRange(); range.selectNodeContents(id); const selection = window.getSelection(); selection?.removeAllRanges(); selection?.addRange(range); }
+      if (status) status.textContent = '请长按或选中微信号 C49909 手动复制';
+    }
+  });
+  const mobileContact = document.querySelector<HTMLElement>('[data-mobile-contact]');
+  const heroTarget = document.querySelector('#hero');
+  const contactTarget = document.querySelector('#contact');
+  const scenarioTarget = document.querySelector('#roi');
+  if (heroTarget && contactTarget && mobileContact) {
+    let pastHero = false;
+    let contactVisible = false;
+    let scenarioVisible = false;
+    const contactVisibility = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.target === heroTarget) pastHero = !entry.isIntersecting && entry.boundingClientRect.bottom <= 76;
+        if (entry.target === contactTarget) contactVisible = entry.isIntersecting;
+        if (entry.target === scenarioTarget) scenarioVisible = entry.isIntersecting;
+      });
+      mobileContact.hidden = !pastHero || contactVisible || scenarioVisible;
+    }, { rootMargin: '-76px 0px 0px 0px', threshold: 0 });
+    contactVisibility.observe(heroTarget);
+    contactVisibility.observe(contactTarget);
+    if (scenarioTarget) contactVisibility.observe(scenarioTarget);
+  }
+
   const contactSection = document.querySelector<HTMLElement>('[data-story-section="contact"]');
 
   if (contactSection && !contactSection.dataset.storyBound) {

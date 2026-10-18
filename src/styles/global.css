@@ -126,7 +126,7 @@ img {
 
 .section-header {
   text-align: center;
-  margin-bottom: 64px;
+  margin-bottom: 48px;
   position: relative;
   transition: transform 0.7s var(--ease-out);
 }
@@ -225,9 +225,13 @@ img {
 
 /* ===== Scroll Animation Base ===== */
 .reveal {
+  opacity: 1;
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+
+.js-ready .reveal:not(.visible) {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  transform: translateY(18px);
 }
 
 .reveal.visible {
@@ -247,7 +251,7 @@ img {
 }
 
 .js-ready .counter {
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.6s var(--ease-out);
 }
 
@@ -371,6 +375,7 @@ img {
 
   .section-title {
     font-size: clamp(22px, 6vw, 28px);
+    text-wrap: balance;
   }
 }
 
@@ -386,7 +391,8 @@ img {
     transition-duration: 0.01ms !important;
   }
 
-  .reveal {
+  .reveal,
+  .js-ready .reveal:not(.visible) {
     opacity: 1;
     transform: none;
   }
@@ -440,4 +446,16 @@ img {
 .btn:active::after {
   width: 300px;
   height: 300px;
+}
+
+/* Mobile reading: preserve the nine sections with less vertical padding. */
+@media (min-width: 769px) {
+  #whyme, #certs, #faq { padding-block: 88px; }
+}
+@media (max-width: 768px) {
+  .section { padding-block: 56px; }
+  .section-header { margin-bottom: 28px; }
+  .section-header::after { bottom: -14px; }
+  .reveal { transition-delay: 0s; }
+  body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
 }

@@ -457,7 +457,8 @@ export function createLiquidMetalScene({
           { threshold: 0.01 },
         )
       : null;
-  intersectionObserver?.observe(host);
+  // The background is fixed; observe the actual hero so it rests while reading.
+  intersectionObserver?.observe(document.querySelector('#hero') || host);
 
   if (!resizeObserver) window.addEventListener('resize', resize);
   if (hasFinePointer && !isMobile) {

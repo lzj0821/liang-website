@@ -1,147 +1,89 @@
 ---
-// ROI Calculator — Interactive investment return estimator
+// Scenario calculator: time value and implementation costs are explicit assumptions.
 ---
-
 <section class="section roi" id="roi" data-story-section="roi">
   <div class="roi-ambient-wave" aria-hidden="true"></div>
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">投入产出</span>
-      <h2 class="section-title">AI 能帮你省多少钱？</h2>
-      <p class="section-desc">
-        拖动下方滑块，实时计算 AI 赋能后的预期收益。<br />
-        基于真实客户案例数据估算。
-      </p>
+      <h2 class="section-title">AI 能帮你省多少时间？</h2>
+      <p class="section-desc">选一项重复工作，估算可省下的时间与投入。</p>
     </div>
-
     <div class="roi-card card reveal reveal-delay-1">
-      <div class="roi-inputs">
+      <div class="roi-config">
+        <span class="roi-example-label">先看一个例子</span>
+        <h3>把时间留给更重要的事</h3>
+        <p id="roiExample">3 位同事，每人每天花 2 小时做重复工作。</p>
+        <p class="roi-example-note">先选一项整理报表或核对资料的任务，试做后用实际节省的工时验证。</p>
+        <details class="roi-settings">
+          <summary>按我的业务调整参数</summary>
+          <div class="roi-inputs">
         <div class="roi-preset-block">
-          <span class="roi-preset-label">参数预设</span>
-          <div class="roi-presets" role="group" aria-label="ROI 参数预设">
-            <button
-              type="button"
-              class="roi-preset"
-              data-roi-preset="starter"
-              data-cost="120"
-              data-leads="50"
-              data-hours="1.5"
-              aria-pressed="false"
-            >
-              轻量尝试
-            </button>
-            <button
-              type="button"
-              class="roi-preset is-active"
-              data-roi-preset="growth"
-              data-cost="200"
-              data-leads="100"
-              data-hours="3"
-              aria-pressed="true"
-            >
-              成长业务
-            </button>
-            <button
-              type="button"
-              class="roi-preset"
-              data-roi-preset="scale"
-              data-cost="320"
-              data-leads="300"
-              data-hours="5"
-              aria-pressed="false"
-            >
-              高投入团队
-            </button>
-            <button
-              type="button"
-              class="roi-preset"
-              data-roi-preset="custom"
-              aria-pressed="false"
-            >
-              自定义
-            </button>
+          <span class="roi-preset-label">场景示例</span>
+          <div class="roi-presets" role="group" aria-label="测算场景示例">
+            <button type="button" class="roi-preset" data-roi-preset="starter" data-cost="50" data-leads="1" data-hours="1" aria-pressed="false">个人提效</button>
+            <button type="button" class="roi-preset is-active" data-roi-preset="growth" data-cost="50" data-leads="3" data-hours="2" aria-pressed="true">运营小团队</button>
+            <button type="button" class="roi-preset" data-roi-preset="scale" data-cost="80" data-leads="5" data-hours="3" aria-pressed="false">内容团队</button>
+            <button type="button" class="roi-preset" data-roi-preset="custom" aria-pressed="false">自定义</button>
           </div>
         </div>
-
-        <!-- 当前获客成本 -->
         <div class="roi-input-group">
-          <label class="roi-label" for="costSlider">
-            <span class="roi-label-text">当前单条获客成本</span>
-            <span class="roi-label-value" id="costValue">200 元</span>
-          </label>
-          <input type="range" class="roi-slider" id="costSlider" min="50" max="500" value="200" step="10" />
-          <div class="roi-range">
-            <span>50 元</span>
-            <span>500 元</span>
-          </div>
+          <label class="roi-label" for="hoursSlider"><span class="roi-label-text">每人每天的重复工作</span><span class="roi-label-value" id="hoursValue">2 小时</span></label>
+          <input type="range" class="roi-slider" id="hoursSlider" min="0" max="8" value="2" step="0.5" />
+          <div class="roi-range"><span>0 小时</span><span>8 小时</span></div>
         </div>
-
-        <!-- 每月线索数 -->
         <div class="roi-input-group">
-          <label class="roi-label" for="leadsSlider">
-            <span class="roi-label-text">每月获取线索数</span>
-            <span class="roi-label-value" id="leadsValue">100 条</span>
-          </label>
-          <input type="range" class="roi-slider" id="leadsSlider" min="10" max="500" value="100" step="10" />
-          <div class="roi-range">
-            <span>10 条</span>
-            <span>500 条</span>
-          </div>
+          <label class="roi-label" for="leadsSlider"><span class="roi-label-text">参与这项工作的同事</span><span class="roi-label-value" id="leadsValue">3 人</span></label>
+          <input type="range" class="roi-slider" id="leadsSlider" min="1" max="30" value="3" step="1" />
+          <div class="roi-range"><span>1 人</span><span>30 人</span></div>
         </div>
-
-        <!-- 数据整理耗时 -->
         <div class="roi-input-group">
-          <label class="roi-label" for="hoursSlider">
-            <span class="roi-label-text">每天数据整理耗时</span>
-            <span class="roi-label-value" id="hoursValue">3 小时</span>
-          </label>
-          <input type="range" class="roi-slider" id="hoursSlider" min="0.5" max="8" value="3" step="0.5" />
-          <div class="roi-range">
-            <span>0.5 小时</span>
-            <span>8 小时</span>
-          </div>
+          <label class="roi-label" for="costSlider"><span class="roi-label-text">每小时人力成本</span><span class="roi-label-value" id="costValue">50 元</span></label>
+          <input type="range" class="roi-slider" id="costSlider" min="0" max="300" value="50" step="5" />
+          <div class="roi-range"><span>0 元</span><span>300 元</span></div>
         </div>
+        <details class="roi-assumptions">
+          <summary>调整效率目标与投入</summary>
+          <div class="roi-assumption-fields">
+            <label>预计节省时间（%）<input id="efficiencyInput" type="number" min="0" max="100" step="1" value="50" required /></label>
+            <label>每月工作日（天）<input id="daysInput" type="number" min="1" max="31" step="1" value="22" required /></label>
+            <label>每月工具与维护（元）<input id="toolsInput" type="number" min="0" max="1000000" step="1" value="300" required /></label>
+            <label>一次性实施投入（元）<input id="setupInput" type="number" min="0" max="10000000" step="1" value="5000" required /></label>
+          </div>
+          <p>示例投入用于试算，具体费用按需求评估。</p>
+        </details>
       </div>
-
+        </details>
+      </div>
       <div class="roi-results">
-        <div class="roi-result-header">AI 赋能后预计</div>
-
-        <div class="roi-result-item">
-          <span class="roi-result-label">每月获客成本节省</span>
-          <span class="roi-result-value roi-highlight" id="savingsValue" aria-live="polite">¥6,000</span>
-        </div>
-
-        <div class="roi-result-item">
-          <span class="roi-result-label">获客成本降幅</span>
-          <span class="roi-result-value" id="costReduction" aria-live="polite">30%</span>
-        </div>
-
-        <div class="roi-result-item">
-          <span class="roi-result-label">每月节省工时</span>
-          <span class="roi-result-value" id="hoursSaved" aria-live="polite">33 小时</span>
-        </div>
-
-        <div class="roi-result-item roi-total">
-          <span class="roi-result-label">年度综合节省</span>
-          <span class="roi-result-value roi-total-value" id="annualValue" aria-live="polite">¥91,800</span>
-        </div>
-
-        <div class="roi-note">
-          * 保守估计：获客成本降 30%，数据整理时间省 50%，时薪按 50 元计算
-        </div>
-
-        <div class="roi-insight" aria-live="polite">
-          <span class="roi-insight-label">测算解读</span>
-          <p id="roiInsight"></p>
-        </div>
-
-        <a href="#contact" class="btn btn-primary roi-cta">获取我的 AI 落地方案</a>
+        <div class="roi-result-header">按当前假设测算</div>
+        <div class="roi-time-result"><span class="roi-result-label">每月可释放工时</span><strong class="roi-highlight" id="hoursSaved" aria-live="polite">66 小时</strong></div>
+        <p class="roi-note" id="roiTimeAssumptions">按每月 22 个工作日、重复工作节省 50% 试算。</p>
+        <div class="roi-insight" aria-live="polite"><span class="roi-insight-label">这些时间可以用来</span><p id="roiInsight">相当于约 8.3 个工作日（每天 8 小时），可用于客户沟通、内容策划等工作。</p></div>
+        <details class="roi-financials">
+          <summary>查看成本与金额测算</summary>
+          <div class="roi-financial-content">
+            <div class="roi-result-item"><span class="roi-result-label">每月工时价值折算</span><span class="roi-result-value" id="savingsValue">¥3,300</span></div>
+            <div class="roi-result-item"><span class="roi-result-label">首年工具与实施投入</span><span class="roi-result-value" id="investmentValue">¥8,600</span></div>
+            <div class="roi-result-item roi-total"><span class="roi-result-label">首年折算价值减投入</span><span class="roi-result-value" id="annualValue">¥31,000</span></div>
+            <p class="roi-note" id="roiAssumptions">每月工具与维护 ¥300，一次性投入 ¥5,000。</p>
+            <p class="roi-note" id="roiFinancialInsight">工时价值不等于现金收入或直接减少的工资支出。</p>
+          </div>
+        </details>
+        <a href="#contact" class="btn btn-primary roi-cta">聊聊哪一步值得先做</a>
       </div>
     </div>
   </div>
 </section>
-
 <style>
+  .roi-config h3 { font-size: 23px; line-height: 1.5; margin: 12px 0 18px; }
+  .roi-example-label { font-size: 13px; color: var(--accent); }
+  .roi-config > p { color: var(--text-secondary); line-height: 1.8; font-size: 15px; }
+  .roi-example-note { margin-top: 16px; }
+  .roi-settings { margin-top: 24px; border-top: 1px solid var(--border-light); }
+  .roi-settings > summary { cursor: pointer; color: var(--accent); font-size: 14px; padding: 18px 0; }
+  .roi-settings[open] > summary { margin-bottom: 10px; }
+
   .roi {
     background: var(--bg);
     overflow: hidden;
@@ -385,6 +327,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
   }
 
   .roi-result-label {
@@ -393,16 +336,25 @@
   }
 
   .roi-result-value {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     font-family: var(--font-mono);
-    color: var(--text-primary);
+    color: var(--text-secondary);
+    white-space: nowrap;
   }
 
+  .roi-time-result { display: flex; flex-direction: column; gap: 8px; }
   .roi-highlight {
-    color: #22c55e;
-    font-size: 22px;
+    color: var(--accent);
+    font-size: 44px;
+    font-family: var(--font-mono);
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
   }
+
+  .roi-financials { border-top: 1px solid var(--border); }
+  .roi-financials > summary { padding: 14px 0; color: var(--accent); font-size: 13px; cursor: pointer; }
+  .roi-financial-content { display: grid; gap: 16px; padding: 4px 0 8px; }
 
   .roi-total {
     padding-top: 16px;
@@ -494,12 +446,16 @@
 
     .roi-card {
       grid-template-columns: 1fr;
-      padding: 28px 24px;
-      gap: 32px;
+      padding: 24px 20px;
+      gap: 20px;
     }
 
+    .roi-config h3 { font-size: 20px; }
+    .roi-config > p { font-size: 14px; }
+
     .roi-results {
-      padding: 24px;
+      padding: 20px 16px;
+      gap: 14px;
     }
 
     .roi-presets {
@@ -511,7 +467,7 @@
     }
 
     .roi-highlight {
-      font-size: 20px;
+      font-size: 36px;
     }
 
     .roi-total-value {
@@ -533,121 +489,89 @@
     }
   }
 </style>
-
+<style>
+  .roi-assumptions { border-top: 1px solid var(--border-light); padding-top: 16px; color: var(--text-secondary); font-size: 12px; }
+  .roi-assumptions summary { color: var(--accent); cursor: pointer; font-size: 13px; }
+  .roi-assumption-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0 12px; }
+  .roi-assumption-fields label { display: flex; flex-direction: column; gap: 8px; }
+  .roi-assumption-fields input { width: 100%; min-width: 0; color: var(--text-primary); background: var(--bg); border: 1px solid var(--border-light); border-radius: 6px; padding: 10px; font: inherit; }
+  .roi-assumption-fields input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .roi-assumption-fields input[aria-invalid="true"] { border-color: #d99379; }
+</style>
 <script>
-  const costSlider = document.getElementById('costSlider') as HTMLInputElement;
-  const leadsSlider = document.getElementById('leadsSlider') as HTMLInputElement;
-  const hoursSlider = document.getElementById('hoursSlider') as HTMLInputElement;
-
-  const costValue = document.getElementById('costValue')!;
-  const leadsValue = document.getElementById('leadsValue')!;
-  const hoursValue = document.getElementById('hoursValue')!;
-  const savingsValue = document.getElementById('savingsValue')!;
-  const costReduction = document.getElementById('costReduction')!;
-  const hoursSaved = document.getElementById('hoursSaved')!;
-  const annualValue = document.getElementById('annualValue')!;
-  const roiInsight = document.getElementById('roiInsight')!;
-  const roiSection = document.querySelector<HTMLElement>('[data-story-section="roi"]');
-  const roiResults = roiSection?.querySelector<HTMLElement>('.roi-results');
-  const presetButtons = Array.from(
-    roiSection?.querySelectorAll<HTMLButtonElement>('[data-roi-preset]') || [],
-  );
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let pulseTimer = 0;
-
-  function setActivePreset(preset: string) {
-    presetButtons.forEach((button) => {
-      const isActive = button.dataset.roiPreset === preset;
-      button.classList.toggle('is-active', isActive);
-      button.setAttribute('aria-pressed', String(isActive));
-    });
-  }
-
-  function setSliderProgress(slider: HTMLInputElement) {
-    const min = parseFloat(slider.min);
-    const max = parseFloat(slider.max);
-    const value = parseFloat(slider.value);
-    const progress = ((value - min) / (max - min)) * 100;
-    slider.style.setProperty('--slider-progress', `${progress.toFixed(2)}%`);
-  }
-
-  function triggerResultFeedback() {
-    if (reducedMotion || !roiResults) return;
-    window.clearTimeout(pulseTimer);
-    roiResults.classList.remove('is-pulsing');
-    annualValue.classList.remove('is-updating');
-    requestAnimationFrame(() => {
-      roiResults.classList.add('is-pulsing');
-      annualValue.classList.add('is-updating');
-      pulseTimer = window.setTimeout(() => {
-        roiResults.classList.remove('is-pulsing');
-        annualValue.classList.remove('is-updating');
-      }, 920);
-    });
-  }
-
-  function calculate(animate = true) {
-    const cost = parseFloat(costSlider.value);
-    const leads = parseFloat(leadsSlider.value);
-    const hours = parseFloat(hoursSlider.value);
-
-    // Update labels
-    costValue.textContent = `${cost} 元`;
-    leadsValue.textContent = `${leads} 条`;
-    hoursValue.textContent = `${hours} 小时`;
-    setSliderProgress(costSlider);
-    setSliderProgress(leadsSlider);
-    setSliderProgress(hoursSlider);
-
-    // Conservative estimate: 30% cost reduction, 50% time savings
-    const costSavingsPerLead = cost * 0.3;
-    const monthlyCostSavings = costSavingsPerLead * leads;
-    const monthlyHoursSaved = hours * 0.5 * 22; // 22 working days
-    const hourlyRate = 50; // conservative hourly rate
-    const monthlyTimeValue = monthlyHoursSaved * hourlyRate;
-    const monthlyTotal = monthlyCostSavings + monthlyTimeValue;
-    const annualTotal = monthlyTotal * 12;
-    const workdaysSaved = monthlyHoursSaved / 8;
-
-    // Update results
-    savingsValue.textContent = `¥${Math.round(monthlyCostSavings).toLocaleString()}`;
-    costReduction.textContent = '30%';
-    hoursSaved.textContent = `${Math.round(monthlyHoursSaved)} 小时`;
-    annualValue.textContent = `¥${Math.round(annualTotal).toLocaleString()}`;
-    roiInsight.textContent =
-      `按当前参数，每月预计综合节省 ¥${Math.round(monthlyTotal).toLocaleString()}，` +
-      `其中可释放约 ${Math.round(monthlyHoursSaved)} 小时，相当于 ${workdaysSaved.toFixed(1)} 个工作日。`;
-    if (animate) triggerResultFeedback();
-  }
-
-  const handleManualInput = () => {
-    setActivePreset('custom');
-    calculate();
-  };
-
-  costSlider?.addEventListener('input', handleManualInput);
-  leadsSlider?.addEventListener('input', handleManualInput);
-  hoursSlider?.addEventListener('input', handleManualInput);
-
-  presetButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const preset = button.dataset.roiPreset || 'custom';
-      setActivePreset(preset);
-
-      if (preset === 'custom') return;
-
-      costSlider.value = button.dataset.cost || costSlider.value;
-      leadsSlider.value = button.dataset.leads || leadsSlider.value;
-      hoursSlider.value = button.dataset.hours || hoursSlider.value;
-      calculate();
-    });
+  const roiSection = document.querySelector<HTMLElement>('[data-story-section="roi"]')!;
+  const input = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const field = (id: string) => document.getElementById(id)!;
+  const costSlider = input('costSlider');
+  const leadsSlider = input('leadsSlider');
+  const hoursSlider = input('hoursSlider');
+  const efficiency = input('efficiencyInput');
+  const days = input('daysInput');
+  const tools = input('toolsInput');
+  const setup = input('setupInput');
+  const assumptions = [efficiency, days, tools, setup];
+  const sliders = [costSlider, leadsSlider, hoursSlider];
+  const presets = [...roiSection.querySelectorAll<HTMLButtonElement>('[data-roi-preset]')];
+  const money = (n: number) => (n < 0 ? '−¥' : '¥') + Math.round(Math.abs(n)).toLocaleString('zh-CN');
+  const number = (n: number) => Number(n.toFixed(1)).toLocaleString('zh-CN');
+  const setPreset = (name: string) => presets.forEach(button => {
+    button.classList.toggle('is-active', button.dataset.roiPreset === name);
+    button.setAttribute('aria-pressed', String(button.dataset.roiPreset === name));
   });
-
-  // Initial calculation
-  calculate(false);
-
-  window.addEventListener('visual-story:update', (event) => {
+  function calculate() {
+    const hourly = costSlider.valueAsNumber;
+    const people = leadsSlider.valueAsNumber;
+    const hours = hoursSlider.valueAsNumber;
+    field('roiExample').textContent = people + ' 位同事，每人每天花 ' + hours + ' 小时做重复工作。';
+    field('costValue').textContent = hourly + ' 元';
+    field('leadsValue').textContent = people + ' 人';
+    field('hoursValue').textContent = hours + ' 小时';
+    sliders.forEach(slider => {
+      const progress = (slider.valueAsNumber - Number(slider.min)) / (Number(slider.max) - Number(slider.min)) * 100;
+      slider.style.setProperty('--slider-progress', progress + '%');
+    });
+    const invalid = assumptions.some(item => !item.validity.valid);
+    assumptions.forEach(item => item.setAttribute('aria-invalid', String(!item.validity.valid)));
+    if (invalid) {
+      ['hoursSaved', 'savingsValue', 'investmentValue', 'annualValue'].forEach(id => field(id).textContent = '—');
+      field('roiTimeAssumptions').textContent = '请检查参数：效率为 0–100%，工作日为 1–31 天，投入不能为负数。';
+      field('roiAssumptions').textContent = '请填写完整且在范围内的参数。';
+      field('roiInsight').textContent = '参数完整后会重新计算。';
+      field('roiFinancialInsight').textContent = '参数完整后会重新计算。';
+      return;
+    }
+    const monthlyHours = hours * people * days.valueAsNumber * efficiency.valueAsNumber / 100;
+    const monthlyValue = monthlyHours * hourly;
+    const annualCost = tools.valueAsNumber * 12 + setup.valueAsNumber;
+    const annualNet = monthlyValue * 12 - annualCost;
+    field('hoursSaved').textContent = number(monthlyHours) + ' 小时';
+    field('savingsValue').textContent = money(monthlyValue);
+    field('investmentValue').textContent = money(annualCost);
+    field('annualValue').textContent = money(annualNet);
+    field('roiTimeAssumptions').textContent = '按每月 ' + days.value + ' 个工作日、重复工作节省 ' + efficiency.value + '% 试算。';
+    field('roiAssumptions').textContent = '按每小时人力成本 ' + money(hourly) + ' 折算；每月工具与维护 ' + money(tools.valueAsNumber) + '，一次性投入 ' + money(setup.valueAsNumber) + '。';
+    field('roiInsight').textContent = monthlyHours > 0
+      ? '相当于约 ' + number(monthlyHours / 8) + ' 个工作日（每天 8 小时），可用于客户沟通、内容策划等工作。'
+      : '当前参数下没有释放工时，可以换一项重复任务评估。';
+    field('roiFinancialInsight').textContent = (annualNet > 0
+      ? ''
+      : '按当前假设，首年工时折算价值尚未超过投入，可先缩小范围或重新评估。')
+      + '工时价值不等于现金收入或直接减少的工资支出。';
+  }
+  [...sliders, ...assumptions].forEach(item => item.addEventListener('input', () => { setPreset('custom'); calculate(); }));
+  presets.forEach(button => button.addEventListener('click', () => {
+    const name = button.dataset.roiPreset || 'custom';
+    setPreset(name);
+    if (name === 'custom') { hoursSlider.focus(); return; }
+    costSlider.value = button.dataset.cost!;
+    leadsSlider.value = button.dataset.leads!;
+    hoursSlider.value = button.dataset.hours!;
+    efficiency.value = '50'; days.value = '22'; tools.value = '300'; setup.value = '5000';
+    calculate();
+  }));
+  calculate();
+  window.addEventListener('visual-story:update', event => {
     const detail = (event as CustomEvent<{ section: string }>).detail;
-    roiSection?.classList.toggle('story-active', detail.section === 'roi');
+    roiSection.classList.toggle('story-active', detail.section === 'roi');
   });
 </script>

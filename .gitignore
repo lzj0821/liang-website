@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # local visual brainstorming previews
 .superpowers/
+
+# local review screenshots, converted originals and development logs
+output/
+.playwright-cli/

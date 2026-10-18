@@ -5,7 +5,7 @@ import Hero from '../components/Hero.astro';
 import HeroLiquidMetal from '../components/HeroLiquidMetal.astro';
 import VisualStoryProgress from '../components/VisualStoryProgress.astro';
 import WhyMe from '../components/WhyMe.astro';
-import ROICalculator from '../components/ROICalculator.astro';
+import ScenarioCheck from '../components/ScenarioCheck.astro';
 import Cases from '../components/Cases.astro';
 import Certificates from '../components/Certificates.astro';
 import Services from '../components/Services.astro';
@@ -13,10 +13,11 @@ import Process from '../components/Process.astro';
 import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact.astro';
 import CaseStudyDrawer from '../components/CaseStudyDrawer.astro';
+import ImageLightbox from '../components/ImageLightbox.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="LIANG | FDE 前沿部署工程师">
+<Layout title="Liangzhenjie | AI 落地顾问">
   <HeroLiquidMetal />
   <Header />
   <VisualStoryProgress />
@@ -25,7 +26,7 @@ import Footer from '../components/Footer.astro';
     <div class="divider hero-transition-divider"></div>
     <WhyMe />
     <div class="divider"></div>
-    <ROICalculator />
+    <ScenarioCheck />
     <div class="divider"></div>
     <Cases />
     <div class="divider"></div>
@@ -40,5 +41,6 @@ import Footer from '../components/Footer.astro';
     <Contact />
   </main>
   <CaseStudyDrawer />
+  <ImageLightbox />
   <Footer />
 </Layout>

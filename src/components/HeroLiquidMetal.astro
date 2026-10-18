@@ -74,7 +74,8 @@
 
   const root = document.querySelector<HTMLElement>('[data-liquid-metal]');
   const canvas = root?.querySelector<HTMLCanvasElement>('.hero-liquid-canvas');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const compactDevice = window.matchMedia('(max-width: 768px), (pointer: coarse)');
 
   if (root && canvas) {
     let sceneController: ReturnType<typeof createLiquidMetalScene> | null = null;
@@ -86,19 +87,29 @@
       cleanedUp = true;
       storyController?.dispose();
       sceneController?.dispose();
+      motionPreference.removeEventListener('change', syncScene);
+      compactDevice.removeEventListener('change', syncScene);
     };
 
-    try {
-      sceneController = createLiquidMetalScene({
-        canvas,
-        host: root,
-        reducedMotion,
-      });
-      root.dataset.webgl = 'ready';
-    } catch (error) {
-      root.dataset.webgl = 'fallback';
-      console.warn('Liquid metal scene fell back to CSS rendering.', error);
+    function syncScene() {
+      sceneController?.dispose();
+      sceneController = null;
+      if (!root || !canvas || cleanedUp) return;
+      if (compactDevice.matches || motionPreference.matches) {
+        root.dataset.webgl = 'fallback';
+        return;
+      }
+      try {
+        sceneController = createLiquidMetalScene({ canvas, host: root, reducedMotion: false });
+        root.dataset.webgl = 'ready';
+      } catch (error) {
+        root.dataset.webgl = 'fallback';
+        console.warn('Liquid metal scene fell back to CSS rendering.', error);
+      }
     }
+    syncScene();
+    motionPreference.addEventListener('change', syncScene);
+    compactDevice.addEventListener('change', syncScene);
 
     storyController = createVisualStoryController({
       root: document.documentElement,

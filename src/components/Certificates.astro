@@ -5,127 +5,126 @@ import certGeminiEducator from '../assets/certs/Gemini教育者认证.png';
 import certGeminiTeacher from '../assets/certs/Gemini教师认证.png';
 import certGeminiStudent from '../assets/certs/Gemini Certified University Student认证.png';
 import certUNESCO from '../assets/certs/联合国科教文组织OER证书.png';
-import certAITrainer from '../assets/certs/ai-trainer.jpg';
+import certAITrainer from '../assets/refresh/ai-trainer-cn-private.png';
 import certAIJustice from '../assets/certs/人工智能、司法与法治认证.png';
-import certLiveMarketing from '../assets/certs/live-marketing.jpg';
+import certLiveMarketing from '../assets/refresh/live-marketing-cn-private.png';
 ---
 
 <section class="section certs" id="certs" data-story-section="certificates">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">专业认证</span>
-      <h2 class="section-title">权威机构背书</h2>
+      <h2 class="section-title">专业认证与持续学习</h2>
       <p class="section-desc">
-        经过国际权威机构考核认证的 AI 应用能力。
+        点击查看证书 · 部分图片已做隐私处理。
       </p>
     </div>
 
-    <div class="certs-grid">
-      <!-- Google Gemini Educator -->
-      <div class="cert-card card reveal" data-cert-story="0">
-        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看 Gemini 教育者认证大图">
-          <Image src={certGeminiEducator} alt="Gemini 教育者认证" class="cert-img" loading="lazy" width={800} height={600} />
-          <span class="cert-shine" aria-hidden="true"></span>
-        </button>
-        <div class="cert-org">Google for Education</div>
-        <h3 class="cert-name">Gemini 教育者认证</h3>
-        <p class="cert-name-en" lang="en">Gemini Educator Certification</p>
-        <div class="cert-meta">
-          <span class="cert-date">2026.06.05</span>
-          <span class="cert-valid">谷歌教育部门颁发 · 有效至 2029.06.05</span>
-        </div>
-      </div>
-
-      <!-- Google Gemini Teacher -->
-      <div class="cert-card card reveal reveal-delay-1" data-cert-story="1">
-        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看 Gemini 教师认证大图">
-          <Image src={certGeminiTeacher} alt="Gemini 教师认证" class="cert-img" loading="lazy" width={800} height={600} />
-          <span class="cert-shine" aria-hidden="true"></span>
-        </button>
-        <div class="cert-org">Google for Education</div>
-        <h3 class="cert-name">Gemini 教师认证</h3>
-        <p class="cert-name-en" lang="en">Gemini Certified Teacher</p>
-        <div class="cert-meta">
-          <span class="cert-date">2026.05.21</span>
-          <span class="cert-valid">谷歌教育部门颁发 · 有效至 2029.05.21</span>
-        </div>
-      </div>
-
-      <!-- Google Gemini University Student -->
-      <div class="cert-card card reveal reveal-delay-2" data-cert-story="2">
-        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看 Gemini 大学生认证大图">
-          <Image src={certGeminiStudent} alt="Gemini 大学生认证" class="cert-img" loading="lazy" width={800} height={600} />
-          <span class="cert-shine" aria-hidden="true"></span>
-        </button>
-        <div class="cert-org">Google for Education</div>
-        <h3 class="cert-name">Gemini 大学生认证</h3>
-        <p class="cert-name-en" lang="en">Gemini Certified University Student</p>
-        <div class="cert-meta">
-          <span class="cert-date">2026.05.21</span>
-          <span class="cert-valid">谷歌教育部门颁发 · 有效至 2029.05.21</span>
-        </div>
-      </div>
-
-      <!-- UNESCO OER -->
-      <div class="cert-card card reveal reveal-delay-1" data-cert-story="3">
-        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看 UNESCO OER 证书大图">
-          <Image src={certUNESCO} alt="UNESCO OER 证书" class="cert-img" loading="lazy" width={800} height={600} />
-          <span class="cert-shine" aria-hidden="true"></span>
-        </button>
-        <div class="cert-org">联合国教科文组织</div>
-        <h3 class="cert-name">开放教育资源开发证书</h3>
-        <p class="cert-name-en" lang="en">Open Educational Resources (OER) Development</p>
-        <div class="cert-meta">
-          <span class="cert-date">2026.05.21</span>
-          <span class="cert-valid">UNESCO 颁发 · Prof. Lidia Arthur Brito 签署</span>
-        </div>
-      </div>
-
-      <!-- Alibaba AI Trainer -->
-      <div class="cert-card card reveal reveal-delay-2" data-cert-story="4">
+    <div class="certs-grid certs-primary">
+      <div class="cert-card card reveal" data-cert-story="4" data-cert-private>
         <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看人工智能训练师高级证书大图">
-          <Image src={certAITrainer} alt="人工智能训练师高级" class="cert-img" loading="lazy" width={800} height={600} />
+          <Image src={certAITrainer} alt="人工智能训练师高级证书（隐私处理展示版）" class="cert-img" loading="lazy" width={1000} />
           <span class="cert-shine" aria-hidden="true"></span>
         </button>
         <div class="cert-org">阿里云 · 达摩院</div>
         <h3 class="cert-name">人工智能训练师（高级）</h3>
-        <p class="cert-name-en" lang="en">AI Trainer — Advanced Level</p>
+        <p class="cert-name-en" lang="en" hidden>AI Trainer — Advanced Level</p>
         <div class="cert-meta">
           <span class="cert-date">2026.05.21</span>
           <span class="cert-valid">有效至 2027.05.21</span>
         </div>
       </div>
 
-      <!-- AI & Justice -->
-      <div class="cert-card card reveal reveal-delay-3" data-cert-story="5">
-        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看人工智能、司法与法治认证大图">
-          <Image src={certAIJustice} alt="人工智能、司法与法治认证" class="cert-img" loading="lazy" width={800} height={600} />
+      <div class="cert-card card reveal reveal-delay-1" data-cert-story="0">
+        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看 Gemini 教育者认证大图">
+          <Image src={certGeminiEducator} alt="Gemini 教育者认证" class="cert-img" loading="lazy" width={1000} />
           <span class="cert-shine" aria-hidden="true"></span>
         </button>
-        <div class="cert-org">牛津大学 · UNESCO</div>
-        <h3 class="cert-name">人工智能、司法与法治认证</h3>
-        <p class="cert-name-en" lang="en">AI, Justice & Rule of Law</p>
+        <div class="cert-org">Google for Education</div>
+        <h3 class="cert-name">Gemini 教育者认证</h3>
+        <p class="cert-name-en" lang="en" hidden>Gemini Certified Educator</p>
         <div class="cert-meta">
-          <span class="cert-date">2026.05.31</span>
-          <span class="cert-valid">牛津大学赛德商学院与联合国教科文组织共同开发</span>
+          <span class="cert-date">2026.06.05</span>
+          <span class="cert-valid">有效至 2029.06.05</span>
         </div>
       </div>
 
-      <!-- 直播运营营销师 -->
-      <div class="cert-card card reveal reveal-delay-1" data-cert-story="6">
-        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看直播运营营销师证书大图">
-          <Image src={certLiveMarketing} alt="直播运营营销师" class="cert-img" loading="lazy" width={800} height={600} />
+      <div class="cert-card card reveal reveal-delay-2" data-cert-story="5">
+        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看人工智能、司法与法治结业证书大图">
+          <Image src={certAIJustice} alt="人工智能、司法与法治结业证书" class="cert-img" loading="lazy" width={1000} />
           <span class="cert-shine" aria-hidden="true"></span>
         </button>
-        <div class="cert-org">行业认证</div>
-        <h3 class="cert-name">直播运营营销师</h3>
-        <p class="cert-name-en" lang="en">Live Streaming Marketing Professional</p>
+        <div class="cert-org">牛津大学 · UNESCO</div>
+        <h3 class="cert-name">人工智能、司法与法治结业证书</h3>
+        <p class="cert-name-en" lang="en" hidden>AI, Justice & Rule of Law</p>
         <div class="cert-meta">
-          <span class="cert-date">已取得</span>
-          <span class="cert-valid">直播电商专业能力认证</span>
+          <span class="cert-date">2026.05.31</span>
+          <span class="cert-note" hidden>牛津大学赛德商学院与联合国教科文组织共同开发</span>
         </div>
       </div>
     </div>
+    <details class="cert-more">
+      <summary><span class="cert-more-closed">查看更多相关证书</span><span class="cert-more-open">收起相关证书</span></summary>
+      <p class="cert-swipe-hint" id="cert-swipe-hint">左右滑动查看 · 点击证书可放大</p>
+      <div class="certs-grid certs-secondary" role="region" aria-label="相关证书" aria-describedby="cert-swipe-hint" tabindex="0">
+      <div class="cert-card card reveal" data-cert-story="1">
+        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看 Gemini 教职人员认证大图">
+          <Image src={certGeminiTeacher} alt="Gemini 教职人员认证" class="cert-img" loading="lazy" width={1000} />
+          <span class="cert-shine" aria-hidden="true"></span>
+        </button>
+        <div class="cert-org">Google for Education</div>
+        <h3 class="cert-name">Gemini 教职人员认证</h3>
+        <p class="cert-name-en" lang="en" hidden>Gemini Certified Faculty</p>
+        <div class="cert-meta">
+          <span class="cert-date">2026.05.21</span>
+          <span class="cert-valid">有效至 2029.05.21</span>
+        </div>
+      </div>
+
+      <div class="cert-card card reveal reveal-delay-1" data-cert-story="2">
+        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看 Gemini 大学生认证大图">
+          <Image src={certGeminiStudent} alt="Gemini 大学生认证" class="cert-img" loading="lazy" width={1000} />
+          <span class="cert-shine" aria-hidden="true"></span>
+        </button>
+        <div class="cert-org">Google for Education</div>
+        <h3 class="cert-name">Gemini 大学生认证</h3>
+        <p class="cert-name-en" lang="en" hidden>Gemini Certified University Student</p>
+        <div class="cert-meta">
+          <span class="cert-date">2026.05.21</span>
+          <span class="cert-valid">有效至 2029.05.21</span>
+        </div>
+      </div>
+
+      <div class="cert-card card reveal reveal-delay-2" data-cert-story="3">
+        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看 UNESCO 开放教育资源开发结业证书大图">
+          <Image src={certUNESCO} alt="UNESCO 开放教育资源开发结业证书" class="cert-img" loading="lazy" width={1000} />
+          <span class="cert-shine" aria-hidden="true"></span>
+        </button>
+        <div class="cert-org">联合国教科文组织</div>
+        <h3 class="cert-name">开放教育资源开发结业证书</h3>
+        <p class="cert-name-en" lang="en" hidden>Open Educational Resources (OER) Development</p>
+        <div class="cert-meta">
+          <span class="cert-date">2026.05.21</span>
+          <span class="cert-note" hidden>UNESCO 颁发 · Prof. Lidia Arthur Brito 签署</span>
+        </div>
+      </div>
+
+      <div class="cert-card card reveal" data-cert-story="6" data-cert-private>
+        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看直播运营营销师证书大图">
+          <Image src={certLiveMarketing} alt="直播运营营销师初级证书（隐私处理展示版）" class="cert-img" loading="lazy" width={1000} />
+          <span class="cert-shine" aria-hidden="true"></span>
+        </button>
+        <div class="cert-org">巨量引擎 · 巨量学</div>
+        <h3 class="cert-name">直播运营营销师（初级）</h3>
+        <p class="cert-name-en" lang="en" hidden>Livestreaming Operation — Junior</p>
+        <div class="cert-meta">
+          <span class="cert-date">历史证书</span>
+          <span class="cert-valid">证书标注期限：2024.01.02</span>
+        </div>
+      </div>
+
+      </div>
+    </details>
   </div>
 
   <dialog class="cert-lightbox" data-cert-lightbox aria-label="证书大图查看">
@@ -138,6 +137,7 @@ import certLiveMarketing from '../assets/certs/live-marketing.jpg';
 </section>
 
 <style>
+  [hidden] { display: none !important; }
   .certs {
     background: var(--bg-surface);
     overflow: clip;
@@ -206,7 +206,7 @@ import certLiveMarketing from '../assets/certs/live-marketing.jpg';
   .cert-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   .cert-shine {
@@ -225,7 +225,7 @@ import certLiveMarketing from '../assets/certs/live-marketing.jpg';
   }
 
   .cert-card.story-active .cert-shine {
-    animation: certSurfaceSweep 5.6s ease-in-out infinite;
+    animation: certSurfaceSweep 1.8s ease-out 1;
   }
 
   @keyframes certSurfaceSweep {
@@ -371,6 +371,37 @@ import certLiveMarketing from '../assets/certs/live-marketing.jpg';
     }
   }
 
+  @media (max-width: 768px), (pointer: coarse) {
+    /* Expand the hit area while keeping the visible 36px circle in place. */
+    .cert-lightbox-close {
+      top: 4px;
+      right: 6px;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      isolation: isolate;
+      touch-action: manipulation;
+    }
+
+    .cert-lightbox-close::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      z-index: -1;
+      border: 1px solid var(--border-light);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+      pointer-events: none;
+    }
+
+    .cert-lightbox-close:hover::before {
+      border-color: var(--accent);
+    }
+
+  }
+
   @media (max-width: 480px) {
     .certs-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -410,6 +441,52 @@ import certLiveMarketing from '../assets/certs/live-marketing.jpg';
       display: none;
     }
   }
+  .cert-more { margin-top: 24px; }
+  .cert-more > summary { cursor: pointer; color: var(--accent); padding: 16px; text-align: center; border: 1px solid var(--border-light); border-radius: 8px; font-size: 14px; }
+  .cert-more-open { display: none; }
+  .cert-more[open] .cert-more-closed { display: none; }
+  .cert-more[open] .cert-more-open { display: inline; }
+  .certs-secondary { margin-top: 24px; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .certs-secondary .cert-card { min-width: 0; padding: 18px 14px; transform: none; }
+  .certs-secondary .cert-img-wrap { max-width: 260px; flex-shrink: 0; }
+  .certs-secondary .cert-name-en { overflow-wrap: anywhere; }
+  .certs-secondary .cert-meta { margin-top: auto; padding-top: 4px; }
+  .cert-swipe-hint { display: none; }
+  .cert-valid, .cert-date, .cert-name-en { font-size: 12px; line-height: 1.5; }
+  @media (max-width: 768px) {
+    .certs-grid { grid-template-columns: 1fr; gap: 12px; }
+    .cert-card { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 16px; padding: 16px; text-align: left; align-items: start; transform: none; }
+    .cert-card .cert-img-wrap { grid-column: 1; grid-row: 1 / 5; align-self: center; margin: 0; }
+    .cert-org, .cert-name, .cert-name-en, .cert-meta { grid-column: 2; min-width: 0; }
+    .cert-name { font-size: 15px; }
+    .cert-org { font-size: 11px; letter-spacing: .3px; }
+    .cert-card .cert-date, .cert-card .cert-valid, .cert-card .cert-name-en { font-size: 12px; line-height: 1.5; }
+    .cert-swipe-hint { display: block; margin-top: 16px; color: var(--text-muted); font-size: 12px; text-align: center; }
+    .certs-secondary {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: min(78vw, 280px);
+      gap: 12px;
+      margin-top: 12px;
+      padding: 4px 4px 16px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 4px;
+    }
+    .certs-secondary .cert-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      text-align: center;
+      scroll-snap-align: start;
+      transform: none;
+    }
+    .certs-secondary .cert-img-wrap { max-width: none; }
+  }
+  @media (max-width: 380px) { .cert-card { grid-template-columns: 78px minmax(0, 1fr); gap: 4px 12px; padding: 14px; } }
 </style>
 
 <script>
@@ -463,7 +540,7 @@ import certLiveMarketing from '../assets/certs/live-marketing.jpg';
         activeTrigger = button;
         dialogImage.src = image.currentSrc || image.src;
         dialogImage.alt = image.alt;
-        dialogCaption.textContent = title;
+        dialogCaption.textContent = [title, card?.hasAttribute('data-cert-private') ? '隐私处理展示版' : '', card?.querySelector('.cert-valid')?.textContent?.trim(), card?.querySelector('.cert-note')?.textContent?.trim()].filter(Boolean).join(' · ');
         if (!dialog.open) {
           document.documentElement.classList.add('cert-lightbox-open');
           document.body.classList.add('cert-lightbox-open');

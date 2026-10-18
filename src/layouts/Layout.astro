@@ -5,16 +5,20 @@ interface Props {
   title: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
 }
 
 const siteURL = (Astro.site?.toString() || 'https://liangzhenjie.cn').replace(/\/$/, '');
 const {
   title,
-  description = 'LIANG — AI 落地顾问。帮传统企业用 AI 解决真问题，获客成本降 80%，数据整理省 90%。',
-  image = `${siteURL}/images/og-default.png`
+  description = 'Liangzhenjie · AI 落地顾问。4 年家居一线运营经验，熟悉门店、经销商与招商团队，从客户跟进、报表整理和内容制作入手，提供企业 AI 培训与工具搭建。',
+  image = `${siteURL}/images/og-default.png`,
+  imageAlt = 'Liangzhenjie · AI 落地顾问｜帮传统企业，用 AI 解决真问题｜liangzhenjie.cn'
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, siteURL).toString();
+const squareShareImage = `${siteURL}/images/og-square.png`;
+const squareShareImageAlt = 'Liangzhenjie · AI 落地顾问 · liangzhenjie.cn';
 ---
 
 <!doctype html>
@@ -29,10 +33,18 @@ const canonicalURL = new URL(Astro.url.pathname, siteURL).toString();
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="LIANG | AI 落地顾问" />
+    <meta property="og:site_name" content="Liangzhenjie | AI 落地顾问" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <!-- Square thumbnail first; keep the landscape cover as an alternative.
+         These are generic share hints, not authenticated WeChat JS-SDK settings. -->
+    <meta property="og:image" content={squareShareImage} />
+    <meta property="og:image:alt" content={squareShareImageAlt} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1254" />
+    <meta property="og:image:height" content="1254" />
     <meta property="og:image" content={image} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:url" content={canonicalURL} />
@@ -43,6 +55,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteURL).toString();
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <title>{title}</title>
 
@@ -50,10 +63,10 @@ const canonicalURL = new URL(Astro.url.pathname, siteURL).toString();
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
-      "name": "LIANG | AI 落地顾问",
+      "name": "Liangzhenjie | AI 落地顾问",
       "description": description,
       "url": siteURL,
-      "image": `${siteURL}/images/og-default.png`,
+      "image": image,
       "jobTitle": "AI 落地顾问",
       "knowsAbout": ["AI 落地部署", "知识管理系统", "自媒体 AI 工作流", "本地大模型部署"],
       "sameAs": [
@@ -73,7 +86,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteURL).toString();
 
     <!-- Scroll Reveal Script -->
     <script>
-      // Signal JS is ready (used by CSS to hide counters until animated)
+      // Enable entrance effects only when JavaScript is available.
       document.documentElement.classList.add('js-ready');
 
       // Intersection Observer for .reveal elements
@@ -82,10 +95,11 @@ const canonicalURL = new URL(Astro.url.pathname, siteURL).toString();
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
             }
           });
         },
-        { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
+        { threshold: 0.01, rootMargin: '0px 0px 80px 0px' }
       );
 
       document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));

@@ -1,5 +1,7 @@
 ---
-// Services Section — 3 Standardized Solutions
+import { Image } from 'astro:assets';
+import training from '../assets/refresh/training.jpg';
+import ServiceExample from './ServiceExample.astro';
 ---
 
 <section class="section services" id="services" data-story-section="services">
@@ -8,11 +10,11 @@
       <span class="section-label">服务方案</span>
       <h2 class="section-title">标准化 AI 交付</h2>
       <p class="section-desc">
-        不卖概念，只交付可落地的 AI 解决方案。<br />
-        每套方案都有明确的适用场景、交付物和价格。
+        从一项具体任务开始，明确交付内容与报价。
       </p>
     </div>
 
+    <div class="services-plans">
     <div class="services-story-lines" aria-hidden="true">
       <span></span>
       <span></span>
@@ -20,105 +22,102 @@
     </div>
 
     <div class="services-grid">
-      <!-- Service 1: Knowledge Base -->
       <div class="service-card card reveal" data-service-story="0">
-        <div class="icon-box service-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <div class="icon-box service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
             <path d="M8 7h8M8 11h6"/>
-          </svg>
-        </div>
-        <div class="service-tag">知识库方案</div>
-        <h3 class="service-title">AI 知识库搭建</h3>
-        <p class="service-desc">
-          让你的知识不再散落在微信收藏、浏览器书签和脑子里。搭建专属的 AI 协作知识系统，知识沉淀、标准化、可复用。
-        </p>
+          </svg></div>
+        <div class="service-tag">团队实操</div>
+        <h3 class="service-title">企业 AI 实战培训</h3>
+        <p class="service-desc">从熟悉的任务练起，学会操作，也学会核对。</p>
         <div class="service-details">
-          <div class="service-detail">
-            <span class="service-detail-label">适用对象</span>
-            <span class="service-detail-value">个人 / 内容创作者</span>
-          </div>
-          <div class="service-detail">
-            <span class="service-detail-label">核心价值</span>
-            <span class="service-detail-value">知识沉淀 · 标准化复用</span>
-          </div>
-          <div class="service-detail">
-            <span class="service-detail-label">交付物</span>
-            <span class="service-detail-value">知识库架构 + 模板 + AI Skill + 使用手册</span>
-          </div>
+          <div class="service-detail"><span class="service-detail-label">适合谁</span><span class="service-detail-value">企业管理者 / 运营与业务团队</span></div>
+          <div class="service-detail"><span class="service-detail-label">你会拿到</span><span class="service-deliverables"><span>场景实操</span><span>常用模板</span><span>培训答疑</span></span></div>
         </div>
-        <a href="#contact" class="btn btn-outline service-btn">免费咨询 · 获取报价</a>
+        <ServiceExample title="一次报表实操" input="团队常用表格，以及想完成的汇总结果。" output="实操材料、可复用提问模板与结果检查清单。" check="换一份同类表格，练习汇总并核对关键数字。" />
+        <a class="service-case-link" href="#training-proof">看现场分享 →</a>
+        <a href="#contact" class="btn btn-outline service-btn">聊聊这类需求</a>
       </div>
-
-      <!-- Service 2: Local Model -->
-      <div class="service-card card reveal reveal-delay-1" data-service-story="1">
-        <div class="icon-box service-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <div class="service-card card service-card-featured reveal" data-service-story="1">
+        <div class="icon-box service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             <circle cx="12" cy="16" r="1"/>
-          </svg>
-        </div>
-        <div class="service-tag">本地模型方案</div>
-        <h3 class="service-title">私有化 AI 部署</h3>
-        <p class="service-desc">
-          数据不出本地，AI 能力不打折。为数据敏感型企业提供私有化部署方案，安全合规，定制化咨询。
-        </p>
+          </svg></div>
+        <div class="service-tag">业务提效</div>
+        <h3 class="service-title">业务流程与内部工具</h3>
+        <p class="service-desc">串起客户跟进、报表与录入，减少重复操作。</p>
         <div class="service-details">
-          <div class="service-detail">
-            <span class="service-detail-label">适用对象</span>
-            <span class="service-detail-value">数据敏感企业 / 律所 / 金融机构</span>
-          </div>
-          <div class="service-detail">
-            <span class="service-detail-label">核心价值</span>
-            <span class="service-detail-value">数据安全 · 私有化部署</span>
-          </div>
-          <div class="service-detail">
-            <span class="service-detail-label">交付物</span>
-            <span class="service-detail-value">本地模型 + 搜索增强 + Skills + 部署文档</span>
-          </div>
+          <div class="service-detail"><span class="service-detail-label">适合谁</span><span class="service-detail-value">招商 / 销售 / 运营团队</span></div>
+          <div class="service-detail"><span class="service-detail-label">你会拿到</span><span class="service-deliverables"><span>处理流程</span><span>业务工具</span><span>说明与培训</span></span></div>
         </div>
-        <a href="#contact" class="btn btn-outline service-btn">免费咨询 · 获取报价</a>
+        <ServiceExample title="一个周报流程" input="原始报表、汇总口径和一份目标样表。" output="汇总工具、待核对清单与操作说明。" check="用约定样本核对数字、缺项与重复记录。" />
+        <a class="service-case-link" href="#case-automation" data-case-detail-trigger="automation" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看活动报表与录入案例 →</a>
+        <a href="#contact" class="btn btn-primary service-btn">聊聊这类需求</a>
       </div>
-
-      <!-- Service 3: Content Workflow -->
-      <div class="service-card card service-card-featured reveal reveal-delay-2" data-service-story="2">
-        <div class="service-popular">推荐</div>
-        <div class="icon-box service-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <div class="service-card card reveal" data-service-story="2">
+        <div class="icon-box service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
             <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
             <line x1="12" y1="19" x2="12" y2="23"/>
             <line x1="8" y1="23" x2="16" y2="23"/>
-          </svg>
-        </div>
-        <div class="service-tag">口播工作流方案</div>
-        <h3 class="service-title">自媒体 AI 全链路</h3>
-        <p class="service-desc">
-          从选题到脚本到录制到剪辑，AI 全链路参与。让你专注内容本身，把重复劳动交给 AI。内容量产，风格统一，多平台分发。
-        </p>
+          </svg></div>
+        <div class="service-tag">内容与知识</div>
+        <h3 class="service-title">内容与知识库提效</h3>
+        <p class="service-desc">整理脚本、素材与资料，方便查找、修改和复用。</p>
         <div class="service-details">
-          <div class="service-detail">
-            <span class="service-detail-label">适用对象</span>
-            <span class="service-detail-value">垂类博主 / 内容创业者</span>
-          </div>
-          <div class="service-detail">
-            <span class="service-detail-label">核心价值</span>
-            <span class="service-detail-value">内容量产 · 风格统一 · 多平台分发</span>
-          </div>
-          <div class="service-detail">
-            <span class="service-detail-label">交付物</span>
-            <span class="service-detail-value">工作流 SOP + AI 脚本模板 + 多平台适配 + 培训</span>
-          </div>
+          <div class="service-detail"><span class="service-detail-label">适合谁</span><span class="service-detail-value">内容团队 / 个人创作者</span></div>
+          <div class="service-detail"><span class="service-detail-label">你会拿到</span><span class="service-deliverables"><span>资料知识库</span><span>创作流程</span><span>模板与配置</span></span></div>
         </div>
-        <a href="#contact" class="btn btn-primary service-btn">免费咨询 · 获取报价</a>
+        <ServiceExample title="一条内容的制作" input="一个选题、现有素材和参考成稿。" output="素材整理方式、创作模板与操作说明。" check="走通找素材、改稿、比较版本的过程。" />
+        <a class="service-case-link" href="#case-workbench" data-case-detail-trigger="workbench" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看个人内容工作台 →</a>
+        <a href="#contact" class="btn btn-outline service-btn">聊聊这类需求</a>
+      </div>
+    </div>
+    </div>
+
+
+    <div class="training-proof card reveal" id="training-proof">
+      <figure>
+        <Image src={training} alt="Liangzhenjie 在线下分享 AI 应用与企业落地方法" width={700} loading="lazy" />
+        <figcaption>现场分享：从会用 AI，到真正用出结果</figcaption>
+      </figure>
+      <div class="training-proof-content">
+        <span class="service-tag">线下分享与团队实操</span>
+        <h3 class="service-title">回到工作中，还能继续用</h3>
+        <p class="service-desc">围绕熟悉的任务练习，带走可复用的模板与方法。</p>
+        <div class="training-topics"><span>资料查找</span><span>内容草拟</span><span>报表整理</span></div>
+        <a href="#contact" class="btn btn-outline">沟通培训需求</a>
       </div>
     </div>
   </div>
 </section>
 
 <style>
+  .service-deliverables { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+  .service-deliverables > span { padding: 3px 7px; border-radius: 4px; background: var(--accent-subtle); color: var(--text-secondary); font-size: 12px; }
+  .service-case-link { color: var(--accent); font-size: 13px; line-height: 1.7; padding: 8px 0; text-underline-offset: 4px; }
+  .service-options { margin-top: 24px; color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
+  .training-topics { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--text-secondary); font-size: 13px; }
+  #training-proof { scroll-margin-top: 90px; }
+
+  .service-examples { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 32px; align-items: center; font-size: 13px; }
+  .service-examples > span { color: var(--text-secondary); }
+  .service-examples a { color: var(--accent); text-underline-offset: 4px; }
+  .training-proof { margin-top: 28px; padding: 28px; display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 32px; align-items: center; overflow: hidden; }
+  .training-proof figure { margin: 0; min-width: 0; }
+  .training-proof img { width: 100%; height: auto; display: block; border-radius: 6px; }
+  .training-proof figcaption { color: var(--text-secondary); font-size: 12px; margin-top: 12px; }
+  .training-proof-content { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .training-proof-content .btn { align-self: flex-start; }
+  .training-proof-content .btn { margin-top: 4px; padding: 12px 20px; font-size: 13px; }
+  @media (max-width: 768px) {
+    .training-proof { grid-template-columns: 1fr; gap: 20px; padding: 24px; max-width: 480px; margin-inline: auto; }
+    .training-proof figure { width: 100%; max-width: 360px; }
+    .service-examples { max-width: 480px; margin-inline: auto; }
+  }
+  .services-plans { position: relative; isolation: isolate; }
   .services {
     overflow: hidden;
   }
@@ -131,10 +130,7 @@
   .services-story-lines {
     position: absolute;
     z-index: 1;
-    top: 248px;
-    left: max(24px, calc((100% - var(--container-width)) / 2 + 24px));
-    right: max(24px, calc((100% - var(--container-width)) / 2 + 24px));
-    bottom: 72px;
+    inset: 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
@@ -186,14 +182,14 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    align-items: start;
+    align-items: stretch;
     position: relative;
     z-index: 2;
     perspective: 1200px;
   }
 
   .service-card {
-    padding: 36px 28px;
+    padding: 28px 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -206,37 +202,37 @@
       border-color 0.35s ease,
       box-shadow 0.35s ease,
       background 0.35s ease;
-    min-height: 100%;
+    min-height: 0;
   }
 
   .service-card:nth-child(1),
   .service-card:nth-child(2) {
-    margin-top: 32px;
+    margin-top: 0;
   }
 
   .service-card-featured {
-    min-height: calc(100% + 18px);
-    padding-top: 44px;
+    min-height: 0;
     box-shadow: 0 24px 74px rgba(0, 0, 0, 0.3);
   }
 
+  .service-card.visible,
   .service-card.story-active {
-    transform: perspective(1100px) translate3d(0, 0, 12px);
-    border-color: rgba(201, 165, 92, 0.28);
+    transform: translateY(0);
+    border-color: rgba(201, 165, 92, 0.13);
     box-shadow:
       0 20px 58px rgba(0, 0, 0, 0.3),
       inset 0 1px 0 rgba(234, 211, 141, 0.08);
   }
 
   .services[data-service-focus] .service-card {
-    opacity: 0.72;
+    opacity: 1;
   }
 
   .services[data-service-focus='0'] .service-card:nth-child(1),
   .services[data-service-focus='1'] .service-card:nth-child(2),
   .services[data-service-focus='2'] .service-card:nth-child(3) {
     opacity: 1;
-    transform: perspective(1100px) translate3d(0, -6px, 26px);
+    transform: translateY(0);
     border-color: rgba(234, 211, 141, 0.46);
     box-shadow:
       0 26px 72px rgba(0, 0, 0, 0.4),
@@ -245,8 +241,10 @@
 
   .service-card-featured {
     border-color: rgba(201, 165, 92, 0.3);
-    background: linear-gradient(180deg, rgba(201, 165, 92, 0.04), var(--bg-card));
+    background: linear-gradient(180deg, rgba(201, 165, 92, 0.04), transparent), var(--bg-card);
   }
+
+  .service-card-featured.visible { border-color: rgba(201,165,92,.4); }
 
   .service-card-featured:hover {
     border-color: rgba(201, 165, 92, 0.5);
@@ -349,7 +347,7 @@
 
     .service-card:nth-child(1),
     .service-card:nth-child(2) {
-      margin-top: 18px;
+      margin-top: 0;
     }
   }
 
@@ -361,17 +359,29 @@
     }
 
     .service-card {
-      padding: 28px 24px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 10px;
       transform: translateY(14px);
       min-height: 0;
       margin-top: 0;
     }
+
+    .service-icon { width: 44px; height: 44px; }
+    .service-icon svg { width: 26px; height: 26px; }
+    .service-card > .service-tag { align-self: center; }
+    .service-card > :not(.service-icon):not(.service-tag) { grid-column: 1 / -1; }
+    .service-card > :global(.service-example) { grid-column: 1 / -1; }
+    .service-details { padding: 12px 0; gap: 10px; }
+    .training-proof { padding: 20px; gap: 16px; }
 
     .service-card:nth-child(1),
     .service-card:nth-child(2) {
       margin-top: 0;
     }
 
+    .service-card.visible,
     .service-card.story-active,
     .services[data-service-focus='0'] .service-card:nth-child(1),
     .services[data-service-focus='1'] .service-card:nth-child(2),
