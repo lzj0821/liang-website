@@ -20,9 +20,9 @@ import avatar from '../assets/refresh/portrait.jpg';
       Liangzhenjie · AI 落地顾问
     </div>
 
-    <h1 class="hero-title">
-      <span id="heroTypewriter">帮传统企业</span><br />
-      <span class="hero-title-accent" id="heroTypewriterAccent">用 AI 解决真问题</span>
+    <h1 class="hero-title" aria-label="帮传统企业，用 AI 解决真问题">
+      <span id="heroTypewriter" aria-hidden="true">帮传统企业</span><br />
+      <span class="hero-title-accent" id="heroTypewriterAccent" aria-hidden="true">用 AI 解决真问题</span>
     </h1>
 
     <p class="hero-desc reveal reveal-delay-2">
@@ -186,6 +186,22 @@ import avatar from '../assets/refresh/portrait.jpg';
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: shimmer 4s ease-out 1;
+  }
+
+  .hero-title :global(.typewriter-char) { opacity: 0; position: relative; }
+  .hero-title-accent.is-typewriter-active {
+    background: none;
+    -webkit-text-fill-color: var(--accent);
+  }
+  .hero-title :global(.typewriter-char.is-visible) { opacity: 1; }
+  .hero-title :global(.typewriter-char.is-typing)::after {
+    content: '';
+    position: absolute;
+    right: -0.06em;
+    top: 0.15em;
+    bottom: 0.05em;
+    width: 2px;
+    background: var(--accent);
   }
 
   @keyframes shimmer {
@@ -405,3 +421,56 @@ import avatar from '../assets/refresh/portrait.jpg';
     }
   }
 </style>
+
+<script>
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const title = document.querySelector<HTMLElement>('.hero-title');
+  const lines = [document.getElementById('heroTypewriter'), document.getElementById('heroTypewriterAccent')];
+
+  if (title && lines.every(Boolean) && !motionPreference.matches) {
+    lines[1]!.classList.add('is-typewriter-active');
+    // Keep every character in the layout so typing never moves the content below.
+    const characters = lines.flatMap(line => {
+      const spans = Array.from(line!.textContent || '').map(character => {
+        const span = document.createElement('span');
+        span.className = 'typewriter-char';
+        span.textContent = character;
+        return span;
+      });
+      line!.replaceChildren(...spans);
+      return spans;
+    });
+    let frame = 0;
+    let shown = 0;
+    const start = performance.now() + 500;
+    title.dataset.typing = 'running';
+
+    const finish = () => {
+      cancelAnimationFrame(frame);
+      characters.forEach(character => {
+        character.classList.add('is-visible');
+        character.classList.remove('is-typing');
+      });
+      title.dataset.typing = 'complete';
+      lines[1]!.classList.remove('is-typewriter-active');
+      motionPreference.removeEventListener('change', onMotionChange);
+      window.removeEventListener('pagehide', finish);
+    };
+    function onMotionChange() { if (motionPreference.matches) finish(); }
+    function type(now: number) {
+      const count = Math.min(characters.length, Math.max(0, Math.floor((now - start) / 110) + 1));
+      if (count !== shown) {
+        characters.forEach((character, index) => {
+          character.classList.toggle('is-visible', index < count);
+          character.classList.toggle('is-typing', index === count - 1);
+        });
+        shown = count;
+      }
+      if (count === characters.length) finish();
+      else frame = requestAnimationFrame(type);
+    }
+    motionPreference.addEventListener('change', onMotionChange);
+    window.addEventListener('pagehide', finish);
+    frame = requestAnimationFrame(type);
+  }
+</script>
