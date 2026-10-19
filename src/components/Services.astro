@@ -10,7 +10,7 @@ import ServiceExample from './ServiceExample.astro';
       <span class="section-label">服务方案</span>
       <h2 class="section-title">标准化 AI 交付</h2>
       <p class="section-desc">
-        从一项具体任务开始，明确交付内容与报价。
+        两类服务，按实际任务选择；可从一次培训或一个流程开始。
       </p>
     </div>
 
@@ -18,61 +18,52 @@ import ServiceExample from './ServiceExample.astro';
     <div class="services-story-lines" aria-hidden="true">
       <span></span>
       <span></span>
-      <span></span>
     </div>
 
     <div class="services-grid">
-      <div class="service-card card reveal" data-service-story="0">
+      <div class="service-card card service-card-featured reveal" data-service-story="0">
         <div class="icon-box service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-            <path d="M8 7h8M8 11h6"/>
+            <rect x="4" y="3" width="16" height="18" rx="2"/>
+            <path d="M9 21v-5h6v5M8 7h2m4 0h2M8 11h2m4 0h2"/>
           </svg></div>
-        <div class="service-tag">团队实操</div>
-        <h3 class="service-title">企业 AI 实战培训</h3>
-        <p class="service-desc">从熟悉的任务练起，学会操作，也学会核对。</p>
+        <div class="service-tag">面向企业</div>
+        <h3 class="service-title">企业 AI 落地</h3>
+        <p class="service-desc">让 AI 进入日常业务，帮助团队减少重复操作与沟通成本。</p>
+        <dl class="service-capabilities">
+          <div><dt>业务梳理</dt><dd>找出耗时环节，判断哪些值得用 AI。</dd></div>
+          <div><dt>流程与工具</dt><dd>按需搭建工作流、智能体或内部工具。</dd></div>
+          <div><dt>内部培训</dt><dd>围绕岗位实操，让团队会用、能核对。</dd></div>
+        </dl>
         <div class="service-details">
-          <div class="service-detail"><span class="service-detail-label">适合谁</span><span class="service-detail-value">企业管理者 / 运营与业务团队</span></div>
-          <div class="service-detail"><span class="service-detail-label">你会拿到</span><span class="service-deliverables"><span>场景实操</span><span>常用模板</span><span>培训答疑</span></span></div>
+          <div class="service-detail"><span class="service-detail-label">常见场景</span><span class="service-detail-value">报表汇总 / 客户跟进 / 内部资料问答</span></div>
+          <div class="service-detail"><span class="service-detail-label">按需交付</span><span class="service-deliverables"><span>落地方案</span><span>工具与流程</span><span>培训与说明</span></span></div>
         </div>
-        <ServiceExample title="一次报表实操" input="团队常用表格，以及想完成的汇总结果。" output="实操材料、可复用提问模板与结果检查清单。" check="换一份同类表格，练习汇总并核对关键数字。" />
-        <a class="service-case-link" href="#training-proof">看现场分享 →</a>
-        <a href="#contact" class="btn btn-outline service-btn">聊聊这类需求</a>
-      </div>
-      <div class="service-card card service-card-featured reveal" data-service-story="1">
-        <div class="icon-box service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-            <circle cx="12" cy="16" r="1"/>
-          </svg></div>
-        <div class="service-tag">业务提效</div>
-        <h3 class="service-title">业务流程与内部工具</h3>
-        <p class="service-desc">串起客户跟进、报表与录入，减少重复操作。</p>
-        <div class="service-details">
-          <div class="service-detail"><span class="service-detail-label">适合谁</span><span class="service-detail-value">招商 / 销售 / 运营团队</span></div>
-          <div class="service-detail"><span class="service-detail-label">你会拿到</span><span class="service-deliverables"><span>处理流程</span><span>业务工具</span><span>说明与培训</span></span></div>
-        </div>
-        <ServiceExample title="一个周报流程" input="原始报表、汇总口径和一份目标样表。" output="汇总工具、待核对清单与操作说明。" check="用约定样本核对数字、缺项与重复记录。" />
+        <ServiceExample title="一个周报工作流" input="原始报表、汇总口径和一份目标样表。" output="汇总工作流、核对清单与使用培训。" check="用约定样本核对数字、缺项与重复记录。" />
         <a class="service-case-link" href="#case-automation" data-case-detail-trigger="automation" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看活动报表与录入案例 →</a>
-        <a href="#contact" class="btn btn-primary service-btn">聊聊这类需求</a>
+        <a href="#contact" class="btn btn-primary service-btn">聊聊企业需求</a>
       </div>
-      <div class="service-card card reveal" data-service-story="2">
+      <div class="service-card card reveal" data-service-story="1">
         <div class="icon-box service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-            <line x1="12" y1="19" x2="12" y2="23"/>
-            <line x1="8" y1="23" x2="16" y2="23"/>
+            <rect x="8" y="2" width="8" height="6" rx="1"/>
+            <rect x="2" y="16" width="8" height="6" rx="1"/>
+            <rect x="14" y="16" width="8" height="6" rx="1"/>
+            <path d="M12 8v4M6 16v-4h12v4"/>
           </svg></div>
-        <div class="service-tag">内容与知识</div>
-        <h3 class="service-title">内容与知识库提效</h3>
-        <p class="service-desc">整理脚本、素材与资料，方便查找、修改和复用。</p>
+        <div class="service-tag">面向个人与小团队</div>
+        <h3 class="service-title">智能体与工作流定制</h3>
+        <p class="service-desc">把反复做的事情交给助手与流程，留出时间处理更重要的工作。</p>
+        <dl class="service-capabilities">
+          <div><dt>智能体搭建</dt><dd>围绕你的资料与任务，配置专属助手。</dd></div>
+          <div><dt>工作流定制</dt><dd>串起收集、整理、生成与输出步骤。</dd></div>
+          <div><dt>使用与调整</dt><dd>接入常用工具，保留关键步骤的核对。</dd></div>
+        </dl>
         <div class="service-details">
-          <div class="service-detail"><span class="service-detail-label">适合谁</span><span class="service-detail-value">内容团队 / 个人创作者</span></div>
-          <div class="service-detail"><span class="service-detail-label">你会拿到</span><span class="service-deliverables"><span>资料知识库</span><span>创作流程</span><span>模板与配置</span></span></div>
+          <div class="service-detail"><span class="service-detail-label">常见场景</span><span class="service-detail-value">资料整理 / 内容制作 / 重复填表</span></div>
+          <div class="service-detail"><span class="service-detail-label">按需交付</span><span class="service-deliverables"><span>智能体或工作流</span><span>配置与模板</span><span>使用说明</span></span></div>
         </div>
-        <ServiceExample title="一条内容的制作" input="一个选题、现有素材和参考成稿。" output="素材整理方式、创作模板与操作说明。" check="走通找素材、改稿、比较版本的过程。" />
-        <a class="service-case-link" href="#case-workbench" data-case-detail-trigger="workbench" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看个人内容工作台 →</a>
-        <a href="#contact" class="btn btn-outline service-btn">聊聊这类需求</a>
+        <ServiceExample title="一个内容处理流程" input="现有素材、重复操作步骤和参考成稿。" output="按需定制的智能体或工作流，以及使用说明。" check="用约定样本走通处理步骤，核对输出是否符合要求。" />
+        <a class="service-case-link" href="#case-workbench" data-case-detail-trigger="workbench" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看内容工作流案例 →</a>
+        <a href="#contact" class="btn btn-outline service-btn">聊聊我的重复工作</a>
       </div>
     </div>
     </div>
@@ -95,6 +86,13 @@ import ServiceExample from './ServiceExample.astro';
 </section>
 
 <style>
+  .service-capabilities { display: grid; gap: 12px; margin: 0; padding: 4px 0; }
+  .service-capabilities > div { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; align-items: baseline; }
+  .service-capabilities dt { color: var(--accent); font-size: 13px; font-weight: 600; }
+  .service-capabilities dd { margin: 0; color: var(--text-secondary); font-size: 13px; line-height: 1.8; }
+  @media (max-width: 380px) {
+    .service-capabilities > div { grid-template-columns: 72px minmax(0, 1fr); gap: 8px; }
+  }
   .service-deliverables { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
   .service-deliverables > span { padding: 3px 7px; border-radius: 4px; background: var(--accent-subtle); color: var(--text-secondary); font-size: 12px; }
   .service-case-link { color: var(--accent); font-size: 13px; line-height: 1.7; padding: 8px 0; text-underline-offset: 4px; }
@@ -132,7 +130,7 @@ import ServiceExample from './ServiceExample.astro';
     z-index: 1;
     inset: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
     pointer-events: none;
   }
@@ -172,15 +170,14 @@ import ServiceExample from './ServiceExample.astro';
   }
 
   .services[data-service-focus='0'] .services-story-lines span:nth-child(1)::before,
-  .services[data-service-focus='1'] .services-story-lines span:nth-child(2)::before,
-  .services[data-service-focus='2'] .services-story-lines span:nth-child(3)::before {
+  .services[data-service-focus='1'] .services-story-lines span:nth-child(2)::before {
     opacity: 1;
     filter: brightness(1.45);
   }
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
     align-items: stretch;
     position: relative;
@@ -229,8 +226,7 @@ import ServiceExample from './ServiceExample.astro';
   }
 
   .services[data-service-focus='0'] .service-card:nth-child(1),
-  .services[data-service-focus='1'] .service-card:nth-child(2),
-  .services[data-service-focus='2'] .service-card:nth-child(3) {
+  .services[data-service-focus='1'] .service-card:nth-child(2) {
     opacity: 1;
     transform: translateY(0);
     border-color: rgba(234, 211, 141, 0.46);

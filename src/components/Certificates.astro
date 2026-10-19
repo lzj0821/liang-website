@@ -7,7 +7,7 @@ import certGeminiStudent from '../assets/certs/Gemini Certified University Stude
 import certUNESCO from '../assets/certs/联合国科教文组织OER证书.png';
 import certAITrainer from '../assets/refresh/ai-trainer-cn-private.png';
 import certAIJustice from '../assets/certs/人工智能、司法与法治认证.png';
-import certLiveMarketing from '../assets/refresh/live-marketing-cn-private.png';
+import certAIEngineer from '../assets/refresh/ai-engineer-query-cropped.png';
 ---
 
 <section class="section certs" id="certs" data-story-section="certificates">
@@ -35,17 +35,16 @@ import certLiveMarketing from '../assets/refresh/live-marketing-cn-private.png';
         </div>
       </div>
 
-      <div class="cert-card card reveal reveal-delay-1" data-cert-story="0">
-        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看 Gemini 教育者认证大图">
-          <Image src={certGeminiEducator} alt="Gemini 教育者认证" class="cert-img" loading="lazy" width={1000} />
+      <div class="cert-card card reveal reveal-delay-1" data-cert-story="6" data-cert-private>
+        <button type="button" class="cert-img-wrap cert-query-crop" data-cert-open aria-label="查看人工智能应用工程师高级证书查询截图">
+          <Image src={certAIEngineer} alt="人工智能应用工程师（高级）证书查询截图（身份证号码已遮挡）" class="cert-img" loading="lazy" width={1000} />
           <span class="cert-shine" aria-hidden="true"></span>
         </button>
-        <div class="cert-org">Google for Education</div>
-        <h3 class="cert-name">Gemini 教育者认证</h3>
-        <p class="cert-name-en" lang="en" hidden>Gemini Certified Educator</p>
+        <div class="cert-org">工业和信息化部教育与考试中心</div>
+        <h3 class="cert-name">人工智能应用工程师（高级）</h3>
         <div class="cert-meta">
-          <span class="cert-date">2026.06.05</span>
-          <span class="cert-valid">有效至 2029.06.05</span>
+          <span class="cert-date">职业技术证书</span>
+          <span class="cert-valid">查询截图 · 点击查看</span>
         </div>
       </div>
 
@@ -109,17 +108,17 @@ import certLiveMarketing from '../assets/refresh/live-marketing-cn-private.png';
         </div>
       </div>
 
-      <div class="cert-card card reveal" data-cert-story="6" data-cert-private>
-        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看直播运营营销师证书大图">
-          <Image src={certLiveMarketing} alt="直播运营营销师初级证书（隐私处理展示版）" class="cert-img" loading="lazy" width={1000} />
+      <div class="cert-card card reveal" data-cert-story="0">
+        <button type="button" class="cert-img-wrap" data-cert-open aria-label="查看 Gemini 教育者认证大图">
+          <Image src={certGeminiEducator} alt="Gemini 教育者认证" class="cert-img" loading="lazy" width={1000} />
           <span class="cert-shine" aria-hidden="true"></span>
         </button>
-        <div class="cert-org">巨量引擎 · 巨量学</div>
-        <h3 class="cert-name">直播运营营销师（初级）</h3>
-        <p class="cert-name-en" lang="en" hidden>Livestreaming Operation — Junior</p>
+        <div class="cert-org">Google for Education</div>
+        <h3 class="cert-name">Gemini 教育者认证</h3>
+        <p class="cert-name-en" lang="en" hidden>Gemini Certified Educator</p>
         <div class="cert-meta">
-          <span class="cert-date">历史证书</span>
-          <span class="cert-valid">证书标注期限：2024.01.02</span>
+          <span class="cert-date">2026.06.05</span>
+          <span class="cert-valid">有效至 2029.06.05</span>
         </div>
       </div>
 
@@ -137,6 +136,7 @@ import certLiveMarketing from '../assets/refresh/live-marketing-cn-private.png';
 </section>
 
 <style>
+  .cert-img-wrap.cert-query-crop { background: #fff; }
   [hidden] { display: none !important; }
   .certs {
     background: var(--bg-surface);
