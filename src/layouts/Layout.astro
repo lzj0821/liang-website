@@ -17,7 +17,7 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, siteURL).toString();
-const squareShareImage = `${siteURL}/images/og-square.png`;
+const squareShareImage = `${siteURL}/images/og-square.jpg`;
 const squareShareImageAlt = 'Liangzhenjie · AI 落地顾问 · liangzhenjie.cn';
 ---
 
@@ -40,9 +40,9 @@ const squareShareImageAlt = 'Liangzhenjie · AI 落地顾问 · liangzhenjie.cn'
          These are generic share hints, not authenticated WeChat JS-SDK settings. -->
     <meta property="og:image" content={squareShareImage} />
     <meta property="og:image:alt" content={squareShareImageAlt} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1254" />
-    <meta property="og:image:height" content="1254" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="800" />
     <meta property="og:image" content={image} />
     <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:image:width" content="1200" />
@@ -62,18 +62,27 @@ const squareShareImageAlt = 'Liangzhenjie · AI 落地顾问 · liangzhenjie.cn'
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Liangzhenjie | AI 落地顾问",
-      "description": description,
-      "url": siteURL,
-      "image": image,
-      "jobTitle": "AI 落地顾问",
-      "knowsAbout": ["企业 AI 落地", "智能体搭建", "自动化工作流", "企业 AI 培训"],
-      "sameAs": [
-        "https://xhslink.com/m/7htcBmaHvMh",
-        "https://v.douyin.com/n4Uw16gQ4J4/",
-        "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzY5NzIzNzExMg==#wechat_redirect",
-        "https://youtube.com/@zhenjie9267"
+      "@graph": [
+        {
+          "@type": "Service",
+          "name": "Liangzhenjie | AI 落地顾问",
+          "description": description,
+          "url": siteURL,
+          "image": image,
+          "provider": { "@id": `${siteURL}/#person` }
+        },
+        {
+          "@type": "Person",
+          "@id": `${siteURL}/#person`,
+          "name": "Liangzhenjie",
+          "jobTitle": "AI 落地顾问",
+          "knowsAbout": ["企业 AI 落地", "智能体搭建", "自动化工作流", "企业 AI 培训"],
+          "sameAs": [
+            "https://xhslink.com/m/7htcBmaHvMh",
+            "https://v.douyin.com/n4Uw16gQ4J4/",
+            "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzY5NzIzNzExMg==#wechat_redirect"
+          ]
+        }
       ]
     })} />
 

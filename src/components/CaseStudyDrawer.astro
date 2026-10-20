@@ -1,8 +1,13 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import workbench from '../assets/refresh/workbench-comparison.png';
 import jutuPoster from '../assets/refresh/jutu-input-output.png';
 import crmDemo from '../assets/refresh/crm-demo-anonymized.png';
+
+// Lightbox opens a 1600px WebP derivative instead of the multi-MB PNG original.
+const crmFull = await getImage({ src: crmDemo, width: 1600, format: 'webp' });
+const workbenchFull = await getImage({ src: workbench, width: 1600, format: 'webp' });
+const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' });
 ---
 <div class="case-drawer" id="caseStudyDrawer" data-case-drawer aria-hidden="true">
   <button
@@ -48,19 +53,19 @@ import crmDemo from '../assets/refresh/crm-demo-anonymized.png';
       </dl>
 
       <figure class="case-drawer-media case-mobile-demo" data-case-media="crm" hidden>
-        <a class="image-preview" href={crmDemo.src} data-image-open data-image-caption="客户管理 · 演示数据，图片已做匿名处理" aria-label="放大客户管理界面" aria-haspopup="dialog" aria-controls="imageLightbox">
+        <a class="image-preview" href={crmFull.src} data-image-open data-image-caption="客户管理 · 演示数据，图片已做匿名处理" aria-label="放大客户管理界面" aria-haspopup="dialog" aria-controls="imageLightbox">
           <Image src={crmDemo} alt="客户管理移动端演示：查看负责人、待接收、待联系与无效申请待审状态" width={620} loading="lazy" />
         </a>
         <figcaption>界面局部 · 匿名演示数据，点图查看全图</figcaption>
       </figure>
       <figure class="case-drawer-media" data-case-media="workbench" hidden>
-        <a class="image-preview" href={workbench.src} data-image-open data-image-caption="个人内容创作工作台 · 同一段内容的两版实际样片" aria-label="放大个人内容创作工作台界面" aria-haspopup="dialog" aria-controls="imageLightbox">
+        <a class="image-preview" href={workbenchFull.src} data-image-open data-image-caption="个人内容创作工作台 · 同一段内容的两版实际样片" aria-label="放大个人内容创作工作台界面" aria-haspopup="dialog" aria-controls="imageLightbox">
           <Image src={workbench} alt="工作台 A3 样片对比：同一段口播的两种视频画面并排查看" width={920} loading="lazy" />
         </a>
         <figcaption>同一段内容，两版样片并排比较</figcaption>
       </figure>
       <figure class="case-drawer-media" data-case-media="jutu" hidden>
-        <a class="image-preview" href={jutuPoster.src} data-image-open data-image-caption="居图 AI · 实际输入与生成结果" aria-label="放大居图 AI 输入与输出对照" aria-haspopup="dialog" aria-controls="imageLightbox">
+        <a class="image-preview" href={jutuFull.src} data-image-open data-image-caption="居图 AI · 实际输入与生成结果" aria-label="放大居图 AI 输入与输出对照" aria-haspopup="dialog" aria-controls="imageLightbox">
           <Image src={jutuPoster} alt="居图 AI 实际输入与输出：空房变装修效果图，沙发照片变白底图、场景图、模特体验图和产品海报" width={950} loading="lazy" />
         </a>
         <figcaption>空间原图与效果图 · 点图看完整出图示例</figcaption>

@@ -20,8 +20,8 @@ import avatar from '../assets/refresh/portrait.jpg';
       Liangzhenjie · AI 落地顾问
     </div>
 
-      <h1 class="hero-title" aria-label="帮企业与个人，用 AI 解决真问题">
-        <span id="heroTypewriter" aria-hidden="true">帮企业与个人</span><br />
+    <h1 class="hero-title" aria-label="帮企业与个人，用 AI 解决真问题">
+      <span id="heroTypewriter" aria-hidden="true">帮企业与个人</span><br />
       <span class="hero-title-accent" id="heroTypewriterAccent" aria-hidden="true">用 AI 解决真问题</span>
     </h1>
 
@@ -32,11 +32,11 @@ import avatar from '../assets/refresh/portrait.jpg';
 
     <!-- Brand trust bar -->
     <div class="hero-brands reveal reveal-delay-3">
-      <span class="hero-brands-label">曾服务</span>
+      <span class="hero-brands-label">服务行业</span>
       <div class="hero-brands-list">
-        <span class="hero-brand" style="--brand-color: #003399">定制家居</span>
-        <span class="hero-brand" style="--brand-color: #e85d26">家居零售</span>
-        <span class="hero-brand" style="--brand-color: #2d8cf0">智能家居</span>
+        <span class="hero-brand">定制家居</span>
+        <span class="hero-brand">家居零售</span>
+        <span class="hero-brand">智能家居</span>
       </div>
     </div>
 
@@ -180,21 +180,24 @@ import avatar from '../assets/refresh/portrait.jpg';
   }
 
   .hero-title-accent {
-    background: linear-gradient(135deg, var(--accent) 0%, #e8d5a3 50%, var(--accent) 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 4s ease-out 1;
+    color: var(--accent);
+    text-shadow: 0 0 34px rgba(201, 165, 92, 0.18);
   }
 
-  .hero-title :global(.typewriter-char) { opacity: 0; position: relative; }
-  .hero-title-accent.is-typewriter-active {
-    background: none;
-    -webkit-text-fill-color: var(--accent);
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .hero-title:not([data-typing='running']) .hero-title-accent {
+      background: linear-gradient(135deg, var(--accent) 0%, #e8d5a3 50%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
-  .hero-title :global(.typewriter-char.is-visible) { opacity: 1; }
-  .hero-title :global(.typewriter-char.is-typing)::after {
+
+  /* Characters are only hidden while the typing run is active, so a script
+     failure can never leave the headline invisible. */
+  .hero-title[data-typing='running'] :global(.typewriter-char) { opacity: 0; position: relative; }
+  .hero-title[data-typing='running'] :global(.typewriter-char.is-visible) { opacity: 1; }
+  .hero-title[data-typing='running'] :global(.typewriter-char.is-caret)::after {
     content: '';
     position: absolute;
     right: -0.06em;
@@ -202,11 +205,6 @@ import avatar from '../assets/refresh/portrait.jpg';
     bottom: 0.05em;
     width: 2px;
     background: var(--accent);
-  }
-
-  @keyframes shimmer {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
   }
 
   .hero-desc {
@@ -427,9 +425,10 @@ import avatar from '../assets/refresh/portrait.jpg';
   const title = document.querySelector<HTMLElement>('.hero-title');
   const lines = [document.getElementById('heroTypewriter'), document.getElementById('heroTypewriterAccent')];
 
+  // Keep the published two-line sequence and its original pacing.
   if (title && lines.every(Boolean) && !motionPreference.matches) {
-    lines[1]!.classList.add('is-typewriter-active');
-    // Keep every character in the layout so typing never moves the content below.
+    // Split first while the text is still fully visible, then switch the
+    // hiding rule on. If anything throws before this point, the text stays.
     const characters = lines.flatMap(line => {
       const spans = Array.from(line!.textContent || '').map(character => {
         const span = document.createElement('span');
@@ -440,19 +439,21 @@ import avatar from '../assets/refresh/portrait.jpg';
       line!.replaceChildren(...spans);
       return spans;
     });
+    title.dataset.typing = 'running';
+
     let frame = 0;
     let shown = 0;
+    let watchdog = 0;
     const start = performance.now() + 500;
-    title.dataset.typing = 'running';
 
     const finish = () => {
       cancelAnimationFrame(frame);
+      clearTimeout(watchdog);
       characters.forEach(character => {
         character.classList.add('is-visible');
-        character.classList.remove('is-typing');
+        character.classList.remove('is-caret');
       });
       title.dataset.typing = 'complete';
-      lines[1]!.classList.remove('is-typewriter-active');
       motionPreference.removeEventListener('change', onMotionChange);
       window.removeEventListener('pagehide', finish);
     };
@@ -462,13 +463,16 @@ import avatar from '../assets/refresh/portrait.jpg';
       if (count !== shown) {
         characters.forEach((character, index) => {
           character.classList.toggle('is-visible', index < count);
-          character.classList.toggle('is-typing', index === count - 1);
+          character.classList.toggle('is-caret', index === count - 1);
         });
         shown = count;
       }
       if (count === characters.length) finish();
       else frame = requestAnimationFrame(type);
     }
+    // Safety net: even if rAF never runs (blocked main thread, odd browser),
+    // reveal the whole line shortly after load.
+    watchdog = window.setTimeout(finish, 3000);
     motionPreference.addEventListener('change', onMotionChange);
     window.addEventListener('pagehide', finish);
     frame = requestAnimationFrame(type);

@@ -76,6 +76,9 @@ import { featuredCases } from '../data/featured-cases';
   .option-marker { font-family:var(--font-mono); font-size:10px; color:var(--text-muted); border:1px solid var(--border-light); border-radius:50%; width:24px; height:24px; display:grid; place-items:center; flex-shrink:0; }
   .scenario-options label:has(:checked) { border-color:var(--accent); background:var(--accent-subtle); color:var(--text-primary); }
   .scenario-options label:has(:checked) .option-marker { background:var(--accent); color:var(--bg); border-color:var(--accent); }
+  /* JS fallback for browsers without :has() support. */
+  .scenario-options label.is-checked { border-color:var(--accent); background:var(--accent-subtle); color:var(--text-primary); }
+  .scenario-options label.is-checked .option-marker { background:var(--accent); color:var(--bg); border-color:var(--accent); }
   .scenario-options label:has(:focus-visible) { outline:2px solid var(--accent); outline-offset:3px; }
   .scenario-status { color:var(--accent); font-size:12px; min-height:20px; margin-top:10px; }
   .scenario-actions { display:flex; align-items:center; justify-content:space-between; gap:16px; }
@@ -225,6 +228,7 @@ import { featuredCases } from '../data/featured-cases';
       if(!steps[current].contains(input) || advanceTimer!==undefined || performance.now()<acceptAfter || event.detail>1){event.preventDefault();return;}
       queueAdvance();
     });
+    const syncChecked=()=>form.querySelectorAll('.scenario-options label').forEach(label=>label.classList.toggle('is-checked',!!label.querySelector('input:checked')));
     form.addEventListener('keydown',event=>{
       const input=event.target;
       if(!(input instanceof HTMLInputElement) || input.type!=='radio')return;
@@ -236,14 +240,14 @@ import { featuredCases } from '../data/featured-cases';
         // Arrow keys explore this radio group; only explicit activation changes the question.
         const options=Array.from(steps[current].querySelectorAll<HTMLInputElement>('input[type="radio"]')).filter(el=>el.name===input.name);
         const target=options[(options.indexOf(input)+direction+options.length)%options.length];
-        target.checked=true;target.focus();error.textContent='';
-      }else{input.checked=true;queueAdvance();}
+        target.checked=true;syncChecked();target.focus();error.textContent='';
+      }else{input.checked=true;syncChecked();queueAdvance();}
     });
-    form.addEventListener('change',()=>error.textContent='');
+    form.addEventListener('change',()=>{error.textContent='';syncChecked();});
     back.addEventListener('click',()=>{if(current>0)show(current-1);});
     jumps.forEach((button,i)=>button.addEventListener('click',()=>{if(i<=reached)show(i);}));
     document.querySelector('[data-scenario-edit]')?.addEventListener('click',()=>show(0));
-    document.querySelector('[data-scenario-reset]')?.addEventListener('click',()=>{form.reset();reached=0;show(0);});
+    document.querySelector('[data-scenario-reset]')?.addEventListener('click',()=>{form.reset();reached=0;syncChecked();show(0);});
     document.querySelectorAll<HTMLButtonElement>('[data-copy-assessment]').forEach(button=>button.addEventListener('click',async()=>{
       if(!summary)return;
       const scope=button.closest<HTMLElement>('[data-assessment-contact], [data-scenario-result]')!;
@@ -253,6 +257,7 @@ import { featuredCases } from '../data/featured-cases';
       catch{fallback.value=summary;fallback.hidden=false;fallback.focus();fallback.select();status.textContent='请选中下方文字手动复制。';}
     }));
     motion.addEventListener('change',()=>{if(motion.matches)entryAnimation?.cancel();});
+    syncChecked();
     show(0,false);
   }
 </script>

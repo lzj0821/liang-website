@@ -304,14 +304,24 @@
 
     if (finePointer && !reducedMotion) {
       cards.forEach((card) => {
+        let tiltFrame = 0;
+        let latestX = 0;
+        let latestY = 0;
         card.addEventListener('pointermove', (event) => {
-          const bounds = card.getBoundingClientRect();
-          const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-          const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-          card.style.setProperty('--tilt-x', `${(-y * 4).toFixed(2)}deg`);
-          card.style.setProperty('--tilt-y', `${(x * 4).toFixed(2)}deg`);
+          latestX = event.clientX;
+          latestY = event.clientY;
+          if (tiltFrame) return;
+          tiltFrame = requestAnimationFrame(() => {
+            tiltFrame = 0;
+            const bounds = card.getBoundingClientRect();
+            const x = (latestX - bounds.left) / bounds.width - 0.5;
+            const y = (latestY - bounds.top) / bounds.height - 0.5;
+            card.style.setProperty('--tilt-x', `${(-y * 4).toFixed(2)}deg`);
+            card.style.setProperty('--tilt-y', `${(x * 4).toFixed(2)}deg`);
+          });
         });
         card.addEventListener('pointerleave', () => {
+          if (tiltFrame) { cancelAnimationFrame(tiltFrame); tiltFrame = 0; }
           card.style.setProperty('--tilt-x', '0deg');
           card.style.setProperty('--tilt-y', '0deg');
         });

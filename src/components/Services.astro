@@ -1,6 +1,8 @@
 ---
 import { Image } from 'astro:assets';
 import training from '../assets/refresh/training.jpg';
+import trainingContent from '../assets/refresh/training-content-anonymized.png';
+import trainingAgent from '../assets/refresh/training-agent-anonymized.png';
 import ServiceExample from './ServiceExample.astro';
 ---
 
@@ -81,6 +83,17 @@ import ServiceExample from './ServiceExample.astro';
         <div class="training-topics"><span>资料查找</span><span>内容草拟</span><span>报表整理</span></div>
         <a href="#contact" class="btn btn-outline">沟通培训需求</a>
       </div>
+      <div class="training-gallery" aria-label="更多线下分享照片">
+        <figure>
+          <Image src={trainingContent} alt="内容与电商团队 AI 实战入门分享课件，企业信息已遮挡" width={480} loading="lazy" />
+          <figcaption>内容与电商团队分享</figcaption>
+        </figure>
+        <figure>
+          <Image src={trainingAgent} alt="Agent 落地主题分享的会场与课件，企业信息已遮挡" width={480} loading="lazy" />
+          <figcaption>Agent 落地主题分享</figcaption>
+        </figure>
+        <p class="training-gallery-note">企业信息已做匿名处理</p>
+      </div>
     </div>
   </div>
 </section>
@@ -103,16 +116,27 @@ import ServiceExample from './ServiceExample.astro';
   .service-examples { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 32px; align-items: center; font-size: 13px; }
   .service-examples > span { color: var(--text-secondary); }
   .service-examples a { color: var(--accent); text-underline-offset: 4px; }
-  .training-proof { margin-top: 28px; padding: 28px; display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 32px; align-items: center; overflow: hidden; }
+  .training-proof { margin-top: 28px; padding: 28px; display: grid; grid-template-columns: minmax(190px, .9fr) minmax(230px, 1.15fr) minmax(240px, 1fr); gap: 24px; align-items: center; overflow: hidden; }
   .training-proof figure { margin: 0; min-width: 0; }
   .training-proof img { width: 100%; height: auto; display: block; border-radius: 6px; }
   .training-proof figcaption { color: var(--text-secondary); font-size: 12px; margin-top: 12px; }
   .training-proof-content { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
   .training-proof-content .btn { align-self: flex-start; }
   .training-proof-content .btn { margin-top: 4px; padding: 12px 20px; font-size: 13px; }
+  .training-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-width: 0; }
+  .training-gallery img { aspect-ratio: 3 / 4; object-fit: cover; }
+  .training-gallery figcaption { margin-top: 8px; font-size: 11px; line-height: 1.6; }
+  .training-gallery-note { grid-column: 1 / -1; margin: 0; color: var(--text-muted); font-size: 11px; }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .training-proof { grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr); }
+    .training-proof > figure { grid-column: 1; grid-row: 1; }
+    .training-proof-content { grid-column: 2; grid-row: 1 / 3; }
+    .training-gallery { grid-column: 1; }
+  }
   @media (max-width: 768px) {
     .training-proof { grid-template-columns: 1fr; gap: 20px; padding: 24px; max-width: 480px; margin-inline: auto; }
     .training-proof figure { width: 100%; max-width: 360px; }
+    .training-gallery { gap: 12px; }
     .service-examples { max-width: 480px; margin-inline: auto; }
   }
   .services-plans { position: relative; isolation: isolate; }

@@ -5,6 +5,8 @@ export interface FeaturedCase {
   period: string;
   title: string;
   summary: string;
+  /** 卡片上的描述文案；缺省时用 summary。用于避免与卡片数据区重复。 */
+  cardDesc?: string;
   outcome: string;
   scene: string;
   action: string;
@@ -77,6 +79,7 @@ export const featuredCases: FeaturedCase[] = [
     id: 'youtube', brand: '个人内容实践', category: '内容增长', period: '2026.04',
     title: '用 AI 制作系列短视频',
     summary: '个人独立制作与发布，15 天累计 500 万+ 播放。',
+    cardDesc: '系列选题、辅助制作、人工筛选后发布。',
     outcome: '用 AI 支持一个人的持续内容生产',
     result: '2026 年 4 月的 YouTube Shorts 项目记录；播放量不代表销售收入。',
     audience: '需要持续测试内容方向的创作者与内容团队',
@@ -90,6 +93,7 @@ export const featuredCases: FeaturedCase[] = [
     id: 'growth', brand: '某智能家居品牌', category: '获客运营', period: '历史项目',
     title: '获客投放与数据整理',
     summary: '优化投放与数据整理，历史项目获客成本最高降 80%。',
+    cardDesc: '结合线索质量调整投放，用 AI 辅助整理数据。',
     outcome: '更快看清投放效果，把时间留给分析与跟进',
     result: '为具体历史项目结果；获客成本改善来自投放优化，AI 辅助数据整理。',
     audience: '正在投放获客、需要定期复盘的传统企业',
