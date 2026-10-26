@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "agent-onboarding",
+    "title": "我搭了一套 Agent 系统后，才发现“能运行”和“能上岗”是两回事",
+    "author": "阿杰",
+    "publishedAt": "2026-08-15",
+    "cover": "assets/cover-wechat-900x383-v1.png"
+  },
+  {
+    "slug": "ai-project-priorities",
+    "title": "企业最不缺 AI 应用场景，缺的是先做哪一个的判断",
+    "author": "阿杰",
+    "publishedAt": "2026-08-11",
+    "cover": "assets/cover-wechat-900x383-v2.png"
+  },
+  {
+    "slug": "customer-followup",
+    "title": "老板想用 AI 省人之前，先看看客户是怎么丢的",
+    "author": "阿杰",
+    "publishedAt": "2026-08-18",
+    "cover": "assets/cover-wechat-customer-loss-900x383-v3.png"
+  }
+]

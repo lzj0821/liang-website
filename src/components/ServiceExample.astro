@@ -23,11 +23,12 @@ const { title, input, output, check } = Astro.props;
   summary::-webkit-details-marker { display:none; }
   summary > span:first-child { display:flex; flex-wrap:wrap; gap:4px 12px; }
   .example-label { color:var(--text-muted); font-size:12px; }
-  .example-toggle { color:var(--accent); font-size:20px; font-weight:400; line-height:1; transition:transform .2s ease; }
+  .example-toggle { display:grid; place-items:center; flex:0 0 24px; width:24px; height:24px; margin-right:6px; color:var(--accent); font-size:20px; font-weight:400; line-height:1; transition:transform .2s ease; }
   details[open] .example-toggle { transform:rotate(45deg); }
   dl { padding:4px 0 16px; display:grid; gap:12px; }
-  dl > div { display:grid; grid-template-columns:52px minmax(0,1fr); gap:12px; font-size:12px; line-height:1.8; }
+  dl > div { display:grid; grid-template-columns:64px minmax(0,1fr); gap:12px; font-size:14px; line-height:1.8; }
   dt { color:var(--accent); }
   dd { color:var(--text-secondary); }
+  @media (max-width:380px) { dl > div { grid-template-columns:minmax(0,1fr); gap:3px; } }
   @media (prefers-reduced-motion:reduce) { .example-toggle { transition:none; } }
 </style>

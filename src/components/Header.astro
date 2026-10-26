@@ -91,7 +91,7 @@
 
   .logo-role {
     color: var(--accent);
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: 14px;
     font-weight: 500;
   }
@@ -243,6 +243,25 @@
 
     .mobile-nav {
       display: flex;
+    }
+  }
+
+  @media (max-width: 768px) and (max-height: 600px) {
+    .mobile-nav {
+      justify-content: flex-start;
+      gap: 12px;
+      padding: calc(80px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      scroll-padding-block: 80px 24px;
+    }
+
+    .mobile-nav > a {
+      flex-shrink: 0;
+    }
+
+    .mobile-nav-cta {
+      margin-top: 12px;
     }
   }
 </style>

@@ -2,6 +2,7 @@
 // Contact Section — Social Matrix + CTA
 import { Image } from 'astro:assets';
 import wechatQR from '../assets/images/wechat-qr.png';
+import FeaturedArticles from './FeaturedArticles.astro';
 ---
 
 <section class="section contact" id="contact" data-story-section="contact">
@@ -37,7 +38,8 @@ import wechatQR from '../assets/images/wechat-qr.png';
       <!-- Right: Social Links -->
       <div class="contact-social reveal reveal-delay-1">
         <h3 class="social-title">也可以看看我的日常分享</h3>
-        <p class="social-desc">AI 应用记录与内容创作实践。</p>
+        <p class="social-desc">三篇实战笔记，记录我怎样判断和推进 AI 项目。</p>
+        <FeaturedArticles />
 
         <div class="social-grid">
           <!-- 小红书 -->

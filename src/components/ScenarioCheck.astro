@@ -1,4 +1,6 @@
 ---
+import TaskIcon from './TaskIcon.astro';
+import DeliveryGlyph from './DeliveryGlyph.astro';
 import { scenarioQuestions } from '../data/scenario-check';
 import { featuredCases } from '../data/featured-cases';
 ---
@@ -19,12 +21,12 @@ import { featuredCases } from '../data/featured-cases';
         <div class="scenario-stage">
           {scenarioQuestions.map((question,index)=>(
             <div class="scenario-step" data-scenario-step={index} hidden={index!==0}>
-              <h3 tabindex="-1" data-scenario-heading>{question.title}</h3>
+              <div class="question-header"><span class="question-number" aria-hidden="true">{String(index+1).padStart(2,'0')}</span><h3 tabindex="-1" data-scenario-heading>{question.title}</h3></div>
               {question.groups.map(group=>(
                 <fieldset><legend class="sr-only">{group.label}</legend>
                   <div class="scenario-options">
                     {group.options.map(([value,label],i)=>(
-                      <label><input type="radio" name={group.name} value={value} required aria-describedby="scenario-hint scenario-keyboard-hint scenario-error"/><span class="option-marker" aria-hidden="true">{String(i+1).padStart(2,'0')}</span><span>{label}</span></label>
+                      <label><input type="radio" name={group.name} value={value} required aria-describedby="scenario-hint scenario-keyboard-hint scenario-error"/><span class:list={['option-marker', {'option-scene':index===0}]} aria-hidden="true">{index===0 ? <TaskIcon kind={value} /> : String(i+1).padStart(2,'0')}</span><span>{label}</span></label>
                     ))}
                   </div>
                 </fieldset>
@@ -37,16 +39,17 @@ import { featuredCases } from '../data/featured-cases';
         <p class="sr-only" id="scenario-keyboard-hint">键盘操作：方向键选择，按回车或空格确认并继续。</p>
       </form>
       <div class="scenario-result" data-scenario-result hidden>
-        <span class="scenario-eyebrow">你的场景 · 建议从这里开始</span>
+        <span class="scenario-eyebrow">建议起点</span>
         <h3 tabindex="-1" data-scenario-title></h3>
-        <div class="scenario-signals" data-scenario-signals></div>
+        <div class="scenario-next"><span>第一步</span><p data-scenario-next-action></p></div>
+        <template data-flow-glyph="0"><DeliveryGlyph kind="input" /></template>
+        <template data-flow-glyph="1"><DeliveryGlyph kind="ai" /></template>
+        <template data-flow-glyph="2"><DeliveryGlyph kind="check" /></template>
         <ol class="scenario-flow" aria-label="可以尝试的协作方式" data-scenario-flow></ol>
-        <div class="scenario-next"><span>先做一件事</span><p data-scenario-next-action></p></div>
-        <details class="scenario-details"><summary>为什么这样建议？</summary><p data-scenario-reason></p><p><strong>由你确认：</strong><span data-scenario-human></span></p><dl data-scenario-answers></dl></details>
-        <div class="scenario-related" data-scenario-related><span>参考案例</span>{featuredCases.map(item=><a href={'#case-'+item.id} data-scenario-case={item.id} data-case-detail-trigger={item.id} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false" hidden>{item.title} →</a>)}</div>
         <div class="scenario-result-actions"><a href="#contact" class="btn btn-primary">聊聊这个场景</a><button type="button" class="text-button" data-copy-assessment>复制结果</button></div>
         <p class="scenario-status copy-status" data-assessment-copy-status role="status"></p>
         <textarea data-assessment-copy-fallback hidden readonly aria-label="自测结果，可选中复制" rows="6"></textarea>
+        <details class="scenario-details"><summary>查看判断依据</summary><div class="scenario-signals" data-scenario-signals></div><p data-scenario-reason></p><p><strong>由你确认：</strong><span data-scenario-human></span></p><div class="scenario-related" data-scenario-related><span>参考案例</span>{featuredCases.map(item=><a href={'#case-'+item.id} data-scenario-case={item.id} data-case-detail-trigger={item.id} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false" hidden>{item.title} →</a>)}</div><dl data-scenario-answers></dl></details>
         <div class="scenario-edit"><button type="button" class="text-button" data-scenario-edit>修改回答</button><button type="button" class="text-button" data-scenario-reset>重新开始</button><span>仅作起点参考，需实际试做。</span></div>
       </div>
       <noscript><p>从重复、耗时、结果能核对的工作开始，例如报表汇总或资料整理。</p><a href="#contact" class="btn btn-primary">聊聊你的场景</a></noscript>
@@ -87,19 +90,21 @@ import { featuredCases } from '../data/featured-cases';
   .text-button:hover { color:var(--accent-hover); }
   .text-button:disabled { opacity:.35; cursor:default; }
   .scenario-eyebrow { display:block; font-size:12px; color:var(--accent); margin-bottom:12px; }
-  .scenario-result h3 { margin-bottom:16px; }
+  .scenario-result h3 { font-size:clamp(24px,3.5vw,34px); line-height:1.4; margin-bottom:14px; max-width:24ch; }
   .scenario-signals { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
   .scenario-signals:empty { display:none; }
-  .scenario-signals :global(span) { padding:4px 10px; border:1px solid var(--border-light); border-radius:4px; font-size:11px; color:var(--text-secondary); }
+  .scenario-signals :global(span) { padding:4px 10px; border:1px solid var(--border-light); border-radius:4px; font-size:12px; color:var(--text-secondary); }
   .scenario-signals :global([data-state="attention"]) { border-color:#6e582b; color:var(--accent-hover); }
-  .scenario-flow { list-style:none; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin:0 0 24px; }
-  .scenario-flow :global(li) { position:relative; padding:16px 12px; border-top:1px solid var(--border-light); background:#ffffff02; font-size:13px; }
+  .scenario-flow { list-style:none; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin:24px 0 28px; padding:20px 0; border-block:1px solid var(--border); }
+  .scenario-flow :global(li) { position:relative; padding:0 8px; font-size:14px; line-height:1.7; }
   .scenario-flow :global(li:not(:last-child)::after) { content:'→'; position:absolute; right:-14px; top:50%; color:var(--text-muted); }
-  .scenario-flow :global(small) { display:block; color:var(--text-muted); font-size:11px; margin-bottom:8px; }
-  .scenario-flow :global(li:nth-child(2)) { border-color:var(--accent); color:var(--accent-hover); background:var(--accent-subtle); }
-  .scenario-next { display:flex; gap:16px; font-size:14px; line-height:1.8; margin-bottom:12px; }
+  .scenario-flow :global(small) { display:block; color:var(--text-muted); font-size:12px; margin-bottom:8px; }
+  .scenario-flow :global(li:nth-child(2)) { color:var(--accent-hover); }
+  .scenario-flow :global(li:nth-child(2) small) { color:var(--accent); }
+  .scenario-next { display:flex; gap:12px; font-size:14px; line-height:1.8; color:var(--text-secondary); }
   .scenario-next > span { color:var(--accent); flex-shrink:0; font-size:12px; padding-top:2px; }
-  .scenario-details { font-size:12px; color:var(--text-muted); margin-bottom:16px; }
+  .scenario-details { font-size:12px; color:var(--text-secondary); margin-top:20px; }
+  .scenario-details[open] { padding-bottom:12px; }
   summary { cursor:pointer; padding:10px 0; min-height:44px; }
   .scenario-details p { color:var(--text-secondary); line-height:1.8; margin-bottom:8px; }
   .scenario-details :global(dl) { display:grid; grid-template-columns:90px 1fr; gap:6px 12px; border-top:1px solid var(--border); padding-top:12px; }
@@ -108,15 +113,15 @@ import { featuredCases } from '../data/featured-cases';
   .scenario-related a { padding:8px 0; }
   .scenario-result-actions { display:flex; align-items:center; gap:24px; }
   .copy-status:empty { display:none; }
-  .scenario-edit { margin-top:16px; padding-top:10px; border-top:1px solid var(--border); display:flex; align-items:center; flex-wrap:wrap; gap:6px 20px; }
-  .scenario-edit > span { margin-left:auto; font-size:11px; color:var(--text-muted); }
+  .scenario-edit { margin-top:4px; padding-top:6px; border-top:1px solid var(--border); display:flex; align-items:center; flex-wrap:wrap; gap:0 20px; }
+  .scenario-edit > span { margin-left:auto; font-size:12px; color:var(--text-muted); }
   textarea { width:100%; padding:12px; color:var(--text-primary); background:var(--bg); border:1px solid var(--border-light); border-radius:6px; font:inherit; font-size:13px; }
   @media (hover:hover) and (pointer:fine) { .scenario-options label:hover { border-color:#8a713f; background:#c9a55c08; } }
   @media (max-width:640px) {
     .scenario-card { padding:22px 20px; border-radius:12px; }
-    .scenario-topline { font-size:11px; }
+    .scenario-topline { font-size:12px; }
     .scenario-steps { gap:10px; margin:16px 0 24px; }
-    .scenario-steps button { font-size:11px; text-align:center; }
+    .scenario-steps button { font-size:12px; text-align:center; }
     .scenario-steps button span { display:none; }
     h3 { font-size:21px; margin-bottom:20px; }
     .scenario-stage { min-height:252px; }
@@ -126,18 +131,62 @@ import { featuredCases } from '../data/featured-cases';
     .scenario-step:not([data-scenario-step="0"]) .scenario-options label { min-height:48px; }
     .option-marker { width:22px; height:22px; }
     .scenario-signals { gap:6px; margin-bottom:20px; }
-    .scenario-signals :global(span) { font-size:10px; padding:3px 6px; }
-    .scenario-flow { gap:14px; margin-bottom:20px; }
-    .scenario-flow :global(li) { padding:12px 8px; font-size:12px; }
+    .scenario-signals :global(span) { font-size:12px; padding:3px 6px; }
+    .scenario-flow { gap:14px; margin:20px 0; padding:16px 0; }
+    .scenario-flow :global(li) { padding:0; font-size:14px; }
     .scenario-flow :global(li:not(:last-child)::after) { right:-12px; }
     .scenario-next { flex-direction:column; gap:4px; }
     .scenario-result-actions { gap:20px; }
     .scenario-result-actions .btn { flex:1; padding-inline:16px; }
     .scenario-edit > span { width:100%; margin-left:0; }
+    .scenario-details { margin-top:14px; }
+  }
+  @media (max-width:380px) {
+    .scenario-flow { grid-template-columns:1fr; gap:14px; }
+    .scenario-flow :global(li) { display:grid; grid-template-columns:64px minmax(0,1fr); align-items:baseline; gap:12px; }
+    .scenario-flow :global(small) { margin-bottom:0; }
+    .scenario-flow :global(li:not(:last-child)::after) { content:none; }
+  }
+
+  .scenario-flow { gap:18px; border:0; padding:0; }
+  .scenario-flow :global(li) { position:relative; display:flex; flex-direction:column; justify-content:flex-end; min-height:210px; border:1px solid #c9a55c26; border-radius:10px; background:radial-gradient(ellipse at 50% 20%,#c9a55c13,transparent 75%),#191917; padding:0; }
+  .scenario-flow :global(.flow-illustration) { width:100px; margin:0 auto; }
+  .scenario-flow :global(.flow-caption) { padding:6px 16px 18px; }
+  .scenario-flow :global(small) { font-size:14px; color:#b8b3a8; margin-bottom:7px; }
+  .scenario-flow :global(strong) { display:block; color:#e7e2d7; font-size:16px; line-height:1.6; font-weight:500; }
+  .scenario-flow :global(li:nth-child(2)) { background:radial-gradient(ellipse at 50% 20%,#c9a55c20,transparent 75%),#222018; border-color:#c9a55c66; }
+  .scenario-flow :global(li:nth-child(2) strong) { color:#ead7a5; }
+  .scenario-flow :global(li:not(:last-child)::after) { right:-17px; top:50%; }
+  @media(max-width:600px) {
+    .scenario-flow { grid-template-columns:1fr; gap:12px; }
+    .scenario-flow :global(li) { display:grid; grid-template-columns:76px minmax(0,1fr); align-items:center; min-height:108px; gap:4px; }
+    .scenario-flow :global(.flow-illustration) { width:76px; }
+    .scenario-flow :global(.flow-caption) { padding:16px 14px 16px 0; }
+    .scenario-flow :global(small) { margin-bottom:5px; }
+    .scenario-flow :global(li:not(:last-child)::after) { content:none; }
+  }
+
+
+  .scenario-card { max-width:960px;background:radial-gradient(ellipse at top right,#c9a55c0d,transparent 55%),#141413; }
+  .question-header { display:flex;gap:18px;align-items:center;margin-bottom:24px; }.question-header h3 { margin:0; }
+  .question-number { font-size:48px;font-weight:300;line-height:1;color:#c9a55c66;font-family:var(--font-mono); }
+  .scenario-step[data-scenario-step="0"] .scenario-options { grid-template-columns:repeat(3,minmax(0,1fr));gap:14px; }
+  .scenario-step[data-scenario-step="0"] .scenario-options label { flex-direction:column;align-items:flex-start;gap:18px;padding:22px;min-height:140px;background:linear-gradient(140deg,#c9a55c09,transparent),#191917;font-size:16px;border-radius:12px; }
+  .option-scene { width:44px;height:44px;border:0;background:none !important; }
+  .scenario-step:not([data-scenario-step="0"]) .scenario-options label { padding:20px;min-height:80px;font-size:16px; }
+  .scenario-options label:has(:checked) { box-shadow:inset 0 0 0 1px #c9a55c70; }
+  .scenario-topline,.scenario-actions > span,.scenario-details { font-size:14px; }
+  @media(max-width:640px) {
+   .scenario-card { padding:22px 18px; }.question-header { gap:12px; }.question-number { font-size:36px; }
+   .scenario-topline { font-size:12px; }.scenario-actions > span { font-size:13px; }
+   .scenario-step[data-scenario-step="0"] .scenario-options { grid-template-columns:repeat(2,minmax(0,1fr));gap:10px; }
+   .scenario-step[data-scenario-step="0"] .scenario-options label { padding:16px;gap:10px;min-height:118px;font-size:15px; }
+   .scenario-step:not([data-scenario-step="0"]) .scenario-options label { padding:16px;min-height:64px;font-size:15px; }
   }
 </style>
 
 <script>
+  import { resultFlowLabels } from '../data/visual-copy';
   import { scenarioQuestions, assessScenario, scenarioSummary, type ScenarioAnswers } from '../data/scenario-check';
   const form = document.querySelector<HTMLFormElement>('[data-scenario-form]');
   const panel = document.querySelector<HTMLElement>('[data-scenario-result]');
@@ -201,7 +250,15 @@ import { featuredCases } from '../data/featured-cases';
       const signals=panel.querySelector('[data-scenario-signals]')!;signals.replaceChildren();
       result.signals.forEach(signal=>{const el=document.createElement('span');el.textContent=signal.label+' · '+signal.value;el.dataset.state=signal.state;signals.append(el);});
       const flow=panel.querySelector('[data-scenario-flow]')!;flow.replaceChildren();
-      result.flow.forEach((text,i)=>{const li=document.createElement('li');const label=document.createElement('small');label.textContent=['你提供','AI 帮忙','你确认'][i];li.append(label,document.createTextNode(text));flow.append(li);});
+      result.flow.forEach((text,i)=>{
+        const li=document.createElement('li');
+        const glyph=panel.querySelector<HTMLTemplateElement>(`[data-flow-glyph="${i}"]`)!;
+        const illustration=document.createElement('div');illustration.className='flow-illustration';illustration.append(glyph.content.cloneNode(true));
+        const caption=document.createElement('div');caption.className='flow-caption';
+        const label=document.createElement('small');label.textContent=resultFlowLabels[i];
+        const value=document.createElement('strong');value.textContent=text;
+        caption.append(label,value);li.append(illustration,caption);flow.append(li);
+      });
       // When no concrete task is chosen, use preparation labels rather than implying AI has been assessed.
       if(result.kind==='explore') flow.querySelectorAll('small').forEach((el,i)=>el.textContent=['第一步','第二步','第三步'][i]);
       panel.querySelectorAll<HTMLElement>('[data-scenario-case]').forEach(link=>link.hidden=!result.caseIds.includes(link.dataset.scenarioCase||''));

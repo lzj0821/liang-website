@@ -1,0 +1,35 @@
+---
+interface Props { kind: 'input' | 'plan' | 'tool' | 'support' | 'ai' | 'check'; }
+const { kind } = Astro.props;
+const marks = {
+  input: 'M45 37h22M45 46h16M45 55h20',
+  plan: 'M43 37h8v8h-8zM61 50h8v8h-8zM51 41h14v9',
+  tool: 'M42 37h30v21H42zM50 64h14M57 58v6M48 47l5 4 12-10',
+  support: 'M43 48v-3a14 14 0 0128 0v12h-9M42 46h5v11h-5zM67 46h5v11h-5z',
+  ai: 'M57 30v9m0 18v9M39 48h9m18 0h9M57 39l9 9-9 9-9-9z',
+  check: 'M43 48l9 9 19-22',
+};
+---
+<svg viewBox="0 0 114 96" fill="none" aria-hidden="true" class="delivery-glyph">
+  {kind==='input' ? <g>
+    <path d="M18 21h45l12 12v48H18z" fill="#26251f" stroke="#bda36a"/><path d="M63 21v14h12M27 42h38M27 52h38M27 62h38M39 42v28M53 42v28" stroke="#aa9a71"/>
+    <rect x="68" y="46" width="31" height="35" rx="4" fill="#363125" stroke="#d0b576"/><path d="M75 56h17M75 64h17M75 72h10" stroke="#e0cb99"/>
+  </g> : kind==='ai' ? <g>
+    <rect x="14" y="18" width="86" height="59" rx="6" fill="#23231e" stroke="#c9a55c"/><path d="M14 29h86M35 87h44M57 77v10" stroke="#a68d57"/>
+    <rect x="23" y="42" width="16" height="20" rx="3" fill="#3d3828" stroke="#c9a55c"/><rect x="49" y="42" width="16" height="20" rx="3" fill="#c9a55c33" stroke="#c9a55c"/><rect x="75" y="42" width="16" height="20" rx="3" fill="#3d3828" stroke="#c9a55c"/>
+    <path d="M39 52h10M65 52h10M28 48h6M28 53h6M80 52l3 3 5-7" stroke="#f0d9a7" stroke-width="1.5"/>
+  </g> : kind==='check' ? <g>
+    <rect x="23" y="20" width="58" height="64" rx="5" fill="#28271f" stroke="#c9a55c"/><rect x="39" y="15" width="26" height="10" rx="3" fill="#a58c55"/>
+    <path d="m32 39 3 3 6-7m-9 19 3 3 6-7m-9 19 3 3 6-7M48 39h23M48 54h23M48 69h13" stroke="#d5c195" stroke-width="1.7"/>
+    <circle cx="82" cy="72" r="15" fill="#c9a55c"/><path d="m75 72 5 5 9-11" stroke="#171713" stroke-width="2.5"/>
+  </g> : <g>
+  <ellipse cx="57" cy="82" rx="37" ry="6" fill="#000" opacity=".3" />
+  <path d="M31 25l47-6 7 49-47 7z" fill="#c9a55c" opacity=".09" stroke="#c9a55c" />
+  <rect x="30" y="20" width="54" height="53" rx="10" fill="#20201c" stroke="#c9a55c" stroke-opacity=".55" />
+  <path d="M40 21h34" stroke="#f1dcaa" stroke-opacity=".65" />
+  <path d={marks[kind]} stroke="#e0c58a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="81" cy="69" r="10" fill="#c9a55c" />
+  <path d="M77 69l3 3 5-6" stroke="#171713" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </g>}
+</svg>
+<style>.delivery-glyph { display:block; width:100%; height:auto; overflow:visible; }</style>

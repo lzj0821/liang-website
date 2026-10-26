@@ -1,0 +1,17 @@
+---
+import articles from '../data/articles.json';
+const order = ['ai-project-priorities','agent-onboarding','customer-followup'];
+const selected = order.map(slug=>articles.find(article=>article.slug===slug)!);
+---
+<nav class="featured-articles" aria-label="精选实战笔记">
+  {selected.map((article,index)=>(
+    <a href={'/articles/'+article.slug+'/'}><span class="article-number" aria-hidden="true">{String(index+1).padStart(2,'0')}</span><span>{article.title}</span><span aria-hidden="true">↗</span></a>
+  ))}
+</nav>
+<style>
+  .featured-articles { margin:4px 0 24px; border-top:1px solid var(--border-light); }
+  a { display:grid; grid-template-columns:20px minmax(0,1fr) 16px; align-items:center; gap:12px; min-height:54px; padding:13px 0; border-bottom:1px solid var(--border); color:var(--text-secondary); font-size:13px; line-height:1.7; }
+  a:hover, a:focus-visible { color:var(--accent-hover); }
+  .article-number { color:var(--text-muted); font-family:var(--font-mono); font-size:10px; }
+  a > span:last-child { color:var(--accent); }
+</style>

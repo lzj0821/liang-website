@@ -1,9 +1,21 @@
 ---
-import { Image } from 'astro:assets';
-import training from '../assets/refresh/training.jpg';
+import { Image, getImage } from 'astro:assets';
+import training from '../assets/evidence-20261026/training-refined.jpg';
+import SharingRecord from './SharingRecord.astro';
 import trainingContent from '../assets/refresh/training-content-anonymized.png';
 import trainingAgent from '../assets/refresh/training-agent-anonymized.png';
+import TaskIcon from './TaskIcon.astro';
+import { selfBuiltProducts } from '../data/self-built-products';
+import VisualStory from './VisualStory.astro';
+import { serviceCopy } from '../data/visual-copy';
 import ServiceExample from './ServiceExample.astro';
+import AgentExamples from './AgentExamples.astro';
+import enterpriseVisual from '../assets/visual-scenes-20261024/enterprise.png';
+import individualVisual from '../assets/visual-scenes-20261024/individual.png';
+const [trainingContentFull, trainingAgentFull] = await Promise.all([
+  getImage({ src: trainingContent, width: 1080, format: 'webp' }),
+  getImage({ src: trainingAgent, width: 1080, format: 'webp' }),
+]);
 ---
 
 <section class="section services" id="services" data-story-section="services">
@@ -12,7 +24,7 @@ import ServiceExample from './ServiceExample.astro';
       <span class="section-label">服务方案</span>
       <h2 class="section-title">标准化 AI 交付</h2>
       <p class="section-desc">
-        两类服务，按实际任务选择；可从一次培训或一个流程开始。
+        从一次培训、一个流程，或一款小程序开始。
       </p>
     </div>
 
@@ -24,46 +36,14 @@ import ServiceExample from './ServiceExample.astro';
 
     <div class="services-grid">
       <div class="service-card card service-card-featured reveal" data-service-story="0">
-        <div class="icon-box service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="4" y="3" width="16" height="18" rx="2"/>
-            <path d="M9 21v-5h6v5M8 7h2m4 0h2M8 11h2m4 0h2"/>
-          </svg></div>
-        <div class="service-tag">面向企业</div>
-        <h3 class="service-title">企业 AI 落地</h3>
-        <p class="service-desc">让 AI 进入日常业务，帮助团队减少重复操作与沟通成本。</p>
-        <dl class="service-capabilities">
-          <div><dt>业务梳理</dt><dd>找出耗时环节，判断哪些值得用 AI。</dd></div>
-          <div><dt>流程与工具</dt><dd>按需搭建工作流、智能体或内部工具。</dd></div>
-          <div><dt>内部培训</dt><dd>围绕岗位实操，让团队会用、能核对。</dd></div>
-        </dl>
-        <div class="service-details">
-          <div class="service-detail"><span class="service-detail-label">常见场景</span><span class="service-detail-value">报表汇总 / 客户跟进 / 内部资料问答</span></div>
-          <div class="service-detail"><span class="service-detail-label">按需交付</span><span class="service-deliverables"><span>落地方案</span><span>工具与流程</span><span>培训与说明</span></span></div>
-        </div>
+        <VisualStory variant="service" image={enterpriseVisual} title={serviceCopy.enterprise.title} eyebrow={serviceCopy.enterprise.audience} points={serviceCopy.enterprise.points} />
         <ServiceExample title="一个周报工作流" input="原始报表、汇总口径和一份目标样表。" output="汇总工作流、核对清单与使用培训。" check="用约定样本核对数字、缺项与重复记录。" />
-        <a class="service-case-link" href="#case-automation" data-case-detail-trigger="automation" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看活动报表与录入案例 →</a>
+        <a class="service-case-link" href="#case-automation" data-case-detail-trigger="automation" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看报表与录入案例 →</a>
         <a href="#contact" class="btn btn-primary service-btn">聊聊企业需求</a>
       </div>
       <div class="service-card card reveal" data-service-story="1">
-        <div class="icon-box service-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="8" y="2" width="8" height="6" rx="1"/>
-            <rect x="2" y="16" width="8" height="6" rx="1"/>
-            <rect x="14" y="16" width="8" height="6" rx="1"/>
-            <path d="M12 8v4M6 16v-4h12v4"/>
-          </svg></div>
-        <div class="service-tag">面向个人与小团队</div>
-        <h3 class="service-title">智能体与工作流定制</h3>
-        <p class="service-desc">把反复做的事情交给助手与流程，留出时间处理更重要的工作。</p>
-        <dl class="service-capabilities">
-          <div><dt>智能体搭建</dt><dd>围绕你的资料与任务，配置专属助手。</dd></div>
-          <div><dt>工作流定制</dt><dd>串起收集、整理、生成与输出步骤。</dd></div>
-          <div><dt>使用与调整</dt><dd>接入常用工具，保留关键步骤的核对。</dd></div>
-        </dl>
-        <div class="service-details">
-          <div class="service-detail"><span class="service-detail-label">常见场景</span><span class="service-detail-value">资料整理 / 内容制作 / 重复填表</span></div>
-          <div class="service-detail"><span class="service-detail-label">按需交付</span><span class="service-deliverables"><span>智能体或工作流</span><span>配置与模板</span><span>使用说明</span></span></div>
-        </div>
-        <ServiceExample title="一个内容处理流程" input="现有素材、重复操作步骤和参考成稿。" output="按需定制的智能体或工作流，以及使用说明。" check="用约定样本走通处理步骤，核对输出是否符合要求。" />
+        <VisualStory variant="service" image={individualVisual} title={serviceCopy.individual.title} eyebrow={serviceCopy.individual.audience} points={serviceCopy.individual.points} />
+        <AgentExamples />
         <a class="service-case-link" href="#case-workbench" data-case-detail-trigger="workbench" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看内容工作流案例 →</a>
         <a href="#contact" class="btn btn-outline service-btn">聊聊我的重复工作</a>
       </div>
@@ -71,43 +51,68 @@ import ServiceExample from './ServiceExample.astro';
     </div>
 
 
+    <div class="miniapp-service card reveal">
+      <div class="miniapp-service-copy">
+        <span class="service-tag">产品与工具开发</span>
+        <h3>小程序开发</h3>
+        <p>把一个具体需求，做成微信里能用的工具。</p>
+        <span class="miniapp-scope">需求与功能 · 开发与测试 · 使用交接</span>
+      </div>
+      <div class="miniapp-products" aria-label="小程序作品">
+        {selfBuiltProducts.map((product,i) => <button type="button" data-case-detail-trigger="jutu" data-product-open={product.id} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">
+          <TaskIcon kind={['images','research','content'][i]} /><strong>{product.shortName}</strong><span>{['家居出图','模型动态','图文转播客'][i]}</span>
+        </button>)}
+      </div>
+      <div class="miniapp-service-actions">
+        <button type="button" class="service-case-link" data-case-detail-trigger="jutu" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">查看小程序作品 →</button>
+        <a href="#contact" class="btn btn-outline">聊聊小程序需求</a>
+      </div>
+    </div>
+
     <div class="training-proof card reveal" id="training-proof">
       <figure>
         <Image src={training} alt="Liangzhenjie 在线下分享 AI 应用与企业落地方法" width={700} loading="lazy" />
-        <figcaption>现场分享：从会用 AI，到真正用出结果</figcaption>
+        <figcaption>线下分享：从会用 AI，到真正用出结果</figcaption>
       </figure>
       <div class="training-proof-content">
-        <span class="service-tag">线下分享与团队实操</span>
+        <span class="service-tag">线下分享与企业内训</span>
         <h3 class="service-title">回到工作中，还能继续用</h3>
         <p class="service-desc">围绕熟悉的任务练习，带走可复用的模板与方法。</p>
         <div class="training-topics"><span>资料查找</span><span>内容草拟</span><span>报表整理</span></div>
         <a href="#contact" class="btn btn-outline">沟通培训需求</a>
       </div>
-      <div class="training-gallery" aria-label="更多线下分享照片">
+      <div class="training-gallery" aria-label="企业内训照片">
         <figure>
-          <Image src={trainingContent} alt="内容与电商团队 AI 实战入门分享课件，企业信息已遮挡" width={480} loading="lazy" />
-          <figcaption>内容与电商团队分享</figcaption>
+          <a class="image-preview" href={trainingContentFull.src} data-image-open data-image-caption="企业内训 · 内容与电商 AI 实战" aria-label="放大企业内训 · 内容与电商 AI 实战照片" aria-haspopup="dialog" aria-controls="imageLightbox">
+            <Image src={trainingContent} alt="内容与电商团队 AI 实战企业内训课件" width={480} loading="lazy" />
+          </a>
+          <figcaption>企业内训 · 内容与电商 AI 实战</figcaption>
         </figure>
         <figure>
-          <Image src={trainingAgent} alt="Agent 落地主题分享的会场与课件，企业信息已遮挡" width={480} loading="lazy" />
-          <figcaption>Agent 落地主题分享</figcaption>
+          <a class="image-preview" href={trainingAgentFull.src} data-image-open data-image-caption="企业内训 · Agent 落地应用" aria-label="放大 企业内训 · Agent 落地应用照片" aria-haspopup="dialog" aria-controls="imageLightbox">
+            <Image src={trainingAgent} alt="企业内训 · Agent 落地应用的会场与课件" width={480} loading="lazy" />
+          </a>
+          <figcaption>企业内训 · Agent 落地应用</figcaption>
         </figure>
-        <p class="training-gallery-note">企业信息已做匿名处理</p>
       </div>
+      <SharingRecord />
     </div>
   </div>
 </section>
 
 <style>
-  .service-capabilities { display: grid; gap: 12px; margin: 0; padding: 4px 0; }
-  .service-capabilities > div { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; align-items: baseline; }
-  .service-capabilities dt { color: var(--accent); font-size: 13px; font-weight: 600; }
-  .service-capabilities dd { margin: 0; color: var(--text-secondary); font-size: 13px; line-height: 1.8; }
-  @media (max-width: 380px) {
-    .service-capabilities > div { grid-template-columns: 72px minmax(0, 1fr); gap: 8px; }
-  }
-  .service-deliverables { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
-  .service-deliverables > span { padding: 3px 7px; border-radius: 4px; background: var(--accent-subtle); color: var(--text-secondary); font-size: 12px; }
+  .service-card > :global(.service-example), .service-card > :global(.examples-trigger) { margin-inline:14px; width:calc(100% - 28px); }
+  .service-card > .service-case-link { margin-inline:14px; min-height:44px; display:flex; align-items:center; }
+  .service-card > .service-btn { width:calc(100% - 28px); margin-inline:14px; margin-bottom:14px; }
+
+  .miniapp-service { margin-top:24px; padding:28px 32px; display:flex; justify-content:space-between; align-items:center; gap:24px; background:linear-gradient(110deg,#c9a55c0b,transparent 65%),var(--bg-card); }
+  .miniapp-service h3 { font-size:24px; margin:8px 0; }
+  .miniapp-service p { color:var(--text-secondary); font-size:14px; line-height:1.8; }
+  .miniapp-scope { display:block; margin-top:12px; color:var(--text-muted); font-size:12px; line-height:1.8; }
+  .miniapp-service-actions { display:flex; flex-direction:column; align-items:flex-start; gap:12px; flex-shrink:0; }
+  .miniapp-service-actions button { background:none; border:0; font:inherit; font-size:13px; text-align:left; cursor:pointer; min-height:44px; }
+  .miniapp-service-actions .btn { font-size:13px; padding:14px 24px; }
+  @media(max-width:768px) { .miniapp-service { flex-direction:column; align-items:stretch; padding:24px; max-width:480px; margin-inline:auto; } .miniapp-service-actions { align-items:stretch; } }
   .service-case-link { color: var(--accent); font-size: 13px; line-height: 1.7; padding: 8px 0; text-underline-offset: 4px; }
   .service-options { margin-top: 24px; color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
   .training-topics { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--text-secondary); font-size: 13px; }
@@ -125,8 +130,7 @@ import ServiceExample from './ServiceExample.astro';
   .training-proof-content .btn { margin-top: 4px; padding: 12px 20px; font-size: 13px; }
   .training-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-width: 0; }
   .training-gallery img { aspect-ratio: 3 / 4; object-fit: cover; }
-  .training-gallery figcaption { margin-top: 8px; font-size: 11px; line-height: 1.6; }
-  .training-gallery-note { grid-column: 1 / -1; margin: 0; color: var(--text-muted); font-size: 11px; }
+  .training-gallery figcaption { margin-top: 10px; font-size: 12px; line-height: 1.6; }
   @media (min-width: 769px) and (max-width: 1024px) {
     .training-proof { grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr); }
     .training-proof > figure { grid-column: 1; grid-row: 1; }
@@ -210,7 +214,8 @@ import ServiceExample from './ServiceExample.astro';
   }
 
   .service-card {
-    padding: 28px 24px;
+    min-width: 0;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -287,11 +292,11 @@ import ServiceExample from './ServiceExample.astro';
     display: flex;
     align-items: center;
     gap: 8px;
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: 12px;
     color: var(--accent);
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
   }
 
   .service-tag::before {
@@ -303,9 +308,10 @@ import ServiceExample from './ServiceExample.astro';
   }
 
   .service-title {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.025em;
+    line-height: 1.4;
   }
 
   .service-desc {
@@ -314,39 +320,12 @@ import ServiceExample from './ServiceExample.astro';
     line-height: 1.7;
   }
 
-  .service-details {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 20px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
 
-  .service-detail {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
-  }
 
-  .service-detail-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
 
-  .service-detail-value {
-    font-size: 13px;
-    color: var(--text-secondary);
-    text-align: right;
-  }
 
   .service-btn {
+    margin-top: auto;
     width: 100%;
     justify-content: center;
     margin-top: auto;
@@ -362,7 +341,7 @@ import ServiceExample from './ServiceExample.astro';
     }
 
     .service-card {
-      padding: 32px 24px;
+      padding: 12px;
     }
 
     .service-card:nth-child(1),
@@ -379,21 +358,16 @@ import ServiceExample from './ServiceExample.astro';
     }
 
     .service-card {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: 44px minmax(0, 1fr);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
       gap: 10px;
       transform: translateY(14px);
       min-height: 0;
       margin-top: 0;
     }
 
-    .service-icon { width: 44px; height: 44px; }
-    .service-icon svg { width: 26px; height: 26px; }
-    .service-card > .service-tag { align-self: center; }
-    .service-card > :not(.service-icon):not(.service-tag) { grid-column: 1 / -1; }
-    .service-card > :global(.service-example) { grid-column: 1 / -1; }
-    .service-details { padding: 12px 0; gap: 10px; }
+    .service-card > .service-tag { align-self: flex-start; }
     .training-proof { padding: 20px; gap: 16px; }
 
     .service-card:nth-child(1),
@@ -420,6 +394,15 @@ import ServiceExample from './ServiceExample.astro';
       transform: none;
     }
   }
+
+  .miniapp-service { display:grid;grid-template-columns:1fr 1.2fr;gap:24px 32px;padding:32px; }
+  .miniapp-service h3 { font-size:28px; }.miniapp-service p,.miniapp-scope { font-size:14px; }
+  .miniapp-products { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;min-width:0; }
+  .miniapp-products button { min-width:0;padding:20px 10px;display:flex;align-items:center;flex-direction:column;gap:12px;border:1px solid #c9a55c26;border-radius:12px;background:linear-gradient(155deg,#c9a55c0b,#151513);color:var(--text-primary);font:inherit;cursor:pointer; }
+  .miniapp-products strong { font-size:15px;font-weight:500; }.miniapp-products span { font-size:13px;color:var(--text-secondary); }
+  .miniapp-products button:hover { border-color:var(--accent); }
+  .miniapp-service-actions { grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:18px; }
+  @media(max-width:768px) { .miniapp-service { grid-template-columns:1fr;padding:22px;gap:22px; } .miniapp-service-actions { flex-direction:column;align-items:stretch;gap:8px; } .miniapp-products button { padding:16px 4px;gap:10px; } .miniapp-products strong { font-size:14px; } .miniapp-products span { font-size:12px; } }
 </style>
 
 <script>

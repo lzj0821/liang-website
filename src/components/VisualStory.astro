@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+interface Props {
+  image: ImageMetadata;
+  title: string;
+  eyebrow?: string;
+  line?: string;
+  points?: readonly string[];
+  variant?: 'ability' | 'service';
+}
+const { image, title, eyebrow, line, points, variant = 'ability' } = Astro.props;
+---
+<figure class:list={['visual-story', `visual-story-${variant}`]}>
+  <Image src={image} alt="" width={900} sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 600px" loading="lazy" />
+  <figcaption>
+    {eyebrow && <span class="visual-eyebrow">{eyebrow}</span>}
+    <h3>{title}</h3>
+    {line && <p>{line}</p>}
+    {points && <ul>{points.map(point => <li>{point}</li>)}</ul>}
+  </figcaption>
+</figure>
+<style>
+  .visual-story { position:relative; isolation:isolate; overflow:hidden; margin:0; width:100%; min-width:0; border-radius:10px; background:#141413; aspect-ratio:1.25; min-height:270px; }
+  .visual-story img { position:absolute; z-index:-2; bottom:0; left:0; width:100%; height:auto; display:block; }
+  .visual-story::after { content:''; position:absolute; z-index:-1; inset:0; background:linear-gradient(180deg,#141413 0%,#141413a0 16%,#14141320 34%,transparent 45%); pointer-events:none; }
+  figcaption { position:relative; padding:24px; }
+  h3 { color:var(--text-primary); font-family:var(--font-body); font-size:26px; font-weight:650; line-height:1.35; letter-spacing:-.03em; }
+  p { margin-top:9px; color:#c3bfb5; font-size:15px; line-height:1.6; }
+  .visual-eyebrow { display:block; margin-bottom:12px; color:#d5ba7c; font-size:14px; line-height:1.5; }
+  ul { display:flex; flex-wrap:wrap; gap:7px 16px; margin:13px 0 0; padding:0; list-style:none; }
+  li { color:#ded6c5; font-size:15px; line-height:1.6; white-space:nowrap; }
+  li::before { content:'·'; margin-right:7px; color:var(--accent); }
+  .visual-story-service { aspect-ratio:1.45; min-height:300px; }
+  .visual-story-service h3 { font-size:30px; }
+  @media(max-width:768px) {
+    figcaption { padding:20px; }
+    .visual-story { min-height:260px; }
+    .visual-story-service { min-height:300px; }
+    h3 { font-size:25px; }
+    .visual-story-service h3 { font-size:26px; }
+    p,li { font-size:15px; }
+    ul { gap:6px 12px; }
+  }
+  @media(max-width:360px) {
+    figcaption { padding:18px; }
+    .visual-story-service h3 { font-size:24px; }
+    ul { max-width:210px; }
+  }
+</style>

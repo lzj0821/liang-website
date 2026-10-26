@@ -1,368 +1,74 @@
 ---
-// Process Section — Service workflow timeline
+import WorkScene from './WorkScene.astro';
+import { processCopy } from '../data/visual-copy';
 ---
-
 <section class="section process" id="process" data-story-section="process">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">合作流程</span>
       <h2 class="section-title">从咨询到落地，每一步都清晰</h2>
-      <p class="section-desc">
-        先确定要解决的问题，再按约定的节点推进。
-      </p>
     </div>
-
     <div class="process-timeline">
-      <!-- Step 1 -->
-      <div class="process-step reveal" data-process-step="0">
-        <div class="process-number">01</div>
-        <div class="process-connector"></div>
-        <div class="process-card card">
-          <div class="icon-box process-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            </svg>
-          </div>
-          <h3 class="process-title">需求沟通</h3>
-          <p class="process-desc">
-            梳理现有做法，选出值得先做的一项任务。
-          </p>
-          <p class="process-output">拿到：需求清单</p>
-          <div class="process-meta">
-            <span class="process-time">约 30 分钟</span>
-            <span class="process-cost">免费</span>
-          </div>
-        </div>
-      </div>
+      {processCopy.map((step,i) => (
+        <div class="process-step reveal" data-process-step={i}>
+          <div class="process-number">{String(i+1).padStart(2,'0')}</div>
+          <div class="process-card card">
+            <figure class="process-visual">
 
-      <!-- Step 2 -->
-      <div class="process-step reveal reveal-delay-1" data-process-step="1">
-        <div class="process-number">02</div>
-        <div class="process-connector"></div>
-        <div class="process-card card">
-          <div class="icon-box process-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-              <polyline points="10 9 9 9 8 9"/>
-            </svg>
-          </div>
-          <h3 class="process-title">方案定制</h3>
-          <p class="process-desc">
-            明确交付内容、验收方式、周期与报价。
-          </p>
-          <p class="process-output">拿到：实施方案</p>
-          <div class="process-meta">
-            <span class="process-time">1-3 个工作日</span>
-            <span class="process-cost">确认后付定金</span>
+              <figcaption><span>{step.title}</span><h3>{step.output}</h3></figcaption>
+              <WorkScene kind={step.kind} />
+              <p class="process-note">{step.detail}</p>
+            </figure>
+            <div class="process-meta"><span>{step.time}</span><strong>{step.cost}</strong></div>
           </div>
         </div>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="process-step reveal reveal-delay-2" data-process-step="2">
-        <div class="process-number">03</div>
-        <div class="process-connector"></div>
-        <div class="process-card card">
-          <div class="icon-box process-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-              <line x1="8" y1="21" x2="16" y2="21"/>
-              <line x1="12" y1="17" x2="12" y2="21"/>
-            </svg>
-          </div>
-          <h3 class="process-title">开发交付</h3>
-          <p class="process-desc">
-            按节点演示与试用，用真实任务核对结果。
-          </p>
-          <p class="process-output">拿到：工具与培训</p>
-          <div class="process-meta">
-            <span class="process-time">1-4 周</span>
-            <span class="process-cost">按方案报价</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 4 -->
-      <div class="process-step reveal reveal-delay-3" data-process-step="3">
-        <div class="process-number">04</div>
-        <div class="process-connector"></div>
-        <div class="process-card card">
-          <div class="icon-box process-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <path d="m9 12 2 2 4-4"/>
-            </svg>
-          </div>
-          <h3 class="process-title">售后支持</h3>
-          <p class="process-desc">
-            提供答疑与约定范围内的小调整，新增功能另行评估。
-          </p>
-          <p class="process-output">获得：使用支持</p>
-          <div class="process-meta">
-            <span class="process-time">30 天免费</span>
-            <span class="process-cost">后续可续</span>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 </section>
-
 <style>
-  .process-output { color: var(--accent); font-size: 13px; margin-bottom: 18px; }
-  .process-timeline {
-    --process-progress: 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    position: relative;
+  .process-timeline { --process-progress:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
+  .process-step { min-width:0; position:relative; }
+  .process-number { font-family:var(--font-mono); font-size:20px; color:var(--accent); opacity:.6; margin:0 0 14px 4px; }
+  .process-step:not(:last-child) .process-number::after { content:'→'; position:absolute; right:4px; color:var(--text-muted); font-family:var(--font-body); }
+  .process-card { padding:0; overflow:hidden; transition:border-color .3s,box-shadow .3s; }
+  .process-visual { position:relative; margin:0; min-height:210px; background:radial-gradient(ellipse at 70% 70%,#c9a55c12,transparent 70%),#141413; }
+  .process-illustration { position:absolute; width:128px; right:10px; bottom:0; }
+  figcaption { position:relative; padding:22px; }
+  figcaption span { display:block; font-size:14px; color:#b8b3a8; margin-bottom:8px; }
+  h3 { font-size:23px; font-weight:650; color:#ead7a5; letter-spacing:-.025em; }
+  .process-meta { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:6px 12px; padding:16px 18px; border-top:1px solid var(--border); font-size:13px; color:var(--text-secondary); }
+  .process-meta strong { color:var(--accent); font-weight:500; }
+  .process-step.story-current .process-card { border-color:#c9a55c70; box-shadow:0 10px 32px #0003; }
+  .process-step.story-current .process-number,.process-step.story-complete .process-number { opacity:1; }
+  .process-details { max-width:720px; margin:24px auto 0; font-size:14px; color:var(--text-secondary); }
+  summary { cursor:pointer; min-height:44px; padding:12px 0; color:var(--accent); }
+  dl { display:grid; gap:12px; padding:12px 0; }
+  dl > div { display:grid; grid-template-columns:64px minmax(0,1fr); gap:12px; line-height:1.8; }
+  dt { color:var(--text-primary); }
+  @media(max-width:1024px) { .process-timeline { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media(max-width:768px) {
+    .process-timeline { grid-template-columns:1fr; gap:16px; max-width:480px; margin:auto; }
+    .process-step { display:grid; grid-template-columns:28px minmax(0,1fr); gap:10px; }
+    .process-number { font-size:17px; margin:22px 0 0; }
+    .process-step:not(:last-child) .process-number::after { content:''; top:56px; bottom:-12px; left:10px; right:auto; width:1px; background:linear-gradient(#c9a55c60,#c9a55c10); }
+    .process-visual { min-height:132px; }
+    .process-illustration { width:96px; bottom:-3px; right:0; opacity:.8; }
+    figcaption { padding:20px 14px; }
+    h3 { font-size:22px; }
+    .process-meta { font-size:14px; padding:12px 14px; }
+    .process-details { max-width:480px; }
   }
+  @media(max-width:360px) { .process-illustration { width:70px; } h3 { font-size:21px; } }
+  @media(prefers-reduced-motion:reduce) { .process-card { transition:none; } }
 
-  .process-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-  }
-
-  .process-number {
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--accent);
-    font-family: var(--font-mono);
-    margin-bottom: 16px;
-    opacity: 0.4;
-    transition: opacity 0.35s ease, text-shadow 0.35s ease, transform 0.35s var(--ease-out);
-  }
-
-  .process-connector {
-    width: 2px;
-    height: 24px;
-    background: linear-gradient(to bottom, var(--accent), transparent);
-    margin-bottom: 16px;
-  }
-
-  .process-card {
-    text-align: center;
-    padding: 32px 24px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    border-color: rgba(201, 165, 92, 0.08);
-    transform: translateY(12px);
-    transition:
-      transform 0.48s var(--ease-out),
-      border-color 0.35s ease,
-      box-shadow 0.35s ease,
-      background 0.35s ease;
-  }
-
-  .process-step.story-complete .process-number,
-  .process-step.story-current .process-number {
-    opacity: 1;
-  }
-
-  .process-step.story-current .process-number {
-    transform: translateY(-3px);
-    text-shadow: 0 0 22px rgba(201, 165, 92, 0.42);
-  }
-
-  .process-step.story-complete .process-card,
-  .process-step.story-current .process-card {
-    transform: translateY(0);
-    border-color: rgba(201, 165, 92, 0.28);
-  }
-
-  .process-step.story-current .process-card {
-    background:
-      linear-gradient(145deg, rgba(201, 165, 92, 0.06), transparent 45%),
-      var(--bg-card);
-    box-shadow:
-      0 22px 64px rgba(0, 0, 0, 0.34),
-      0 0 28px rgba(201, 165, 92, 0.07);
-  }
-
-  .process-icon {
-    /* Base styles from .icon-box in global.css */
-    margin: 0 auto 20px;
-  }
-
-  .process-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    letter-spacing: -0.01em;
-  }
-
-  .process-desc {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 20px;
-    flex: 1;
-  }
-
-  .process-meta {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-  }
-
-  .process-time,
-  .process-cost {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-  }
-
-  .process-cost {
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  /* Horizontal connector line between steps (desktop) */
-  .process-timeline::before {
-    content: '';
-    position: absolute;
-    top: 38px;
-    left: 12.5%;
-    right: 12.5%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border-light) 10%, var(--border-light) 90%, transparent);
-    z-index: 0;
-  }
-
-  .process-timeline::after {
-    content: '';
-    position: absolute;
-    z-index: 1;
-    top: 38px;
-    left: 12.5%;
-    width: calc(75% * var(--process-progress));
-    height: 1px;
-    background: linear-gradient(90deg, rgba(201, 165, 92, 0.28), var(--accent), #ead38d);
-    box-shadow: 0 0 14px rgba(201, 165, 92, 0.34);
-    transition: width 0.12s linear;
-    pointer-events: none;
-  }
-
-  @media (max-width: 1024px) {
-    .process-timeline {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .process-timeline::before {
-      display: none;
-    }
-
-    .process-timeline::after {
-      display: none;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .process-timeline {
-      grid-template-columns: 1fr;
-      max-width: 480px;
-      margin: 0 auto;
-      padding-left: 22px;
-    }
-
-    .process-timeline::before,
-    .process-timeline::after {
-      display: block;
-      top: 0;
-      bottom: 0;
-      left: 9px;
-      width: 1px;
-      height: 100%;
-      transform-origin: top;
-    }
-
-    .process-timeline::before {
-      background: linear-gradient(180deg, transparent, var(--border-light) 8%, var(--border-light) 92%, transparent);
-    }
-
-    .process-timeline::after {
-      background: linear-gradient(180deg, rgba(201, 165, 92, 0.24), var(--accent), #ead38d);
-      transform: scaleY(var(--process-progress));
-      transition: transform 0.12s linear;
-    }
-
-    .process-step {
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 20px;
-    }
-
-    .process-number {
-      font-size: 24px;
-      margin-bottom: 0;
-      min-width: 40px;
-    }
-
-    .process-connector {
-      display: none;
-    }
-
-    .process-card {
-      text-align: left;
-    }
-
-    .process-icon {
-      margin: 0 0 16px 0;
-    }
-
-    .process-meta {
-      justify-content: flex-start;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .process-step {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .process-number {
-      margin-bottom: 8px;
-    }
-
-    .process-card {
-      text-align: center;
-    }
-
-    .process-meta {
-      justify-content: center;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .process-card,
-    .process-step.story-complete .process-card,
-    .process-step.story-current .process-card {
-      transform: none;
-    }
-  }
-  @media (max-width: 768px) {
-    .process-timeline { padding-left: 0; gap: 16px; }
-    .process-timeline::before, .process-timeline::after { display: none; }
-    .process-step { display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: start; gap: 12px; }
-    .process-number { font-size: 21px; min-width: 0; margin: 18px 0 0; }
-    .process-card { text-align: left; padding: 20px; }
-    .process-icon { display: none; }
-    .process-title { margin-bottom: 8px; font-size: 17px; }
-    .process-desc { margin-bottom: 14px; }
-    .process-meta { justify-content: flex-start; gap: 12px; padding-top: 12px; flex-wrap: wrap; }
-  }
+  .process-card { height:100%;display:flex;flex-direction:column; }
+  .process-visual { flex:1;min-height:0; }
+  figcaption { padding:20px 18px 0; }
+  .process-note { padding:0 18px 20px;font-size:14px;line-height:1.8;color:var(--text-secondary); }
+  .process-meta { margin-top:auto; }
+  @media(max-width:768px) { .process-visual { min-height:0; } figcaption { padding:18px 14px 10px; } .process-note { padding:0 14px 16px; } }
 </style>
-
 <script>
   const processSection = document.querySelector<HTMLElement>('[data-story-section="process"]');
 

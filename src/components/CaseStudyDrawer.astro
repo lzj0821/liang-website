@@ -1,13 +1,15 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import workbench from '../assets/refresh/workbench-comparison.png';
-import jutuPoster from '../assets/refresh/jutu-input-output.png';
 import crmDemo from '../assets/refresh/crm-demo-anonymized.png';
-
-// Lightbox opens a 1600px WebP derivative instead of the multi-MB PNG original.
-const crmFull = await getImage({ src: crmDemo, width: 1600, format: 'webp' });
+import jutuPoster from '../assets/refresh/jutu-input-output.png';
+import { selfBuiltProducts } from '../data/self-built-products';
+import { caseArt, productArt } from '../data/case-art';
 const workbenchFull = await getImage({ src: workbench, width: 1600, format: 'webp' });
+const crmDemoFull = await getImage({ src: crmDemo, width: 1000, format: 'webp' });
 const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' });
+const caseFull = Object.fromEntries(await Promise.all(Object.entries(caseArt).map(async ([id, art]) => [id, await getImage({src: art.image, width:1600, format:'webp'})])));
+const productFull = Object.fromEntries(await Promise.all(Object.entries(productArt).map(async ([id, art]) => [id, await getImage({src:art.image, width:1600, format:'webp'})])));
 ---
 <div class="case-drawer" id="caseStudyDrawer" data-case-drawer aria-hidden="true">
   <button
@@ -43,42 +45,55 @@ const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' }
         <span class="case-drawer-period" data-case-period></span>
       </div>
 
-      <p class="case-drawer-brand" data-case-brand></p>
       <h2 id="caseDrawerTitle" data-case-title></h2>
-      <p class="case-drawer-summary" data-case-outcome></p>
 
-      <dl class="case-comparison" data-case-comparison hidden>
-        <div><dt>原来</dt><dd data-case-before></dd></div>
-        <div><dt>现在</dt><dd data-case-after></dd></div>
-      </dl>
+      <div class="case-products" data-case-media="jutu" hidden>
+        <div class="product-tabs" role="tablist" aria-label="选择小程序">
+          {selfBuiltProducts.map((product, index) => (
+            <button type="button" role="tab" id={'product-tab-' + product.id}
+              aria-controls={'product-panel-' + product.id} aria-selected={index === 0 ? 'true' : 'false'}
+              tabindex={index === 0 ? 0 : -1} data-product-tab={product.id}>{product.shortName}</button>
+          ))}
+        </div>
+        {selfBuiltProducts.map((product, index) => (
+          <section role="tabpanel" id={'product-panel-' + product.id} aria-labelledby={'product-tab-' + product.id}
+            data-product-panel={product.id} hidden={index !== 0} tabindex="0">
+            <figure class:list={['case-drawer-media', {'product-proof': product.id === 'jutu'}]}>
+              <a class="image-preview" href={product.id === 'jutu' ? jutuFull.src : productFull[product.id].src}
+                data-image-open data-image-caption={product.name} aria-label={'放大' + product.name + '展示图'} aria-haspopup="dialog" aria-controls="imageLightbox">
+                <Image src={product.id === 'jutu' ? jutuPoster : productArt[product.id as keyof typeof productArt].image}
+                  alt={product.id === 'jutu' ? '居图 AI 实际输入与出图对照' : productArt[product.id as keyof typeof productArt].alt}
+                  width={1000} loading="lazy" />
+              </a>
+            </figure>
+            <p class="product-description">{product.description}</p>
+          </section>
+        ))}
+      </div>
 
-      <figure class="case-drawer-media case-mobile-demo" data-case-media="crm" hidden>
-        <a class="image-preview" href={crmFull.src} data-image-open data-image-caption="客户管理 · 演示数据，图片已做匿名处理" aria-label="放大客户管理界面" aria-haspopup="dialog" aria-controls="imageLightbox">
-          <Image src={crmDemo} alt="客户管理移动端演示：查看负责人、待接收、待联系与无效申请待审状态" width={620} loading="lazy" />
-        </a>
-        <figcaption>界面局部 · 匿名演示数据，点图查看全图</figcaption>
-      </figure>
-      <figure class="case-drawer-media" data-case-media="workbench" hidden>
-        <a class="image-preview" href={workbenchFull.src} data-image-open data-image-caption="个人内容创作工作台 · 同一段内容的两版实际样片" aria-label="放大个人内容创作工作台界面" aria-haspopup="dialog" aria-controls="imageLightbox">
-          <Image src={workbench} alt="工作台 A3 样片对比：同一段口播的两种视频画面并排查看" width={920} loading="lazy" />
-        </a>
-        <figcaption>同一段内容，两版样片并排比较</figcaption>
-      </figure>
-      <figure class="case-drawer-media" data-case-media="jutu" hidden>
-        <a class="image-preview" href={jutuFull.src} data-image-open data-image-caption="居图 AI · 实际输入与生成结果" aria-label="放大居图 AI 输入与输出对照" aria-haspopup="dialog" aria-controls="imageLightbox">
-          <Image src={jutuPoster} alt="居图 AI 实际输入与输出：空房变装修效果图，沙发照片变白底图、场景图、模特体验图和产品海报" width={950} loading="lazy" />
-        </a>
-        <figcaption>空间原图与效果图 · 点图看完整出图示例</figcaption>
-      </figure>
+      {Object.entries(caseArt).filter(([id]) => id !== 'jutu').map(([id, art]) => (
+        <figure class="case-drawer-media" data-case-media={id} hidden>
+          <a class="image-preview" href={caseFull[id].src} data-image-open data-image-caption={id === 'crm' ? '招商客户管理系统' : id === 'workbench' ? '创作间' : id === 'youtube' ? 'AI 系列短视频' : id === 'growth' ? '运营数据整理提效' : '活动报表与网页录入'}
+            aria-label={'放大' + (id === 'crm' ? 'CRM' : id === 'workbench' ? '创作间' : id === 'youtube' ? '短视频' : id === 'growth' ? '运营数据整理' : '自动化') + '展示图'} aria-haspopup="dialog" aria-controls="imageLightbox">
+            <Image src={art.image} alt={art.alt} width={1000} loading="lazy" />
+          </a>
+        </figure>
+      ))}
+      <p class="case-description" data-case-summary></p>
       <div class="case-metrics" data-case-metrics hidden></div>
       <p class="case-result" data-case-result></p>
-      <p class="case-audience"><span>适合参考</span><span data-case-capability></span></p>
-      <details class="case-background" data-case-background>
-        <summary>我的工作与项目过程</summary>
-        <p class="case-role"><span>我负责</span><span data-case-role></span></p>
-        <p data-case-scene></p>
-        <p data-case-action></p>
-        <div class="case-flows" data-case-flows></div>
+      <details class="case-evidence" data-case-media="crm" hidden>
+        <summary>查看系统页面</summary>
+        <p class="case-result">本地演示环境，使用测试数据。</p>
+        <a class="image-preview" href={crmDemoFull.src} data-image-open data-image-caption="招商 CRM · 本地演示环境，测试数据" aria-label="放大 CRM 系统页面" aria-haspopup="dialog" aria-controls="imageLightbox">
+          <Image src={crmDemo} alt="招商 CRM 本地演示页面：客户分级、分配、跟进状态" width={680} loading="lazy" />
+        </a>
+      </details>
+      <details class="case-evidence" data-case-media="workbench" hidden>
+        <summary>查看实际样片对比</summary>
+        <a class="image-preview" href={workbenchFull.src} data-image-open data-image-caption="创作间 · 两版实际样片" aria-label="放大实际样片对比" aria-haspopup="dialog" aria-controls="imageLightbox">
+          <Image src={workbench} alt="同一段口播的两版实际样片" width={920} loading="lazy" />
+        </a>
       </details>
 
       <a href="#contact" class="btn btn-primary case-drawer-cta" data-case-drawer-cta>
@@ -89,44 +104,26 @@ const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' }
 </div>
 
 <style>
-  .case-comparison { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-  .case-comparison[hidden] { display:none; }
-  .case-comparison > div { padding:14px; border:1px solid var(--border); border-radius:8px; background:#ffffff02; }
-  .case-comparison > div:last-child { border-color:#c9a55c38; background:var(--accent-subtle); }
-  .case-comparison dt { color:var(--text-muted); font-size:11px; margin-bottom:8px; }
-  .case-comparison dd { color:var(--text-secondary); font-size:13px; line-height:1.75; }
-  .case-comparison > div:last-child dt { color:var(--accent); }
-  .case-comparison > div:last-child dd { color:var(--text-primary); }
-  .case-role { display:flex; flex-wrap:wrap; gap:4px 12px; padding-top:10px; }
-  .case-role > span:first-child { color:var(--accent); }
-  .case-result, .case-background p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
-  .case-audience { display: grid; gap: 6px; color: var(--text-secondary); font-size: 13px; }
-  .case-audience > span:first-child { color: var(--accent); font-size: 12px; }
-  .case-background { border-top: 1px solid var(--border); padding-top: 14px; }
-  .case-background summary { color: var(--text-secondary); cursor: pointer; font-size: 13px; min-height: 32px; }
-  .case-background p + p { margin-top: 8px; }
-  .case-flows { display: grid; gap: 16px; margin-top:16px; }
-  .case-flows :global(h3) { margin-bottom: 8px; color: var(--text-muted); font-size: 12px; font-weight: 500; }
-  .case-flows :global(ol) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; list-style: none; }
-  .case-flows :global(li) { position: relative; padding: 12px 6px; border: 1px solid var(--border-light); border-radius: 6px; text-align: center; color: var(--accent); font-size: 12px; }
-  .case-flows :global(li + li::before) { content: '→'; position: absolute; left: -13px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-  .case-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .case-metrics[hidden] { display: none; }
-  .case-metrics :global(div) { display: grid; gap: 6px; padding: 18px 12px; border: 1px solid var(--border-light); border-radius: 8px; }
-  .case-metrics :global(strong) { color: var(--accent); font-size: clamp(20px, 4vw, 28px); }
-  .case-metrics :global(span) { color: var(--text-secondary); font-size: 12px; }
-  .case-examples { padding: 20px; border: 1px solid var(--border-light); border-radius: 8px; }
-  .case-examples :global(h3) { color: var(--accent); font-size: 14px; margin: 0 0 8px; }
-  .case-examples :global(p) { color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
-  .case-examples :global(section + section) { margin-top: 20px; }
-  .case-drawer-media { margin: 0; }
-  .case-mobile-demo { max-width: 310px; margin-inline: auto; }
-  .case-mobile-demo .image-preview { display:block; aspect-ratio:1 / 1.1; overflow:hidden; border-radius:8px; }
-  .case-mobile-demo .image-preview img { height:100%; object-fit:cover; object-position:50% 48%; }
-  [data-case-media="jutu"] .image-preview { display:block; aspect-ratio:950 / 590; overflow:hidden; border-radius:8px; }
-  [data-case-media="jutu"] .image-preview img { height:100%; object-fit:cover; object-position:top; }
-  .case-drawer-media img { display: block; width: 100%; height: auto; border: 1px solid var(--border-light); border-radius: 8px; }
-  .case-drawer-media figcaption { margin-top: 10px; font-size: 12px; color: var(--text-secondary); }
+  [hidden] { display:none !important; }
+  .case-products { display:grid; gap:20px; }
+  .product-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-bottom:1px solid var(--border-light); }
+  .product-tabs button { min-height:48px; border:0; border-bottom:2px solid transparent; background:none; color:var(--text-secondary); font:inherit; font-size:13px; cursor:pointer; padding:8px 4px; }
+  .product-tabs button[aria-selected="true"] { color:var(--accent-hover); border-bottom-color:var(--accent); }
+  .case-description, .product-description { font-size:15px; line-height:1.8; color:var(--text-primary); }
+  .product-description { margin-top:20px; }
+  .case-result { padding-left:14px; border-left:2px solid var(--accent); color:var(--text-secondary); font-size:14px; line-height:1.8; }
+  .case-metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .case-metrics :global(div) { display:grid; gap:8px; padding:18px 12px; border:1px solid var(--border-light); border-radius:8px; }
+  .case-metrics :global(strong) { color:var(--accent); font-size:clamp(24px,5vw,32px); }
+  .case-metrics :global(span) { color:var(--text-secondary); font-size:12px; }
+  .case-drawer-media { margin:0; }
+  .case-drawer-media img, .case-evidence img { display:block; width:100%; height:auto; border-radius:8px; }
+  .product-proof .image-preview { display:block; aspect-ratio:950/590; overflow:hidden; border-radius:8px; }
+  .product-proof img { height:100%; object-fit:cover; object-position:top; }
+  .case-evidence { border-top:1px solid var(--border); padding-top:8px; }
+  .case-evidence summary { color:var(--text-secondary); font-size:13px; cursor:pointer; min-height:44px; display:flex; align-items:center; gap:10px; }
+  .case-evidence summary::before { content:'+'; color:var(--accent); }
+  .case-evidence[open] summary::before { content:'−'; }
   :global(html.case-drawer-open),
   :global(body.case-drawer-open) {
     overflow: hidden;
@@ -165,7 +162,7 @@ const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' }
     position: absolute;
     top: 0;
     right: 0;
-    width: min(560px, 100%);
+    width: min(620px, 100%);
     height: 100%;
     overflow-y: auto;
     border: 0;
@@ -225,8 +222,7 @@ const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' }
     display: flex;
     flex-direction: column;
     gap: 20px;
-    min-height: 100%;
-    padding: 68px 52px 48px;
+    padding: 68px 36px 36px;
   }
 
   .case-drawer-meta {
@@ -234,8 +230,8 @@ const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' }
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    font-family: var(--font-mono);
-    font-size: 11px;
+    font-family: var(--font-body);
+    font-size: 12px;
   }
 
   .case-drawer-category {
@@ -305,7 +301,7 @@ const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' }
   .case-drawer-cta {
     width: 100%;
     justify-content: center;
-    margin-top: auto;
+    margin-top: 8px;
   }
 
   @media (max-width: 640px) {
@@ -325,6 +321,16 @@ const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' }
     .case-drawer-sections section {
       grid-template-columns: 1fr;
       gap: 8px;
+    }
+  }
+
+  @media (max-width: 768px), (pointer: coarse) {
+    .case-drawer-close {
+      width: 48px;
+      height: 48px;
+      left: calc(100% - 66px);
+      margin-bottom: -48px;
+      touch-action: manipulation;
     }
   }
 
@@ -354,20 +360,39 @@ const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' }
     const closeControl = drawer.querySelector<HTMLButtonElement>('.case-drawer-close');
     const cta = drawer.querySelector<HTMLAnchorElement>('[data-case-drawer-cta]');
     const fields = {
-      brand: drawer.querySelector<HTMLElement>('[data-case-brand]'),
       category: drawer.querySelector<HTMLElement>('[data-case-category]'),
       period: drawer.querySelector<HTMLElement>('[data-case-period]'),
       title: drawer.querySelector<HTMLElement>('[data-case-title]'),
-      outcome: drawer.querySelector<HTMLElement>('[data-case-outcome]'),
-      scene: drawer.querySelector<HTMLElement>('[data-case-scene]'),
-      action: drawer.querySelector<HTMLElement>('[data-case-action]'),
+      summary: drawer.querySelector<HTMLElement>('[data-case-summary]'),
       result: drawer.querySelector<HTMLElement>('[data-case-result]'),
-      capability: drawer.querySelector<HTMLElement>('[data-case-capability]'),
-      role: drawer.querySelector<HTMLElement>('[data-case-role]'),
-      before: drawer.querySelector<HTMLElement>('[data-case-before]'),
-      after: drawer.querySelector<HTMLElement>('[data-case-after]'),
     };
     let activeTrigger: HTMLElement | null = null;
+    const productTabs = Array.from(drawer.querySelectorAll<HTMLButtonElement>('[data-product-tab]'));
+    const selectProduct = (id: string, focus = false) => {
+      const selected = productTabs.find(tab => tab.dataset.productTab === id) || productTabs[0];
+      productTabs.forEach(tab => {
+        const active = tab === selected;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+      });
+      drawer.querySelectorAll<HTMLElement>('[data-product-panel]').forEach(section => {
+        section.hidden = section.dataset.productPanel !== selected.dataset.productTab;
+      });
+      if (focus) selected.focus();
+    };
+    productTabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectProduct(tab.dataset.productTab!));
+      tab.addEventListener('keydown', event => {
+        let next = index;
+        if (event.key === 'ArrowRight') next = (index + 1) % productTabs.length;
+        else if (event.key === 'ArrowLeft') next = (index + productTabs.length - 1) % productTabs.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = productTabs.length - 1;
+        else return;
+        event.preventDefault();
+        selectProduct(productTabs[next].dataset.productTab!, true);
+      });
+    });
 
     const setField = (element: HTMLElement | null, value: string) => {
       if (element) element.textContent = value;
@@ -389,35 +414,12 @@ const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' }
       activeTrigger = trigger;
       activeTrigger.setAttribute('aria-expanded', 'true');
 
-      setField(fields.brand, detail.brand);
       setField(fields.category, detail.category);
       setField(fields.period, detail.period);
       setField(fields.title, detail.title);
-      setField(fields.outcome, detail.outcome);
-      setField(fields.scene, detail.scene);
-      setField(fields.action, detail.action);
+      setField(fields.summary, detail.summary);
       setField(fields.result, detail.result);
-      setField(fields.capability, detail.audience);
-      setField(fields.role, detail.role);
-      setField(fields.before, detail.comparison?.before || '');
-      setField(fields.after, detail.comparison?.after || '');
-      const comparison = drawer.querySelector<HTMLElement>('[data-case-comparison]');
-      if (comparison) comparison.hidden = !detail.comparison;
-      const background = drawer.querySelector<HTMLDetailsElement>('[data-case-background]');
-      if (background) background.open = false;
-      const flows = drawer.querySelector<HTMLElement>('[data-case-flows]');
-      if (flows) {
-        flows.replaceChildren();
-        detail.flows.forEach(flow => {
-          const section = document.createElement('section');
-          const title = document.createElement('h3');
-          const steps = document.createElement('ol');
-          title.textContent = flow.title;
-          flow.steps.forEach(step => { const item = document.createElement('li'); item.textContent = step; steps.append(item); });
-          section.append(title, steps);
-          flows.append(section);
-        });
-      }
+      drawer.querySelectorAll<HTMLDetailsElement>('details').forEach(item => item.open = false);
       const metrics = drawer.querySelector<HTMLElement>('[data-case-metrics]');
       if (metrics) {
         metrics.replaceChildren();
@@ -435,6 +437,10 @@ const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' }
       drawer.querySelectorAll<HTMLElement>('[data-case-media]').forEach(media => {
         media.hidden = media.dataset.caseMedia !== trigger.dataset.caseDetailTrigger;
       });
+      const isProducts = detail.id === 'jutu';
+      if (fields.summary) fields.summary.hidden = isProducts;
+      if (fields.result) fields.result.hidden = isProducts || !detail.result;
+      if (isProducts) selectProduct(trigger.dataset.productOpen || 'jutu');
 
       drawer.classList.add('is-open');
       drawer.setAttribute('aria-hidden', 'false');

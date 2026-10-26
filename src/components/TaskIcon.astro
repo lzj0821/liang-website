@@ -1,0 +1,13 @@
+---
+const { kind } = Astro.props as {kind:string};
+const paths:Record<string,string> = {
+reports:'M7 5h24v30H7zM7 13h24M15 13v22M23 13v22M7 21h24M7 28h24M27 24h10v13H27z',
+customer:'M6 6h14v10H6zM24 6h14v10H24zM12 16v6h20v-6M22 22v5M14 27h16v10H14z',
+content:'M6 6h25v25H6zM18 12l8 6-8 6zM11 35h27M35 9v21',
+research:'M6 5h19v27H6zM11 12h9M11 18h7M32 29l6 8M36 23a8 8 0 1 1-16 0 8 8 0 0 1 16 0',
+images:'M5 7h34v28H5zM5 29l11-11 9 9 6-6 8 8M26 14h1',
+unsure:'M16 13a7 7 0 1 1 12 5l-6 5v4M22 33v1',
+};
+---
+<svg viewBox="0 0 44 42" fill="none" aria-hidden="true"><path d={paths[kind] || paths.reports} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<style>svg{width:40px;height:40px;color:#d8c28c;flex-shrink:0;filter:drop-shadow(0 3px 8px #c9a55c14)}</style>

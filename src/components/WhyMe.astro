@@ -1,286 +1,42 @@
 ---
-// Why Me Section — 3 Differentiators
+import VisualStory from './VisualStory.astro';
+import PracticeRecord from './PracticeRecord.astro';
+import { abilityCopy } from '../data/visual-copy';
+import problem from '../assets/visual-scenes-20261024/ability-problem.png';
+import tools from '../assets/visual-scenes-20261024/ability-tools.png';
+import delivery from '../assets/visual-scenes-20261024/ability-delivery.png';
+const pictures = [problem, tools, delivery];
 ---
-
 <section class="section whyme" id="whyme" data-story-section="whyme">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">为什么选我</span>
       <h2 class="section-title">懂业务、懂 AI、能落地</h2>
-      <p class="section-desc">
-        从一线经验出发，做有用的 AI 应用。
-      </p>
     </div>
-
-    <div class="whyme-story-lines" aria-hidden="true">
-      <span class="whyme-story-line"></span>
-      <span class="whyme-story-line"></span>
-      <span class="whyme-story-line"></span>
-    </div>
-
     <div class="whyme-grid">
-      <!-- Card 1: 懂业务 -->
-      <div class="whyme-card card reveal reveal-delay-1" data-story-card="0">
-        <div class="icon-box whyme-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-          </svg>
+      {abilityCopy.map((item,i) => (
+        <div class="whyme-card card reveal" data-story-card={i}>
+          <VisualStory image={pictures[i]} title={item.title} line={item.line} />
+          <div class="whyme-card-data">
+            <a href={item.caseId ? '#case-'+item.caseId : '#services'} data-case-detail-trigger={item.caseId || undefined} aria-haspopup={item.caseId ? 'dialog' : undefined} aria-controls={item.caseId ? 'caseStudyDrawer' : undefined} aria-expanded={item.caseId ? 'false' : undefined}>{item.link}<span aria-hidden="true">↗</span></a>
+          </div>
         </div>
-        <h3 class="whyme-card-title">从业务里找问题</h3>
-        <p class="whyme-card-desc">
-          做过家居获客、直播与团队运营，关注哪一步真正值得改。
-        </p>
-        <div class="whyme-card-data">
-          <a href="#case-crm" data-case-detail-trigger="crm" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看客户管理案例 →</a>
-        </div>
-      </div>
-
-      <!-- Card 2: 懂 AI -->
-      <div class="whyme-card card reveal reveal-delay-2" data-story-card="1">
-        <div class="icon-box whyme-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93"/>
-            <path d="M8 6a4 4 0 0 1 8 0"/>
-            <circle cx="12" cy="14" r="4"/>
-            <path d="M12 18v4"/>
-            <path d="M8 22h8"/>
-          </svg>
-        </div>
-        <h3 class="whyme-card-title">根据需要选工具</h3>
-        <p class="whyme-card-desc">
-          先用现成工具验证，再判断是否值得定制。
-        </p>
-        <div class="whyme-card-data">
-          <a href="#case-workbench" data-case-detail-trigger="workbench" aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看内容工作台 →</a>
-        </div>
-      </div>
-
-      <!-- Card 3: 能落地 -->
-      <div class="whyme-card card reveal reveal-delay-1" data-story-card="2">
-        <div class="icon-box whyme-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 2v20M2 12h20"/>
-            <circle cx="12" cy="12" r="10"/>
-            <path d="m9 12 2 2 4-4"/>
-          </svg>
-        </div>
-        <h3 class="whyme-card-title">关注实际使用</h3>
-        <p class="whyme-card-desc">
-          工具做成后，还要看团队是否愿意持续用。
-        </p>
-        <div class="whyme-card-data">
-          <a href="#services">了解交付内容 →</a>
-        </div>
-      </div>
+      ))}
     </div>
+    <PracticeRecord />
   </div>
 </section>
-
 <style>
-  .whyme-card-data { flex-direction: column; align-items: flex-start; gap: 7px; }
-  .whyme-card-data strong { color: var(--accent); font-size: 18px; }
-  .whyme-card-data > span { color: var(--text-secondary); font-size: 13px; }
-  .whyme-card-data a { font-size: 13px; color: var(--accent); text-underline-offset: 4px; padding: 5px 0; }
-
-  .whyme {
-    background: var(--bg-surface);
-    overflow: hidden;
-  }
-
-  .whyme-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    position: relative;
-    z-index: 2;
-    perspective: 1200px;
-  }
-
-  .whyme-story-lines {
-    position: absolute;
-    z-index: 1;
-    top: 248px;
-    left: max(24px, calc((100% - var(--container-width)) / 2 + 24px));
-    right: max(24px, calc((100% - var(--container-width)) / 2 + 24px));
-    bottom: 72px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    pointer-events: none;
-  }
-
-  .whyme-story-line {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .whyme-story-line::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(
-      180deg,
-      transparent,
-      rgba(234, 211, 141, 0.74) 20%,
-      rgba(201, 165, 92, 0.26) 72%,
-      transparent
-    );
-    box-shadow: 0 0 18px rgba(201, 165, 92, 0.28);
-    opacity: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.9s var(--ease-out), opacity 0.5s ease;
-  }
-
-  .whyme:has(.whyme-card:nth-child(1).story-active) .whyme-story-line:nth-child(1)::before,
-  .whyme:has(.whyme-card:nth-child(2).story-active) .whyme-story-line:nth-child(2)::before,
-  .whyme:has(.whyme-card:nth-child(3).story-active) .whyme-story-line:nth-child(3)::before {
-    opacity: 1;
-    transform: scaleY(1);
-  }
-
-  .whyme-card {
-    --tilt-x: 0deg;
-    --tilt-y: 0deg;
-    padding: 28px 26px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    transform:
-      perspective(1000px)
-      translate3d(0, 12px, 0)
-      rotateX(var(--tilt-x))
-      rotateY(var(--tilt-y));
-    transform-style: preserve-3d;
-    border-color: rgba(201, 165, 92, 0.08);
-    transition:
-      transform 0.55s var(--ease-out),
-      border-color 0.45s ease,
-      box-shadow 0.45s ease,
-      background 0.45s ease;
-  }
-
-  .whyme-card.story-active {
-    transform:
-      perspective(1000px)
-      translate3d(0, 0, 18px)
-      rotateX(var(--tilt-x))
-      rotateY(var(--tilt-y));
-    border-color: rgba(201, 165, 92, 0.34);
-    background:
-      linear-gradient(150deg, rgba(201, 165, 92, 0.055), transparent 42%),
-      var(--bg-card);
-    box-shadow:
-      0 24px 70px rgba(0, 0, 0, 0.34),
-      inset 0 1px 0 rgba(234, 211, 141, 0.1);
-  }
-
-  .whyme-card.story-active .whyme-icon {
-    box-shadow: 0 0 28px rgba(201, 165, 92, 0.16);
-    border-color: rgba(201, 165, 92, 0.34);
-  }
-
-  .whyme-card.story-active .whyme-data-value {
-    text-shadow: 0 0 22px rgba(201, 165, 92, 0.28);
-  }
-
-  .whyme-card-title {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-
-  .whyme-card-desc {
-    font-size: 15px;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    flex: 1;
-  }
-
-  .whyme-card-data {
-    display: flex;
-    justify-content: center;
-    gap: 48px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-  }
-
-  .whyme-data-item {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .whyme-data-value {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .whyme-data-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  @media (max-width: 1024px) {
-    .whyme-story-lines {
-      display: none;
-    }
-
-    .whyme-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .whyme-card:nth-child(3) {
-      grid-column: span 2;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .whyme-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .whyme-card:nth-child(3) {
-      grid-column: span 1;
-      max-width: 100%;
-    }
-
-    .whyme-card {
-      padding: 24px 20px;
-      display: grid;
-      grid-template-columns: 44px minmax(0, 1fr);
-      gap: 12px;
-      transform: translateY(8px);
-    }
-
-    .whyme-icon { width: 44px; height: 44px; }
-    .whyme-icon svg { width: 26px; height: 26px; }
-    .whyme-card-title { align-self: center; font-size: 20px; }
-    .whyme-card-desc, .whyme-card-data { grid-column: 1 / -1; }
-    .whyme-card-desc { font-size: 14px; }
-    .whyme-card-data { padding-top: 14px; }
-    .whyme-card-data strong { font-size: 16px; }
-
-    .whyme-card.story-active {
-      transform: translateY(0);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .whyme-card,
-    .whyme-card.story-active {
-      transform: none;
-    }
-  }
-  .whyme-card .whyme-card-data { display: flex; flex-direction: column; gap: 7px; }
+  .whyme { background:var(--bg-surface); overflow:hidden; }
+  .whyme-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+  .whyme-card { --tilt-x:0deg; --tilt-y:0deg; padding:10px; min-width:0; overflow:hidden; transition:border-color .3s,box-shadow .3s; }
+  .whyme-card.story-active { border-color:#c9a55c50; box-shadow:0 16px 45px #0003; }
+  .whyme-card-data { padding:4px 14px 0; }
+  a { display:flex; justify-content:space-between; align-items:center; gap:12px; min-height:48px; color:var(--accent); font-size:14px; }
+  a span { font-size:20px; }
+  @media(max-width:1024px) { .whyme-grid { gap:16px; } }
+  @media(max-width:768px) { .whyme-grid { grid-template-columns:1fr; max-width:480px; margin:auto; } }
 </style>
-
 <script>
   const whyMeSection = document.querySelector<HTMLElement>('[data-story-section="whyme"]');
 

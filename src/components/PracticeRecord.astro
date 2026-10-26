@@ -1,0 +1,29 @@
+---
+import { Image, getImage } from 'astro:assets';
+import card from '../assets/evidence-20261026/tokenrank-card.png';
+import source from '../assets/evidence-20261026/tokenrank-source.png';
+const records = await Promise.all([card, source].map(async (image, i) => ({
+  image, full: await getImage({src:image,width:1200,format:'webp'}),
+  label: i === 0 ? 'TokenRank 实践记录' : 'TokenRank 统计口径与明细',
+})));
+---
+<details class="practice-record">
+  <summary><span>持续实践记录</span><span class="record-meta">TokenRank · 截至 2026.10.19</span></summary>
+  <div class="record-body">
+    <div class="record-copy"><strong>163 <span>天连续使用</span></strong><p>把 AI 放进日常工作，持续尝试与验证。</p><p class="record-note">平台累计统计 600.31 亿 Token，含输入、输出与缓存。图中费用为等效 API 估算，并非实际支出。</p></div>
+    <div class="record-images">{records.map(item => <a href={item.full.src} data-image-open data-image-caption={item.label + ' · 截至 2026.10.19'} aria-label={'放大' + item.label} aria-haspopup="dialog" aria-controls="imageLightbox"><Image src={item.image} alt={item.label} width={480} loading="lazy" /></a>)}</div>
+  </div>
+</details>
+<style>
+ .practice-record{margin-top:24px;border-top:1px solid var(--border-color,#ffffff15);}
+ summary{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;font-size:15px;color:var(--text-primary);list-style:none;}
+ summary::-webkit-details-marker{display:none}summary::after{content:'+';color:var(--accent);font-size:22px;}details[open] summary::after{content:'−';}
+ .record-meta{margin-left:auto;color:var(--text-secondary);font-size:13px;}
+ .record-body{display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:20px 0 12px;align-items:center;}
+ .record-copy strong{font-size:44px;color:var(--accent);font-weight:600}.record-copy strong span{font-size:17px;color:var(--text-primary);}
+ p{font-size:15px;line-height:1.8;margin-top:12px;color:var(--text-secondary);}.record-note{font-size:13px;max-width:370px;}
+ .record-images{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:370px;justify-self:end;}
+ a{display:block;min-width:0;border-radius:8px;overflow:hidden;}img{width:100%;height:250px;object-fit:contain;background:#101113;display:block;}
+ summary:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;}
+ @media(max-width:768px){.practice-record{max-width:480px;margin-inline:auto;}summary{flex-wrap:wrap;gap:4px 12px;padding-block:14px;}summary>span:first-child{width:calc(100% - 32px)}.record-meta{order:2;margin:0;font-size:12px;}summary::after{margin-left:auto}.record-body{grid-template-columns:1fr;gap:20px;padding-top:8px;}.record-images{justify-self:stretch;max-width:none;}img{height:240px;}.record-copy strong{font-size:36px;}}
+</style>

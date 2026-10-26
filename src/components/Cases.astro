@@ -1,13 +1,17 @@
 ---
 import { featuredCases } from '../data/featured-cases';
-import { Image } from 'astro:assets';
-import crm from '../assets/refresh/crm-demo-anonymized.png';
-import jutu from '../assets/refresh/jutu-input-output.png';
-import workbench from '../assets/refresh/workbench-comparison.png';
-const previews: Record<string, { image: typeof crm; alt: string; caption: string }> = {
-  crm: { image: crm, alt: '客户管理系统匿名演示界面', caption: '匿名演示界面' },
-  jutu: { image: jutu, alt: '居图 AI 空间原图与效果图', caption: '真实输入与生成结果' },
-  workbench: { image: workbench, alt: 'A3 内容工作台两版样片对比', caption: '两版样片对比' },
+import CaseVisual from './CaseVisual.astro';
+const accents: Record<string, string> = {
+  crm: '#8eb9d4', automation: '#85bfae', jutu: '#aaa5de',
+  workbench: '#b4a0ce', youtube: '#d3a08c', growth: '#d3b672',
+};
+const cardCopy: Record<string, string> = {
+  crm: '多平台线索，沉淀到自己的系统。',
+  automation: '少做重复整理与复制填表。',
+  jutu: '居图 AI · AI 重置 · 纸间声语',
+  workbench: '视频、字幕、封面，集中制作。',
+  youtube: '15 天内，完成系列制作与发布。',
+  growth: '把重复整理，交给工具处理。',
 };
 ---
 
@@ -16,35 +20,23 @@ const previews: Record<string, { image: typeof crm; alt: string; caption: string
     <div class="section-header reveal">
       <span class="section-label">实战案例</span>
       <h2 class="section-title">用结果说话</h2>
-      <p class="section-desc">从客户跟进到内容制作，看看具体做成了什么。</p>
+      <p class="section-desc">从客户跟进到内容制作，让需求变成可用的工具。</p>
     </div>
-    <div class="cases-track" aria-hidden="true"><span></span><span></span></div>
     <div class="cases-grid">
       {featuredCases.map((item, index) => (
-        <article class="case-card card reveal" id={'case-' + item.id} data-case-story={index}>
-          <div class="case-header">
-            <div class="case-header-left">
-              <span class="case-brand" style="--brand-color: #c9a55c">{item.category}</span>
-              <span class="case-period">{item.brand}</span>
+        <article class="case-card card reveal" id={'case-' + item.id} data-case-story={index} style={'--case-accent:' + accents[item.id]}>
+          <CaseVisual id={item.id} />
+          <div class="case-copy">
+            <span class="case-brand">{item.category}</span>
+            <h3 class="case-title">{item.title}</h3>
+            <div class="case-bottom">
+              <p class="case-desc">{cardCopy[item.id]}</p>
+              <button type="button" class="case-detail-trigger" data-case-detail-trigger={item.id} data-product-open={item.id === 'jutu' ? 'reset' : undefined}
+                aria-label={'了解案例：' + item.title} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </button>
             </div>
           </div>
-          <h3 class="case-title">{item.title}</h3>
-          {previews[item.id] ? (
-            <figure class={'case-proof case-proof-' + item.id}>
-              <Image src={previews[item.id].image} alt={previews[item.id].alt} width={640} loading="lazy" />
-              <figcaption>{previews[item.id].caption}</figcaption>
-            </figure>
-          ) : item.metrics ? (
-            <div class="case-proof case-proof-metric"><strong>{item.id === 'youtube' ? item.metrics[1].value : item.metrics[0].value}</strong><span>{item.id === 'youtube' ? '15 天累计播放 · 个人内容实践' : '历史项目获客成本降幅'}</span></div>
-          ) : (
-            <div class="case-proof case-proof-flow"><span>两个独立场景</span><ol><li>活动上报<span>→</span>核对与周榜</li><li>网页信息<span>→</span>查重与录入</li></ol></div>
-          )}
-          <p class="case-desc">{item.cardDesc ?? item.summary}</p>
-          <button type="button" class="case-detail-trigger" data-case-detail-trigger={item.id}
-            aria-label={'了解案例：' + item.title} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">
-            了解这个案例
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-          </button>
         </article>
       ))}
     </div>
@@ -52,262 +44,46 @@ const previews: Record<string, { image: typeof crm; alt: string; caption: string
 </section>
 
 <style>
-  .case-card { min-width: 0; }
-  .case-proof { height:96px; margin:0; position:relative; overflow:hidden; border:1px solid var(--border); border-radius:6px; background:#0c0c0c; }
-  .case-proof img { width:100%; height:100%; object-fit:cover; object-position:top; transition:transform .5s var(--ease-out); }
-  .case-proof-jutu img { object-position:50% 16%; }
-  .case-proof-crm img { object-position:50% 57%; }
-  .case-proof-workbench img { object-fit:contain; }
-  .case-proof figcaption { position:absolute; bottom:0; left:0; right:0; padding:14px 10px 5px; background:linear-gradient(transparent,#000c); color:#eee; font-size:10px; }
-  .case-proof-metric { display:flex; flex-direction:column; justify-content:center; padding:16px 20px; background:linear-gradient(115deg,#c9a55c12,transparent); }
-  .case-proof-metric strong { color:var(--accent-hover); font-size:34px; line-height:1.1; font-weight:650; letter-spacing:-.04em; }
-  .case-proof-metric span { font-size:11px; color:var(--text-muted); margin-top:10px; }
-  .case-proof-flow { padding:12px 16px; }
-  .case-proof-flow > span { font-size:10px; color:var(--text-muted); }
-  .case-proof-flow ol { list-style:none; display:grid; gap:8px; margin-top:8px; font-size:12px; color:var(--text-secondary); }
-  .case-proof-flow li { display:flex; align-items:center; gap:12px; }
-  .case-proof-flow li span { color:var(--accent); }
-  .case-header-left { flex-wrap: wrap; }
-  .case-outcome { border-top: 1px solid var(--border); padding-top: 16px; display: grid; gap: 6px; }
-  .case-outcome span { color: var(--text-muted); font-size: 11px; }
-  .case-outcome strong { color: var(--accent); font-size: 14px; font-weight: 600; line-height: 1.6; }
-  .cases-grid { align-items: stretch; }
-
-  .cases {
-    overflow: hidden;
-  }
-
-  .cases > .container {
-    position: relative;
-    z-index: 2;
-  }
-
-  .cases-track {
-    position: absolute;
-    z-index: 1;
-    inset: 260px max(24px, calc((100% - var(--container-width)) / 2 + 12px)) 84px;
-    pointer-events: none;
-  }
-
-  .cases-track span {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(
-      180deg,
-      transparent,
-      rgba(201, 165, 92, 0.34) 14%,
-      rgba(201, 165, 92, 0.08) 78%,
-      transparent
-    );
-    box-shadow: 0 0 18px rgba(201, 165, 92, 0.14);
-    opacity: 0.42;
-  }
-
-  .cases-track span:first-child {
-    left: 2px;
-    transform: rotate(-1.3deg);
-  }
-
-  .cases-track span:last-child {
-    right: 2px;
-    transform: rotate(1.3deg);
-  }
-
-  .cases-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-  }
-
+  .cases { overflow: hidden; }
+  .cases > .container { position: relative; z-index: 2; }
+  .cases-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
   .case-card {
-    scroll-margin-top: 100px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    position: relative;
-    overflow: hidden;
-    transform: translateY(16px);
-    border-color: rgba(201, 165, 92, 0.08);
-    transition:
-      transform 0.68s var(--ease-out),
-      border-color 0.45s ease,
-      box-shadow 0.45s ease,
-      background 0.45s ease;
+    min-width: 0; scroll-margin-top: 100px; padding: 12px;
+    display: flex; flex-direction: column; position: relative;
+    border: 1px solid #ffffff0f; border-radius: 16px; overflow: hidden;
+    background: linear-gradient(155deg, color-mix(in srgb,var(--case-accent) 4%,transparent),transparent 60%),var(--bg-card);
+    transition: transform .3s var(--ease-out), border-color .3s, box-shadow .3s;
   }
-
-  .case-card.visible { transform: translateY(0); }
-
-  .case-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(180deg, transparent, rgba(234, 211, 141, 0.82), transparent);
-    opacity: 0;
-    transform: scaleY(0.1);
-    transition: opacity 0.45s ease, transform 0.75s var(--ease-out);
-  }
-
-  .case-card:nth-child(even)::before {
-    left: auto;
-    right: 0;
-  }
-
-  .case-card.story-active {
-    transform: translateY(0);
-    border-color: rgba(201, 165, 92, 0.13);
-    background:
-      linear-gradient(145deg, rgba(201, 165, 92, 0.045), transparent 42%),
-      var(--bg-card);
-    box-shadow:
-      0 22px 64px rgba(0, 0, 0, 0.34),
-      inset 0 1px 0 rgba(234, 211, 141, 0.08);
-  }
-
-  .case-card.story-active::before {
-    opacity: 0.35;
-    transform: scaleY(1);
-  }
-
-
-
-  .case-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .case-header-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .case-brand {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    padding: 3px 10px;
-    border-radius: 4px;
-    background: rgba(201, 165, 92, 0.12);
-    background: color-mix(in srgb, var(--brand-color, var(--accent)) 15%, transparent);
-    color: var(--brand-color, var(--accent));
-    border: 1px solid rgba(201, 165, 92, 0.2);
-    border: 1px solid color-mix(in srgb, var(--brand-color, var(--accent)) 25%, transparent);
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-  }
-
-  .case-period {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-  }
-
-  .case-title {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
-  }
-
-  .case-desc {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    flex: 1;
-  }
-
+  .case-copy { display: flex; flex-direction: column; flex: 1; gap: 10px; padding: 20px 10px 8px; }
+  .case-brand { display: flex; align-items: center; gap: 8px; color: var(--case-accent); font-size: 12px; font-weight: 500; letter-spacing: .04em; }
+  .case-brand::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+  .case-title { font-size: 20px; font-weight: 700; letter-spacing: -.02em; line-height: 1.45; text-wrap: balance; }
+  .case-bottom { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+  .case-desc { flex: 1; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
   .case-detail-trigger {
-    display: inline-flex;
-    align-items: center;
-    align-self: flex-start;
-    gap: 8px;
-    min-height: 44px;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--accent);
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 650;
-    cursor: pointer;
-    transition: color 0.25s ease;
+    display: flex; align-items: center; justify-content: center; flex: 0 0 44px;
+    width: 44px; height: 44px; border: 1px solid var(--border-light); border-radius: 50%;
+    background: transparent; color: var(--text-secondary); cursor: pointer;
+    transition: color .2s, border-color .2s, background .2s;
   }
-
-  .case-detail-trigger svg {
-    width: 16px;
-    height: 16px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: transform 0.35s var(--ease-out);
-  }
-
-  .case-detail-trigger:hover,
-  .case-detail-trigger:focus-visible {
-    color: var(--accent-hover);
-  }
-
-  .case-detail-trigger:hover svg,
-  .case-detail-trigger:focus-visible svg {
-    transform: translateX(4px);
-  }
-
-  @media (max-width: 1024px) {
-    .cases-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
-    }
-  }
-
+  /* One accessible button opens the case from the entire card. */
+  .case-detail-trigger::after { content: ''; position: absolute; inset: 0; }
+  .case-detail-trigger svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s; }
+  .case-card:focus-within { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .case-detail-trigger:focus-visible { outline-offset: 2px; }
   @media (hover: hover) and (pointer: fine) {
-    .case-card.visible:hover, .case-card.visible:focus-within { transform:translateY(-4px); border-color:rgba(201,165,92,.5); box-shadow:0 18px 40px #0005; }
-    .case-card:hover .case-proof img { transform:scale(1.025); }
+    .case-card.visible:hover { transform: translateY(-4px); border-color: color-mix(in srgb,var(--case-accent) 35%,transparent); box-shadow: 0 16px 36px #0003; }
+    .case-card:hover .case-detail-trigger { color: var(--case-accent); border-color: var(--case-accent); background: color-mix(in srgb,var(--case-accent) 8%,transparent); }
+    .case-card:hover .case-detail-trigger svg { transform: translateX(2px); }
   }
-
+  @media (max-width: 1024px) { .cases-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; } }
   @media (max-width: 640px) {
-    .cases-track {
-      display: none;
-    }
-
-    .cases-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .case-card {
-      padding: 20px;
-      gap: 10px;
-      transform: translateY(18px);
-    }
-
-    .case-outcome { padding-top: 12px; gap: 4px; }
-
-    .case-card.story-active {
-      transform: translateY(0);
-    }
-
-    .case-title {
-      font-size: 18px;
-    }
-
+    .cases-grid { grid-template-columns: 1fr; gap: 20px; }
+    .case-card { padding: 10px; }
+    .case-copy { padding: 16px 8px 6px; gap: 8px; }
+    .case-title { font-size: 20px; }
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    .case-card,
-    .case-card.story-active {
-      transform: none;
-    }
-  }
+  @media (prefers-reduced-motion: reduce) { .case-card, .case-card.visible:hover { transform: none; } }
 </style>
 
 <script>

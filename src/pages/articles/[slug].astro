@@ -1,0 +1,17 @@
+---
+import type { ImageMetadata, MarkdownInstance } from 'astro';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import articles from '../../data/articles.json';
+const bodies = import.meta.glob<MarkdownInstance<Record<string, never>>>('../../content/articles/*/article.md', { eager:true });
+const covers = import.meta.glob<{default:ImageMetadata}>('../../content/articles/*/assets/cover*.png', { eager:true });
+export function getStaticPaths() {
+  return articles.map(article=>({params:{slug:article.slug},props:{article}}));
+}
+const {article} = Astro.props;
+const body = bodies[`../../content/articles/${article.slug}/article.md`];
+const cover = covers[`../../content/articles/${article.slug}/${article.cover}`].default;
+const {Content} = body;
+---
+<ArticleLayout title={article.title} author={article.author} publishedAt={article.publishedAt} cover={cover} headings={body.getHeadings()} related={articles.filter(item=>item.slug!==article.slug)}>
+  <Content />
+</ArticleLayout>

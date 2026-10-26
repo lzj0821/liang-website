@@ -2,6 +2,7 @@
 // Hero Section
 import { Image } from 'astro:assets';
 import avatar from '../assets/refresh/portrait.jpg';
+import { selfBuiltProducts } from '../data/self-built-products';
 ---
 
 <section class="hero" id="hero" data-story-section="hero">
@@ -20,6 +21,11 @@ import avatar from '../assets/refresh/portrait.jpg';
       Liangzhenjie · AI 落地顾问
     </div>
 
+    <div class="hero-credentials reveal" aria-label="专业资质">
+      <span>人工智能应用工程师（高级）</span>
+      <span>人工智能训练师（高级）</span>
+    </div>
+
     <h1 class="hero-title" aria-label="帮企业与个人，用 AI 解决真问题">
       <span id="heroTypewriter" aria-hidden="true">帮企业与个人</span><br />
       <span class="hero-title-accent" id="heroTypewriterAccent" aria-hidden="true">用 AI 解决真问题</span>
@@ -29,16 +35,6 @@ import avatar from '../assets/refresh/portrait.jpg';
         企业 AI 落地，涵盖内部培训、流程与工具。<br />
         为个人与小团队搭建智能体、定制工作流。
     </p>
-
-    <!-- Brand trust bar -->
-    <div class="hero-brands reveal reveal-delay-3">
-      <span class="hero-brands-label">服务行业</span>
-      <div class="hero-brands-list">
-        <span class="hero-brand">定制家居</span>
-        <span class="hero-brand">家居零售</span>
-        <span class="hero-brand">智能家居</span>
-      </div>
-    </div>
 
     <div class="hero-actions reveal reveal-delay-4">
       <a href="#cases" class="btn btn-primary">
@@ -50,21 +46,30 @@ import avatar from '../assets/refresh/portrait.jpg';
       <a href="#contact" class="btn btn-outline">联系咨询</a>
     </div>
 
+
     <!-- Key numbers -->
     <div class="hero-stats reveal reveal-delay-5">
       <div class="hero-stat">
-        <span class="hero-stat-number">4 年</span>
-        <span class="hero-stat-label">一线家居运营经验</span>
+        <span class="hero-stat-number">省时间</span>
+        <span class="hero-stat-label">数据整理：2 小时 → 10 分钟</span>
       </div>
       <div class="hero-stat-divider"></div>
       <div class="hero-stat">
-        <span class="hero-stat-number">80%</span>
-        <span class="hero-stat-label">历史家居项目 · 获客成本最高降幅</span>
+        <span class="hero-stat-number">管客户</span>
+        <span class="hero-stat-label">多平台线索，汇入自己的 CRM</span>
       </div>
       <div class="hero-stat-divider"></div>
       <div class="hero-stat">
-        <span class="hero-stat-number">已上线</span>
-        <span class="hero-stat-label">居图 AI 小程序</span>
+        <span class="hero-stat-number">做产品</span>
+        <span class="hero-stat-label">把具体需求，做成能用的小程序</span>
+      </div>
+    </div>
+    <div class="hero-products reveal">
+      <span>精选产品</span>
+      <div>
+        {selfBuiltProducts.map(product => (
+          <a href="#case-jutu" data-case-detail-trigger="jutu" data-product-open={product.id} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">{product.name}<span aria-hidden="true"> ↗</span></a>
+        ))}
       </div>
     </div>
   </div>
@@ -76,6 +81,24 @@ import avatar from '../assets/refresh/portrait.jpg';
 </section>
 
 <style>
+  .hero .hero-badge { margin-bottom:12px; }
+  .hero .hero-credentials { display:flex;flex-wrap:wrap;gap:6px 22px;margin:0 0 30px;padding:0;min-height:0;font-size:14px;line-height:1.8;color:#aaa79e; }
+  .hero-credentials > span::before { content:'◇';margin-right:7px;color:#c9a55c; }
+  .hero .hero-stats { margin-top:38px;gap:28px; }
+  .hero .hero-stat-label { font-size:14px;line-height:1.7;max-width:200px; }
+  .hero .hero-stat-number { font-size:28px; }
+  @media(max-width:768px) { .hero .hero-credentials { display:grid;gap:3px;font-size:13px;margin-bottom:24px; } .hero .hero-stat-number { font-size:23px; } .hero .hero-stats { gap:12px; } .hero .hero-stat-label { font-size:13px; } }
+
+  .hero-credentials { display:flex; width:fit-content; align-items:center; gap:10px; min-height:44px; padding:8px 0; margin:12px 0 48px; color:var(--text-secondary); font-size:13px; font-weight:400; line-height:1.6; text-decoration:none; }
+  .hero-credentials svg { width:16px; height:16px; flex-shrink:0; color:var(--accent); }
+  .credential-separator { color:var(--text-muted); margin:0 6px; }
+  .credential-arrow { color:var(--text-muted); }
+  .hero-credentials:hover { color:var(--accent-hover); }
+  .hero-products { display:flex; flex-wrap:wrap; align-items:center; gap:4px 16px; margin-top:16px; font-size:12px; }
+  .hero-products > span { color:var(--text-muted); }
+  .hero-products > div { display:flex; flex-wrap:wrap; gap:0 16px; }
+  .hero-products a { display:inline-flex; align-items:center; min-height:44px; color:var(--accent); }
+  @media (max-width:480px) { .hero-credentials { gap:8px; margin:8px 0 28px; } }
   .hero {
     min-height: 100vh;
     display: flex;
@@ -160,7 +183,7 @@ import avatar from '../assets/refresh/portrait.jpg';
     font-weight: 500;
     color: var(--accent);
     margin-bottom: 32px;
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
   }
 
   .hero-badge-dot {
@@ -258,7 +281,7 @@ import avatar from '../assets/refresh/portrait.jpg';
   .hero-actions {
     display: flex;
     gap: 16px;
-    margin-bottom: 80px;
+    margin-bottom: 0;
   }
 
   .hero-actions .btn-primary::before {
@@ -368,7 +391,7 @@ import avatar from '../assets/refresh/portrait.jpg';
 
     .hero-actions {
       flex-direction: column;
-      margin-bottom: 60px;
+      margin-bottom: 0;
     }
 
     .hero-actions .btn {
@@ -379,6 +402,7 @@ import avatar from '../assets/refresh/portrait.jpg';
     .hero-stats {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: start;
       gap: 16px;
     }
 
@@ -396,18 +420,47 @@ import avatar from '../assets/refresh/portrait.jpg';
   }
 
   @media (max-width: 480px) {
+    .hero {
+      padding-top: 80px;
+    }
+
     .hero-avatar {
       width: 80px;
       height: 80px;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
+    }
+
+    .hero-badge {
+      margin-bottom: 20px;
     }
 
     .hero-title {
       font-size: clamp(24px, 8vw, 36px);
+      margin-bottom: 16px;
     }
 
     .hero-desc {
       font-size: 15px;
+      margin-bottom: 24px;
+    }
+
+    .hero-brands {
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .hero-brands-list {
+      gap: 8px;
+    }
+
+    .hero-brand {
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+
+    .hero-actions {
+      gap: 12px;
+      margin-bottom: 0;
     }
 
     .hero-stats {
