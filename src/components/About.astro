@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/refresh/portrait.jpg';
+import Certificates from './Certificates.astro';
+---
+<section class="section about" id="about" data-story-section="about">
+  <div class="container">
+    <span id="whyme" class="legacy-anchor" aria-hidden="true"></span>
+    <div class="about-intro">
+      <Image src={portrait} alt="Liangzhenjie" width={320} height={360} loading="lazy" />
+      <div>
+        <span class="section-label">关于我</span>
+        <h2 class="section-title">Liangzhenjie<span>AI 落地顾问</span></h2>
+        <p>我做企业 AI 落地和培训，也开发智能体、工作流和小程序。做过公司内部的客户管理系统，也给自己做过内容创作工具。</p>
+        <p>找我聊，不用先写一份完整的需求文档。说说你在做什么、想改变什么，我会和你一起想办法，再把需要的工具做出来。</p>
+        <a href="#contact" class="about-link">聊聊你想做的事 <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+    <Certificates />
+  </div>
+</section>
+<style>
+  .about-intro { display:grid; grid-template-columns:200px minmax(0,1fr); gap:48px; align-items:center; max-width:900px; }
+  .about-intro > img { width:200px; height:230px; object-fit:cover; object-position:50% 30%; border-radius:12px; filter:saturate(.8); }
+  .section-title { text-align:left; margin:12px 0 20px; font-size:34px; }
+  .section-title span { display:block; color:var(--text-secondary); font-size:17px; font-weight:400; margin-top:8px; }
+  p { font-size:15px; line-height:1.9; color:var(--text-secondary); margin-top:10px; max-width:42em; }
+  .about-link { display:inline-flex; min-height:44px; gap:14px; align-items:center; margin-top:12px; font-size:14px; color:var(--accent); }
+  .legacy-anchor { display:block; scroll-margin-top:100px; }
+  @media(max-width:768px) { .about-intro { grid-template-columns:1fr; gap:24px; } .about-intro > img { width:100px; height:112px; } .section-title { font-size:28px; } }
+</style>

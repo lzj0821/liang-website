@@ -1,11 +1,12 @@
 export const VISUAL_STORY_SECTIONS = [
   'hero',
-  'whyme',
-  'roi',
+  'enterprise',
+  'individual',
   'cases',
-  'certificates',
-  'services',
+  'training',
+  'roi',
   'process',
+  'about',
   'faq',
   'contact',
 ] as const;

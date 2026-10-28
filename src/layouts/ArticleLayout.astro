@@ -2,15 +2,18 @@
 import '../styles/global.css';
 import { Image, getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import ImageLightbox from '../components/ImageLightbox.astro';
 interface Props {
   title: string;
   author: string;
   publishedAt: string;
   cover: ImageMetadata;
+  takeaways: string[];
   headings: { depth: number; slug: string; text: string }[];
   related: { slug: string; title: string }[];
 }
-const { title, author, publishedAt, cover, headings, related } = Astro.props;
+const { title, author, publishedAt, cover, takeaways, headings, related } = Astro.props;
+const inquiryLink = '/?article=' + encodeURIComponent(Astro.url.pathname.split('/').filter(Boolean).pop() || '') + '#contact';
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const coverImage = await getImage({ src: cover, width: 900, format: 'webp' });
 const shareImage = new URL(coverImage.src, Astro.site).toString();
@@ -50,18 +53,19 @@ const description = `${author}的 AI 落地实战笔记：${title}。原发布�
     <header class="reading-header">
       <nav aria-label="文章导航">
         <a class="reading-brand" href="/">Liangzhenjie</a>
-        <div><a href="/#services">服务</a><a href="/#contact">联系我</a></div>
+        <div><a href="/#services">服务</a><a href={inquiryLink}>联系我</a></div>
       </nav>
     </header>
     <main class="reading-main">
       <article>
         <header class="article-heading">
-          <a class="back-link" href="/#contact">← 返回首页 · 实战笔记</a>
+          <a class="back-link" href="/#articles">← 返回首页 · 日常分享</a>
           <h1>{title}</h1>
           <p class="article-meta">{author}<span>原发布于 <time datetime={publishedAt}>{publishedAt}</time></span></p>
           <p class="historical-note">以下为当时的实践与判断，保留原文中的项目阶段记录。</p>
           <Image src={cover} alt={title + '文章封面'} width={900} widths={[360,720,900]} sizes="(max-width: 760px) calc(100vw - 40px), 720px" loading="eager" class="article-cover" />
         </header>
+        <aside class="article-takeaways" aria-labelledby="takeaways-title"><h2 id="takeaways-title">先看这三个要点</h2><ul>{takeaways.map(point=><li>{point}</li>)}</ul></aside>
         <details class="article-toc">
           <summary>文章目录</summary>
           <nav aria-label="文章目录"><ol>{headings.filter(h=>h.depth===2).map(h=><li><a href={'#'+h.slug}>{h.text}</a></li>)}</ol></nav>
@@ -73,11 +77,12 @@ const description = `${author}的 AI 落地实战笔记：${title}。原发布�
         {related.map(item=><a href={'/articles/'+item.slug+'/'}>{item.title}<span aria-hidden="true">→</span></a>)}
       </aside>
       <footer class="article-footer">
-        <p>有一件重复工作，想看看能不能交给 AI？</p>
-        <a class="btn btn-primary" href="/#contact">聊聊你的场景</a>
+        <p>你也在考虑给公司用上 AI，或想开发一套自己的工具？</p>
+        <a class="btn btn-primary" href={inquiryLink}>说说你想做的事</a>
         <a href="/">返回首页</a>
       </footer>
     </main>
+    <ImageLightbox />
   </body>
 </html>
 <style>
@@ -94,6 +99,10 @@ const description = `${author}的 AI 落地实战笔记：${title}。原发布�
   .article-meta { color:var(--text-secondary); font-size:13px; display:flex; flex-wrap:wrap; gap:8px 20px; }
   .historical-note { font-size:12px; line-height:1.8; color:var(--text-muted); margin:12px 0 24px; }
   .article-cover { width:100%; border-radius:10px; }
+  .article-takeaways { margin-top:24px; padding:20px 22px; border:1px solid #c9a55c30; border-radius:10px; background:#c9a55c08; }
+  .article-takeaways h2 { color:var(--accent-hover); font-size:14px; font-weight:500; margin-bottom:10px; }
+  .article-takeaways ul { padding-left:1.2em; color:var(--text-secondary); font-size:14px; line-height:1.8; }
+  .article-takeaways li + li { margin-top:8px; }
   .article-toc { margin:24px 0 36px; border-block:1px solid var(--border-light); font-size:14px; }
   .article-toc summary { min-height:48px; padding:12px 0; cursor:pointer; color:var(--accent); }
   .article-toc ol { padding:0 0 16px 22px; }
@@ -108,6 +117,8 @@ const description = `${author}的 AI 落地实战笔记：${title}。原发布�
   .article-prose :global(blockquote) { border-left:2px solid var(--accent); padding:8px 0 8px 20px; margin:24px 0; color:var(--text-secondary); }
   .article-prose :global(blockquote p:last-child) { margin-bottom:0; }
   .article-prose :global(img) { width:100%; height:auto; border-radius:8px; margin:32px 0; }
+  .article-prose :global(.image-preview) { margin:28px 0; }
+  .article-prose :global(.image-preview img) { margin:0; }
   .article-prose :global(a) { text-decoration:underline; text-underline-offset:4px; }
   .article-prose :global(hr) { border:0; border-top:1px solid var(--border); margin:36px 0; }
   .related-articles { margin-top:56px; border-top:1px solid var(--border-light); padding-top:24px; }
@@ -126,3 +137,18 @@ const description = `${author}的 AI 落地实战笔记：${title}。原发布�
     .article-prose :global(h3) { font-size:19px; }
   }
 </style>
+<script>
+  document.querySelectorAll<HTMLImageElement>('.article-prose img').forEach(img=>{
+    if(img.closest('a')) return;
+    const link=document.createElement('a');
+    link.href=img.currentSrc || img.src;
+    link.className='image-preview';
+    link.dataset.imageOpen='';
+    link.dataset.imageCaption=img.alt;
+    link.setAttribute('aria-label','放大图片：'+img.alt);
+    link.setAttribute('aria-haspopup','dialog');
+    link.setAttribute('aria-controls','imageLightbox');
+    img.replaceWith(link);
+    link.append(img);
+  });
+</script>

@@ -11,7 +11,7 @@ interface Props {
 const siteURL = (Astro.site?.toString() || 'https://liangzhenjie.cn').replace(/\/$/, '');
 const {
   title,
-  description = 'Liangzhenjie · AI 落地顾问。为企业提供 AI 落地、内部培训与自动化工具，为个人与小团队搭建智能体、定制工作流，减少重复工作。',
+  description = 'Liangzhenjie · AI 落地顾问。企业 AI 落地与内训，智能体与工作流定制开发。从了解业务、选办法，到开发工具、带团队使用。',
   image = `${siteURL}/images/og-default.png`,
   imageAlt = 'Liangzhenjie · AI 落地顾问｜帮传统企业，用 AI 解决真问题｜liangzhenjie.cn'
 } = Astro.props;
@@ -112,6 +112,28 @@ const squareShareImageAlt = 'Liangzhenjie · AI 落地顾问 · liangzhenjie.cn'
       );
 
       document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+      // Keep long page jumps short, without intercepting previews or external links.
+      document.addEventListener('click', event => {
+        if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || !(event.target instanceof Element)) return;
+        const link = event.target.closest<HTMLAnchorElement>('a[href^="#"]');
+        if (!link || link.hasAttribute('download') || link.target === '_blank') return;
+        let id: string;
+        try { id = decodeURIComponent(link.hash.slice(1)); } catch { return; }
+        const target = document.getElementById(id);
+        if (!target) return;
+        event.preventDefault();
+        if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+        // Wait for any dialog/menu close handler to release its scroll lock.
+        requestAnimationFrame(() => {
+          const distance = Math.abs(target.getBoundingClientRect().top);
+          const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          target.scrollIntoView({ behavior: reduced || distance > innerHeight ? 'instant' : 'smooth', block: 'start' });
+          const focusTarget = target.querySelector<HTMLElement>('h1,h2,h3') || target;
+          if (!focusTarget.hasAttribute('tabindex')) focusTarget.setAttribute('tabindex', '-1');
+          focusTarget.focus({ preventScroll: true });
+        });
+      });
 
       // Counter animation — per-element (skip if reduced motion)
       const counterPrefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

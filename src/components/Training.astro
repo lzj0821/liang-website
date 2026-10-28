@@ -1,0 +1,19 @@
+---
+import SharingRecord from './SharingRecord.astro';
+---
+<section class="section training" id="training-proof" data-story-section="training" aria-labelledby="training-title">
+  <div class="container">
+    <div class="training-heading">
+      <div><span class="section-label">线下分享与企业内训</span><h2 class="section-title" id="training-title">拿自己的业务，现场练一遍</h2><p>老板关心值不值得做，员工关心怎么用。课程按参加的人和要解决的事来安排。</p></div>
+      <a href="#contact" data-inquiry-type="training" data-inquiry-source="线下分享与企业内训">聊聊培训怎么安排 <span aria-hidden="true">↓</span></a>
+    </div>
+    <SharingRecord />
+  </div>
+</section>
+<style>
+  .training-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; }
+  .section-title { margin:12px 0; }
+  p { font-size:15px; line-height:1.8; color:var(--text-secondary); }
+  a { display:inline-flex; gap:14px; align-items:center; flex-shrink:0; min-height:44px; font-size:14px; }
+  @media(max-width:768px) { .training-heading { display:block; } a { margin-top:10px; } }
+</style>

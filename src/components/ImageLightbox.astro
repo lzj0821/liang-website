@@ -60,24 +60,24 @@
       sizeButton.textContent = original ? '适应窗口' : '原尺寸查看';
       viewport.scrollTo({ left: 0, top: 0, behavior: 'instant' });
     };
-    document.querySelectorAll<HTMLAnchorElement>('[data-image-open]').forEach(trigger => {
-      trigger.addEventListener('click', event => {
+    document.addEventListener('click', event => {
+        if (!(event.target instanceof Element)) return;
+        const trigger=event.target.closest<HTMLAnchorElement>('a[data-image-open]');
+        if(!trigger) return;
         if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
         const thumbnail = trigger.querySelector<HTMLImageElement>('img');
-        if (!thumbnail) return;
         event.preventDefault();
         activeTrigger = trigger;
-        fitImage(thumbnail.naturalWidth || thumbnail.width, thumbnail.naturalHeight || thumbnail.height);
+        fitImage(thumbnail?.naturalWidth || thumbnail?.width || 900, thumbnail?.naturalHeight || thumbnail?.height || 700);
         setOriginalSize(false);
         sizeButton.disabled = true;
-        fullImage.alt = thumbnail.alt;
-        caption.textContent = trigger.dataset.imageCaption || thumbnail.alt;
+        fullImage.alt = trigger.dataset.imageCaption || thumbnail?.alt || trigger.textContent?.trim() || '图片预览';
+        caption.textContent = fullImage.alt;
         fullImage.src = trigger.href;
         dialog.showModal();
         document.documentElement.classList.add('image-lightbox-open');
         document.body.classList.add('image-lightbox-open');
         closeButton.focus({ preventScroll: true });
-      });
     });
     fullImage.addEventListener('load', () => {
       dialog.style.setProperty('--image-original-width', `${fullImage.naturalWidth}px`);

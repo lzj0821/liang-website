@@ -12,6 +12,6 @@ const body = bodies[`../../content/articles/${article.slug}/article.md`];
 const cover = covers[`../../content/articles/${article.slug}/${article.cover}`].default;
 const {Content} = body;
 ---
-<ArticleLayout title={article.title} author={article.author} publishedAt={article.publishedAt} cover={cover} headings={body.getHeadings()} related={articles.filter(item=>item.slug!==article.slug)}>
+<ArticleLayout title={article.title} author={article.author} publishedAt={article.publishedAt} cover={cover} takeaways={article.takeaways} headings={body.getHeadings()} related={articles.filter(item=>item.slug!==article.slug)}>
   <Content />
 </ArticleLayout>

@@ -4,20 +4,23 @@
     "title": "我搭了一套 Agent 系统后，才发现“能运行”和“能上岗”是两回事",
     "author": "阿杰",
     "publishedAt": "2026-08-15",
-    "cover": "assets/cover-wechat-900x383-v1.png"
+    "cover": "assets/cover-wechat-900x383-v1.png",
+    "takeaways": ["把智能体当作一个具体岗位：先明确任务、权限和完成标准。", "把经验中的判断规则写清楚，用真实任务试用、纠正。", "安排负责人接手异常，按业务结果验收，而不只看工具能否运行。"]
   },
   {
     "slug": "ai-project-priorities",
     "title": "企业最不缺 AI 应用场景，缺的是先做哪一个的判断",
     "author": "阿杰",
     "publishedAt": "2026-08-11",
-    "cover": "assets/cover-wechat-900x383-v2.png"
+    "cover": "assets/cover-wechat-900x383-v2.png",
+    "takeaways": ["先看业务价值和使用频率，再决定哪个 AI 项目值得做。", "资料、流程和负责人是否准备好，会影响工具能否真正用起来。", "先把一段完整流程跑通，用实际结果决定下一步投入。"]
   },
   {
     "slug": "customer-followup",
     "title": "老板想用 AI 省人之前，先看看客户是怎么丢的",
     "author": "阿杰",
     "publishedAt": "2026-08-18",
-    "cover": "assets/cover-wechat-customer-loss-900x383-v3.png"
+    "cover": "assets/cover-wechat-customer-loss-900x383-v3.png",
+    "takeaways": ["先看客户在哪一步流失，再判断需要补工具还是改管理动作。", "AI 可以整理线索和记录，判断与跟进仍需要有人负责。", "先做一轮小范围试跑，再决定是否扩大系统建设。"]
   }
 ]

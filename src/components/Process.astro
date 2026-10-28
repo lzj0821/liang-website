@@ -1,12 +1,11 @@
 ---
-import WorkScene from './WorkScene.astro';
 import { processCopy } from '../data/visual-copy';
 ---
 <section class="section process" id="process" data-story-section="process">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">合作流程</span>
-      <h2 class="section-title">从咨询到落地，每一步都清晰</h2>
+      <h2 class="section-title">如果一起做，怎么开始？</h2>
     </div>
     <div class="process-timeline">
       {processCopy.map((step,i) => (
@@ -16,7 +15,6 @@ import { processCopy } from '../data/visual-copy';
             <figure class="process-visual">
 
               <figcaption><span>{step.title}</span><h3>{step.output}</h3></figcaption>
-              <WorkScene kind={step.kind} />
               <p class="process-note">{step.detail}</p>
             </figure>
             <div class="process-meta"><span>{step.time}</span><strong>{step.cost}</strong></div>
@@ -68,6 +66,17 @@ import { processCopy } from '../data/visual-copy';
   .process-note { padding:0 18px 20px;font-size:14px;line-height:1.8;color:var(--text-secondary); }
   .process-meta { margin-top:auto; }
   @media(max-width:768px) { .process-visual { min-height:0; } figcaption { padding:18px 14px 10px; } .process-note { padding:0 14px 16px; } }
+  /* The process is a reading aid; keep the deliverable and terms in view together. */
+  figcaption { padding-bottom:12px; }
+  .process-card:hover { transform:none; }
+  @media(max-width:768px) {
+    .process-timeline { gap:12px; }
+    figcaption { display:flex; align-items:baseline; gap:12px; padding:14px 14px 8px; }
+    figcaption span { margin:0; font-size:12px; }
+    h3 { font-size:18px; }
+    .process-note { font-size:13px; padding-bottom:12px; }
+    .process-meta { font-size:12px; padding:10px 14px; }
+  }
 </style>
 <script>
   const processSection = document.querySelector<HTMLElement>('[data-story-section="process"]');

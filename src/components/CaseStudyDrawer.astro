@@ -1,12 +1,10 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import workbench from '../assets/refresh/workbench-comparison.png';
-import crmDemo from '../assets/refresh/crm-demo-anonymized.png';
 import jutuPoster from '../assets/refresh/jutu-input-output.png';
 import { selfBuiltProducts } from '../data/self-built-products';
 import { caseArt, productArt } from '../data/case-art';
 const workbenchFull = await getImage({ src: workbench, width: 1600, format: 'webp' });
-const crmDemoFull = await getImage({ src: crmDemo, width: 1000, format: 'webp' });
 const jutuFull = await getImage({ src: jutuPoster, width: 1600, format: 'webp' });
 const caseFull = Object.fromEntries(await Promise.all(Object.entries(caseArt).map(async ([id, art]) => [id, await getImage({src: art.image, width:1600, format:'webp'})])));
 const productFull = Object.fromEntries(await Promise.all(Object.entries(productArt).map(async ([id, art]) => [id, await getImage({src:art.image, width:1600, format:'webp'})])));
@@ -73,22 +71,14 @@ const productFull = Object.fromEntries(await Promise.all(Object.entries(productA
 
       {Object.entries(caseArt).filter(([id]) => id !== 'jutu').map(([id, art]) => (
         <figure class="case-drawer-media" data-case-media={id} hidden>
-          <a class="image-preview" href={caseFull[id].src} data-image-open data-image-caption={id === 'crm' ? '招商客户管理系统' : id === 'workbench' ? '创作间' : id === 'youtube' ? 'AI 系列短视频' : id === 'growth' ? '运营数据整理提效' : '活动报表与网页录入'}
+          <a class="image-preview" href={caseFull[id].src} data-image-open data-image-caption={id === 'crm' ? '多平台客资 CRM · 公司内部项目' : id === 'workbench' ? '创作间' : id === 'youtube' ? 'AI 系列短视频' : id === 'growth' ? '运营数据整理提效' : '活动报表与网页录入'}
             aria-label={'放大' + (id === 'crm' ? 'CRM' : id === 'workbench' ? '创作间' : id === 'youtube' ? '短视频' : id === 'growth' ? '运营数据整理' : '自动化') + '展示图'} aria-haspopup="dialog" aria-controls="imageLightbox">
             <Image src={art.image} alt={art.alt} width={1000} loading="lazy" />
           </a>
         </figure>
       ))}
-      <p class="case-description" data-case-summary></p>
+      <dl class="case-facts" data-case-facts></dl>
       <div class="case-metrics" data-case-metrics hidden></div>
-      <p class="case-result" data-case-result></p>
-      <details class="case-evidence" data-case-media="crm" hidden>
-        <summary>查看系统页面</summary>
-        <p class="case-result">本地演示环境，使用测试数据。</p>
-        <a class="image-preview" href={crmDemoFull.src} data-image-open data-image-caption="招商 CRM · 本地演示环境，测试数据" aria-label="放大 CRM 系统页面" aria-haspopup="dialog" aria-controls="imageLightbox">
-          <Image src={crmDemo} alt="招商 CRM 本地演示页面：客户分级、分配、跟进状态" width={680} loading="lazy" />
-        </a>
-      </details>
       <details class="case-evidence" data-case-media="workbench" hidden>
         <summary>查看实际样片对比</summary>
         <a class="image-preview" href={workbenchFull.src} data-image-open data-image-caption="创作间 · 两版实际样片" aria-label="放大实际样片对比" aria-haspopup="dialog" aria-controls="imageLightbox">
@@ -104,6 +94,10 @@ const productFull = Object.fromEntries(await Promise.all(Object.entries(productA
 </div>
 
 <style>
+  .case-facts { display:grid; gap:0; margin:0; }
+  .case-facts :global(div) { padding:16px 0; border-bottom:1px solid var(--border); }
+  .case-facts :global(dt) { color:var(--accent); font-size:12px; margin-bottom:8px; }
+  .case-facts :global(dd) { margin:0; font-size:14px; line-height:1.85; color:var(--text-secondary); white-space:pre-line; }
   [hidden] { display:none !important; }
   .case-products { display:grid; gap:20px; }
   .product-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-bottom:1px solid var(--border-light); }
@@ -120,6 +114,8 @@ const productFull = Object.fromEntries(await Promise.all(Object.entries(productA
   .case-drawer-media img, .case-evidence img { display:block; width:100%; height:auto; border-radius:8px; }
   .product-proof .image-preview { display:block; aspect-ratio:950/590; overflow:hidden; border-radius:8px; }
   .product-proof img { height:100%; object-fit:cover; object-position:top; }
+  [data-product-panel]:not([data-product-panel="jutu"]) .case-drawer-media { padding:20px;background:#1b1c17;border-radius:10px; }
+  [data-product-panel]:not([data-product-panel="jutu"]) .case-drawer-media img { max-width:260px;max-height:480px;object-fit:contain;margin:auto; }
   .case-evidence { border-top:1px solid var(--border); padding-top:8px; }
   .case-evidence summary { color:var(--text-secondary); font-size:13px; cursor:pointer; min-height:44px; display:flex; align-items:center; gap:10px; }
   .case-evidence summary::before { content:'+'; color:var(--accent); }
@@ -363,8 +359,6 @@ const productFull = Object.fromEntries(await Promise.all(Object.entries(productA
       category: drawer.querySelector<HTMLElement>('[data-case-category]'),
       period: drawer.querySelector<HTMLElement>('[data-case-period]'),
       title: drawer.querySelector<HTMLElement>('[data-case-title]'),
-      summary: drawer.querySelector<HTMLElement>('[data-case-summary]'),
-      result: drawer.querySelector<HTMLElement>('[data-case-result]'),
     };
     let activeTrigger: HTMLElement | null = null;
     const productTabs = Array.from(drawer.querySelectorAll<HTMLButtonElement>('[data-product-tab]'));
@@ -378,6 +372,7 @@ const productFull = Object.fromEntries(await Promise.all(Object.entries(productA
       drawer.querySelectorAll<HTMLElement>('[data-product-panel]').forEach(section => {
         section.hidden = section.dataset.productPanel !== selected.dataset.productTab;
       });
+      if (cta) cta.dataset.inquirySource=selected.textContent?.trim() || '小程序开发';
       if (focus) selected.focus();
     };
     productTabs.forEach((tab, index) => {
@@ -415,10 +410,35 @@ const productFull = Object.fromEntries(await Promise.all(Object.entries(productA
       activeTrigger.setAttribute('aria-expanded', 'true');
 
       setField(fields.category, detail.category);
-      setField(fields.period, detail.period);
+      setField(fields.period, [detail.kind, detail.period].filter((value,index,all)=>all.indexOf(value)===index).join(' · '));
       setField(fields.title, detail.title);
-      setField(fields.summary, detail.summary);
-      setField(fields.result, detail.result);
+      const facts = drawer.querySelector<HTMLElement>('[data-case-facts]');
+      if (facts) {
+        facts.replaceChildren();
+        const rows = detail.id === 'crm' ? [
+          ['项目背景', detail.client?.industry || detail.category],
+          ['前后的变化', detail.problem + '\n' + detail.result],
+          ['我负责什么', detail.work],
+        ] : detail.id === 'youtube' ? [
+          ['制作与发布', detail.work],
+        ] : [
+          ['解决什么', detail.value],
+          ...(detail.client ? [['行业与规模', [detail.client.industry, detail.client.size].filter(Boolean).join(' · ')]] : []),
+          ['为什么做', detail.problem], ['做了什么', detail.work],
+          ...(detail.result ? [['做完之后', detail.result]] : []),
+          ...(detail.measuredResult ? [['结果与周期', [detail.measuredResult.text, detail.measuredResult.period, detail.measuredResult.method].join('\n')]] : []),
+          ...(detail.testimonial ? [['客户评价', detail.testimonial.quote + '\n' + detail.testimonial.role + ' · ' + detail.testimonial.date]] : []),
+        ];
+        rows.forEach(([label,text]) => {
+          const row=document.createElement('div'), term=document.createElement('dt'), description=document.createElement('dd');
+          term.textContent=label; description.textContent=text; row.append(term,description); facts.append(row);
+        });
+        facts.hidden=detail.id==='jutu';
+      }
+      if (cta) {
+        cta.dataset.inquiryType=detail.id==='jutu'?'miniapp':detail.audience;
+        cta.dataset.inquirySource=detail.title;
+      }
       drawer.querySelectorAll<HTMLDetailsElement>('details').forEach(item => item.open = false);
       const metrics = drawer.querySelector<HTMLElement>('[data-case-metrics]');
       if (metrics) {
@@ -438,8 +458,6 @@ const productFull = Object.fromEntries(await Promise.all(Object.entries(productA
         media.hidden = media.dataset.caseMedia !== trigger.dataset.caseDetailTrigger;
       });
       const isProducts = detail.id === 'jutu';
-      if (fields.summary) fields.summary.hidden = isProducts;
-      if (fields.result) fields.result.hidden = isProducts || !detail.result;
       if (isProducts) selectProduct(trigger.dataset.productOpen || 'jutu');
 
       drawer.classList.add('is-open');
@@ -447,7 +465,9 @@ const productFull = Object.fromEntries(await Promise.all(Object.entries(productA
       document.documentElement.classList.add('case-drawer-open');
       document.body.classList.add('case-drawer-open');
       panel?.scrollTo({ top: 0 });
-      requestAnimationFrame(() => closeControl?.focus());
+      requestAnimationFrame(() => {
+        if (activeTrigger === trigger && drawer.classList.contains('is-open')) closeControl?.focus();
+      });
     };
 
     triggers.forEach((trigger) => {

@@ -1,107 +1,67 @@
 ---
 import { featuredCases } from '../data/featured-cases';
 import CaseVisual from './CaseVisual.astro';
-const accents: Record<string, string> = {
-  crm: '#8eb9d4', automation: '#85bfae', jutu: '#aaa5de',
-  workbench: '#b4a0ce', youtube: '#d3a08c', growth: '#d3b672',
-};
-const cardCopy: Record<string, string> = {
-  crm: '多平台线索，沉淀到自己的系统。',
-  automation: '少做重复整理与复制填表。',
-  jutu: '居图 AI · AI 重置 · 纸间声语',
-  workbench: '视频、字幕、封面，集中制作。',
-  youtube: '15 天内，完成系列制作与发布。',
-  growth: '把重复整理，交给工具处理。',
-};
+import AgentExamples from './AgentExamples.astro';
+const mainCases = ['crm','workbench'].map(id=>featuredCases.find(item=>item.id===id)!);
+const otherCases = ['automation','growth','youtube'].map(id=>featuredCases.find(item=>item.id===id)!);
 ---
-
 <section class="section cases" id="cases" data-story-section="cases">
   <div class="container">
-    <div class="section-header reveal">
-      <span class="section-label">实战案例</span>
-      <h2 class="section-title">用结果说话</h2>
-      <p class="section-desc">从客户跟进到内容制作，让需求变成可用的工具。</p>
-    </div>
+    <div class="section-header reveal"><span class="section-label">项目与作品</span><h2 class="section-title">这些事，我已经动手做了</h2><p class="section-desc">先看两个项目：一个用在公司业务里，一个用在自己的创作中。</p></div>
     <div class="cases-grid">
-      {featuredCases.map((item, index) => (
-        <article class="case-card card reveal" id={'case-' + item.id} data-case-story={index} style={'--case-accent:' + accents[item.id]}>
+      {mainCases.map(item=><div id={item.id==='crm'?'cases-business':'cases-personal'} class="case-anchor">
+        <article class="case-card card reveal" id={'case-'+item.id}>
           <CaseVisual id={item.id} />
-          <div class="case-copy">
-            <span class="case-brand">{item.category}</span>
-            <h3 class="case-title">{item.title}</h3>
-            <div class="case-bottom">
-              <p class="case-desc">{cardCopy[item.id]}</p>
-              <button type="button" class="case-detail-trigger" data-case-detail-trigger={item.id} data-product-open={item.id === 'jutu' ? 'reset' : undefined}
-                aria-label={'了解案例：' + item.title} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-              </button>
-            </div>
-          </div>
+          <div class="case-copy"><div class="case-meta"><span>{item.category}</span><span>{item.kind}</span></div><h3>{item.title}</h3><p class="case-value">{item.value}</p>
+          <button type="button" class="case-detail-trigger" data-case-detail-trigger={item.id} aria-label={'了解案例：'+item.title} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">查看项目 <span aria-hidden="true">↗</span></button></div>
         </article>
-      ))}
+      </div>)}
     </div>
+    <a class="products-link" href="#miniapp-products">还做了三个微信小程序，看看能用来做什么 <span aria-hidden="true">↑</span></a>
+    <details class="more-projects">
+      <summary><span>更多项目与使用样例<small>报表处理、系列短视频、智能体样例</small></span><span class="more-toggle" aria-hidden="true">+</span></summary>
+      <div class="more-content">
+        <div class="other-projects">
+          {otherCases.map(item=><article id={'case-'+item.id}>
+            <span class="case-kind">{item.kind}</span><h3>{item.title}</h3><p>{item.id==='youtube'?item.summary:item.value}</p>
+            <button type="button" data-case-detail-trigger={item.id} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">看看怎么做的 <span aria-hidden="true">↗</span></button>
+          </article>)}
+        </div>
+        <AgentExamples />
+      </div>
+    </details>
   </div>
 </section>
-
 <style>
-  .cases { overflow: hidden; }
-  .cases > .container { position: relative; z-index: 2; }
-  .cases-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
-  .case-card {
-    min-width: 0; scroll-margin-top: 100px; padding: 12px;
-    display: flex; flex-direction: column; position: relative;
-    border: 1px solid #ffffff0f; border-radius: 16px; overflow: hidden;
-    background: linear-gradient(155deg, color-mix(in srgb,var(--case-accent) 4%,transparent),transparent 60%),var(--bg-card);
-    transition: transform .3s var(--ease-out), border-color .3s, box-shadow .3s;
-  }
-  .case-copy { display: flex; flex-direction: column; flex: 1; gap: 10px; padding: 20px 10px 8px; }
-  .case-brand { display: flex; align-items: center; gap: 8px; color: var(--case-accent); font-size: 12px; font-weight: 500; letter-spacing: .04em; }
-  .case-brand::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
-  .case-title { font-size: 20px; font-weight: 700; letter-spacing: -.02em; line-height: 1.45; text-wrap: balance; }
-  .case-bottom { display: flex; align-items: center; gap: 12px; margin-top: auto; }
-  .case-desc { flex: 1; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
-  .case-detail-trigger {
-    display: flex; align-items: center; justify-content: center; flex: 0 0 44px;
-    width: 44px; height: 44px; border: 1px solid var(--border-light); border-radius: 50%;
-    background: transparent; color: var(--text-secondary); cursor: pointer;
-    transition: color .2s, border-color .2s, background .2s;
-  }
-  /* One accessible button opens the case from the entire card. */
-  .case-detail-trigger::after { content: ''; position: absolute; inset: 0; }
-  .case-detail-trigger svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s; }
-  .case-card:focus-within { outline: 2px solid var(--accent); outline-offset: 4px; }
-  .case-detail-trigger:focus-visible { outline-offset: 2px; }
-  @media (hover: hover) and (pointer: fine) {
-    .case-card.visible:hover { transform: translateY(-4px); border-color: color-mix(in srgb,var(--case-accent) 35%,transparent); box-shadow: 0 16px 36px #0003; }
-    .case-card:hover .case-detail-trigger { color: var(--case-accent); border-color: var(--case-accent); background: color-mix(in srgb,var(--case-accent) 8%,transparent); }
-    .case-card:hover .case-detail-trigger svg { transform: translateX(2px); }
-  }
-  @media (max-width: 1024px) { .cases-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; } }
-  @media (max-width: 640px) {
-    .cases-grid { grid-template-columns: 1fr; gap: 20px; }
-    .case-card { padding: 10px; }
-    .case-copy { padding: 16px 8px 6px; gap: 8px; }
-    .case-title { font-size: 20px; }
-  }
-  @media (prefers-reduced-motion: reduce) { .case-card, .case-card.visible:hover { transform: none; } }
+  .cases-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px; }
+  .case-anchor,.case-card { min-width:0;scroll-margin-top:100px; }
+  .case-card { padding:12px;height:100%;display:flex;flex-direction:column;border-color:#c9a55c35; }
+  .case-copy { padding:22px 14px 4px;flex:1;display:flex;flex-direction:column; }
+  .case-meta { display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--accent); }
+  .case-meta span:last-child { color:var(--text-secondary); }
+  h3 { font-size:23px;font-weight:600;line-height:1.5;margin:12px 0 10px; }
+  .case-value { color:var(--text-secondary);font-size:15px;line-height:1.8;margin-bottom:18px; }
+  .case-detail-trigger { display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:auto;padding:12px 0;min-height:44px;border:0;border-top:1px solid var(--border);background:none;font:inherit;font-size:14px;color:var(--accent);cursor:pointer; }
+  .products-link { display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding:12px 4px;font-size:14px;line-height:1.7;color:var(--text-secondary); }
+  .products-link:hover { color:var(--accent); }
+  .more-projects { border:1px solid var(--border-light);border-radius:12px;margin-top:16px;overflow:hidden;background:var(--bg-card); }
+  summary { display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px;cursor:pointer;list-style:none;font-size:17px; }
+  summary::-webkit-details-marker { display:none; } summary small { display:block;font-size:13px;color:var(--text-secondary);line-height:1.8;margin-top:6px; }
+  .more-toggle { color:var(--accent);font-size:24px; } details[open] .more-toggle { transform:rotate(45deg); }
+  .more-content { padding:0 24px 24px; }
+  .other-projects { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px; }
+  .other-projects article { display:flex;flex-direction:column;min-width:0;padding:20px;background:#10110f;border:1px solid var(--border);border-radius:10px;scroll-margin-top:100px; }
+  .case-kind { font-size:12px;color:var(--text-muted); }.other-projects h3 { font-size:18px; }
+  .other-projects p { font-size:14px;line-height:1.8;color:var(--text-secondary);margin-bottom:14px; }
+  .other-projects button { display:flex;justify-content:space-between;align-items:center;min-height:44px;margin-top:auto;background:none;border:0;border-top:1px solid var(--border);font:inherit;font-size:13px;color:var(--accent);cursor:pointer;text-align:left; }
+  @media(max-width:768px) { .cases-grid { grid-template-columns:1fr;gap:20px; }.case-copy { padding:18px 8px 2px; }h3 { font-size:21px; }.other-projects { grid-template-columns:1fr;gap:12px; }summary { padding:20px; }.more-content { padding:0 16px 16px; }.products-link { font-size:13px; } }
 </style>
-
 <script>
-  const casesSection = document.querySelector<HTMLElement>('[data-story-section="cases"]');
-
-  if (casesSection && !casesSection.dataset.storyBound) {
-    casesSection.dataset.storyBound = 'true';
-    const cards = Array.from(casesSection.querySelectorAll<HTMLElement>('[data-case-story]'));
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    window.addEventListener('visual-story:update', (event) => {
-      const detail = (event as CustomEvent<{ section: string; progress: number }>).detail;
-      if (detail.section !== 'cases') return;
-
-      cards.forEach((card, index) => {
-        const threshold = 0.04 + (index / Math.max(1, cards.length - 1)) * 0.7;
-        card.classList.toggle('story-active', reducedMotion || detail.progress >= threshold);
-      });
-    });
-  }
+  const revealLinkedProject=()=>{
+    const target=document.getElementById(location.hash.slice(1));
+    const collection=target?.closest<HTMLDetailsElement>('.more-projects');
+    if(collection && !collection.open){collection.open=true;requestAnimationFrame(()=>target?.scrollIntoView({behavior:'instant',block:'start'}));}
+  };
+  revealLinkedProject();
+  window.addEventListener('hashchange',revealLinkedProject);
 </script>

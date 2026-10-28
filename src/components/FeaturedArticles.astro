@@ -5,7 +5,7 @@ const selected = order.map(slug=>articles.find(article=>article.slug===slug)!);
 ---
 <nav class="featured-articles" aria-label="精选实战笔记">
   {selected.map((article,index)=>(
-    <a href={'/articles/'+article.slug+'/'}><span class="article-number" aria-hidden="true">{String(index+1).padStart(2,'0')}</span><span>{article.title}</span><span aria-hidden="true">↗</span></a>
+    <a href={'/articles/'+article.slug+'/'}><span class="article-number" aria-hidden="true">{String(index+1).padStart(2,'0')}</span><span>{article.title}</span><span aria-hidden="true">→</span></a>
   ))}
 </nav>
 <style>

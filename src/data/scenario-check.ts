@@ -1,6 +1,6 @@
 export const scenarioQuestions = [
-  { title: '先挑一件最想省力的事', short: '选场景', groups: [
-    { name: 'task', label: '工作场景', options: [['reports', '报表与录入'], ['customer', '客户跟进'], ['content', '内容制作'], ['research', '资料查找'], ['images', '产品出图'], ['unsure', '还没想清']] },
+  { title: '先选一个想改善的业务环节', short: '选方向', groups: [
+    { name: 'task', label: '业务环节', options: [['reports', '报表与业务运营'], ['customer', '客户管理与跟进'], ['content', '内容制作与营销'], ['research', '资料与专业知识'], ['images', '商品与空间展示'], ['unsure', '还没想清楚']] },
   ] },
   { title: '它有多占用你的时间？', short: '看投入', groups: [
     { name: 'workload', label: '投入程度', options: [['high', '经常做，而且很耗时'], ['medium', '定期做，想再快一点'], ['low', '偶尔做，不太费时间'], ['unsure', '还没有算过']] },

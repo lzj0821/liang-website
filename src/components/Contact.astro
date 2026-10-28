@@ -1,540 +1,236 @@
 ---
-// Contact Section — Social Matrix + CTA
 import { Image } from 'astro:assets';
 import wechatQR from '../assets/images/wechat-qr.png';
 import FeaturedArticles from './FeaturedArticles.astro';
+const socials = [
+  {name:'小红书',url:'https://xhslink.com/m/7htcBmaHvMh'},
+  {name:'抖音',url:'https://v.douyin.com/n4Uw16gQ4J4/'},
+  {name:'公众号',url:'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzY5NzIzNzExMg==#wechat_redirect'},
+];
 ---
-
 <section class="section contact" id="contact" data-story-section="contact">
   <div class="container">
+    <div class="section-header contact-heading"><span class="section-label">联系我</span><h2 class="section-title">说说你想做的事</h2><p class="section-desc">直接加微信聊就好。想先理一理思路，也可以在下面写几句，复制发给我。</p></div>
+    <div class="contact-options" aria-label="选择联系方法"><button type="button" class="btn btn-primary" data-qr-open>加微信聊聊 <span aria-hidden="true">↗</span></button><a href="#inquiry-form" class="btn btn-outline">先写几句 <span aria-hidden="true">↓</span></a><span>微信号 C49909</span></div>
     <div class="contact-layout">
-      <!-- Left: CTA -->
-      <div class="contact-cta reveal">
-        <span class="section-label">联系我</span>
-        <h2 class="section-title">聊聊你最想<br />省下时间的那件事</h2>
-        <p class="section-desc contact-desc">
-          告诉我：你做什么业务、哪一步最费时、现在怎么处理。<br />
-          发自测结果或去掉敏感信息的样本也可以。
-        </p>
+      <form class="inquiry-form" id="inquiry-form" data-inquiry-form hidden novalidate>
+        <div class="inquiry-field">
+          <label for="inquiry-type">想聊哪方面？</label>
+          <select id="inquiry-type" name="type">
+            <option value="unsure">还没确定</option>
+            <option value="enterprise">企业 AI 落地</option>
+            <option value="individual">智能体与工作流定制开发</option>
+            <option value="miniapp">小程序开发</option>
+            <option value="training">线下分享与企业内训</option>
+          </select>
+          <p class="inquiry-help" data-inquiry-help>先说业务和想法，技术怎么选，我们一起看。</p>
+        </div>
+        <div class="inquiry-source" data-inquiry-source-row hidden><span>关于：<span data-inquiry-source-text></span></span><button type="button" data-clear-inquiry-source aria-label="移除项目来源">移除</button></div>
+        <div class="inquiry-field"><label for="inquiry-business">你在做什么业务？</label><input id="inquiry-business" name="business" type="text" maxlength="100" required autocomplete="off" placeholder="做什么行业，服务哪些客户？简单说说就好" aria-describedby="inquiry-business-error" /><span class="field-error" id="inquiry-business-error"></span></div>
+        <div class="inquiry-field"><label for="inquiry-task">这次最想做成什么？</label><textarea id="inquiry-task" name="task" rows="3" maxlength="500" required placeholder="想解决的问题，或者想做的工具、产品，都可以聊" aria-describedby="inquiry-task-error"></textarea><span class="field-error" id="inquiry-task-error"></span></div>
+        <div class="inquiry-field"><label for="inquiry-current">现在是怎么做的？<span class="optional">可不填</span></label><textarea id="inquiry-current" name="current" rows="2" maxlength="500" placeholder="有现成做法、参考产品或希望完成的时间，可以一起说说" aria-describedby="inquiry-current-error"></textarea><span class="field-error" id="inquiry-current-error"></span></div>
         <div class="assessment-contact" data-assessment-contact hidden>
-          <span>你的自测建议</span>
-          <p data-assessment-contact-title></p>
-          <button type="button" class="wechat-copy" data-copy-assessment>复制自测结果</button>
-          <p data-assessment-copy-status role="status" aria-live="polite"></p>
-          <textarea data-assessment-copy-fallback hidden readonly aria-label="自测结果，可选中复制" rows="8"></textarea>
+          <label class="assessment-toggle"><input type="checkbox" name="includeAssessment" checked data-include-assessment />一起带上场景自测结果</label>
+          <details><summary>查看或调整自测内容</summary><label class="sr-only" for="inquiry-assessment">自测结果</label><textarea id="inquiry-assessment" data-inquiry-assessment rows="7" maxlength="2000"></textarea></details>
         </div>
-        <div class="contact-qr">
-          <button type="button" class="contact-qr-frame" data-qr-open aria-label="放大微信二维码">
-            <Image src={wechatQR} alt="Liangzhenjie 的微信二维码" class="contact-qr-img" loading="lazy" />
-            <span class="contact-qr-ring" aria-hidden="true"></span>
-          </button>
-          <span class="contact-qr-hint">微信内可长按识别，也可复制微信号添加</span>
-          <div class="wechat-id-row"><span>微信号 <strong id="wechat-id">C49909</strong></span><button type="button" data-copy-wechat class="wechat-copy">复制微信号</button></div>
-          <p class="wechat-copy-status" data-copy-status role="status" aria-live="polite"></p>
-          <span class="contact-qr-hint">添加时请备注业务或需求，方便开始沟通</span>
-        </div>
-      </div>
-
-      <!-- Right: Social Links -->
-      <div class="contact-social reveal reveal-delay-1">
-        <h3 class="social-title">也可以看看我的日常分享</h3>
-        <p class="social-desc">三篇实战笔记，记录我怎样判断和推进 AI 项目。</p>
-        <FeaturedArticles />
-
-        <div class="social-grid">
-          <!-- 小红书 -->
-          <a href="https://xhslink.com/m/7htcBmaHvMh" target="_blank" rel="noopener noreferrer" class="social-card card" data-social-story="0">
-            <div class="social-icon social-icon-xhs">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M22.405 9.879c.002.016.01.02.07.019h.725a.797.797 0 0 0 .78-.972.794.794 0 0 0-.884-.618.795.795 0 0 0-.692.794c0 .101-.002.666.001.777zm-11.509 4.808c-.203.001-1.353.004-1.685.003a2.528 2.528 0 0 1-.766-.126.025.025 0 0 0-.03.014L7.7 16.127a.025.025 0 0 0 .01.032c.111.06.336.124.495.124.66.01 1.32.002 1.981 0 .01 0 .02-.006.023-.015l.712-1.545a.025.025 0 0 0-.024-.036zM.477 9.91c-.071 0-.076.002-.076.01a.834.834 0 0 0-.01.08c-.027.397-.038.495-.234 3.06-.012.24-.034.389-.135.607-.026.057-.033.042.003.112.046.092.681 1.523.787 1.74.008.015.011.02.017.02.008 0 .033-.026.047-.044.147-.187.268-.391.371-.606.306-.635.44-1.325.486-1.706.014-.11.021-.22.03-.33l.204-2.616.022-.293c.003-.029 0-.033-.03-.034zm7.203 3.757a1.427 1.427 0 0 1-.135-.607c-.004-.084-.031-.39-.235-3.06a.443.443 0 0 0-.01-.082c-.004-.011-.052-.008-.076-.008h-1.48c-.03.001-.034.005-.03.034l.021.293c.076.982.153 1.964.233 2.946.05.4.186 1.085.487 1.706.103.215.223.419.37.606.015.018.037.051.048.049.02-.003.742-1.642.804-1.765.036-.07.03-.055.003-.112zm3.861-.913h-.872a.126.126 0 0 1-.116-.178l1.178-2.625a.025.025 0 0 0-.023-.035l-1.318-.003a.148.148 0 0 1-.135-.21l.876-1.954a.025.025 0 0 0-.023-.035h-1.56c-.01 0-.02.006-.024.015l-.926 2.068c-.085.169-.314.634-.399.938a.534.534 0 0 0-.02.191.46.46 0 0 0 .23.378.981.981 0 0 0 .46.119h.59c.041 0-.688 1.482-.834 1.972a.53.53 0 0 0-.023.172.465.465 0 0 0 .23.398c.15.092.342.12.475.12l1.66-.001c.01 0 .02-.006.023-.015l.575-1.28a.025.025 0 0 0-.024-.035zm-6.93-4.937H3.1a.032.032 0 0 0-.034.033c0 1.048-.01 2.795-.01 6.829 0 .288-.269.262-.28.262h-.74c-.04.001-.044.004-.04.047.001.037.465 1.064.555 1.263.01.02.03.033.051.033.157.003.767.009.938-.014.153-.02.3-.06.438-.132.3-.156.49-.419.595-.765.052-.172.075-.353.075-.533.002-2.33 0-4.66-.007-6.991a.032.032 0 0 0-.032-.032zm11.784 6.896c0-.014-.01-.021-.024-.022h-1.465c-.048-.001-.049-.002-.05-.049v-4.66c0-.072-.005-.07.07-.07h.863c.08 0 .075.004.075-.074V8.393c0-.082.006-.076-.08-.076h-3.5c-.064 0-.075-.006-.075.073v1.445c0 .083-.006.077.08.077h.854c.075 0 .07-.004.07.07v4.624c0 .095.008.084-.085.084-.37 0-1.11-.002-1.304 0-.048.001-.06.03-.06.03l-.697 1.519s-.014.025-.008.036c.006.01.013.008.058.008 1.748.003 3.495.002 5.243.002.03-.001.034-.006.035-.033v-1.539zm4.177-3.43c0 .013-.007.023-.02.024-.346.006-.692.004-1.037.004-.014-.002-.022-.01-.022-.024-.005-.434-.007-.869-.01-1.303 0-.072-.006-.071.07-.07l.733-.003c.041 0 .081.002.12.015.093.025.16.107.165.204.006.431.002 1.153.001 1.153zm2.67.244a1.953 1.953 0 0 0-.883-.222h-.18c-.04-.001-.04-.003-.042-.04V10.21c0-.132-.007-.263-.025-.394a1.823 1.823 0 0 0-.153-.53 1.533 1.533 0 0 0-.677-.71 2.167 2.167 0 0 0-1-.258c-.153-.003-.567 0-.72 0-.07 0-.068.004-.068-.065V7.76c0-.031-.01-.041-.046-.039H17.93s-.016 0-.023.007c-.006.006-.008.012-.008.023v.546c-.008.036-.057.015-.082.022h-.95c-.022.002-.028.008-.03.032v1.481c0 .09-.004.082.082.082h.913c.082 0 .072.128.072.128V11.19s.003.117-.06.117h-1.482c-.068 0-.06.082-.06.082v1.445s-.01.068.064.068h1.457c.082 0 .076-.006.076.079v3.225c0 .088-.007.081.082.081h1.43c.09 0 .082.007.082-.08v-3.27c0-.029.006-.035.033-.035l2.323-.003c.098 0 .191.02.28.061a.46.46 0 0 1 .274.407c.008.395.003.79.003 1.185 0 .259-.107.367-.33.367h-1.218c-.023.002-.029.008-.028.033.184.437.374.871.57 1.303a.045.045 0 0 0 .04.026c.17.005.34.002.51.003.15-.002.517.004.666-.01a2.03 2.03 0 0 0 .408-.075c.59-.18.975-.698.976-1.313v-1.981c0-.128-.01-.254-.034-.38 0 .078-.029-.641-.724-.998z"/>
-              </svg>
-            </div>
-            <div class="social-info">
-              <span class="social-name">小红书</span>
-              <span class="social-handle">@阿杰Thinking</span>
-            </div>
-            <svg class="social-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M4 12l8-8M12 4v8M12 4H4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-
-          <!-- 抖音 -->
-          <a href="https://v.douyin.com/n4Uw16gQ4J4/" target="_blank" rel="noopener noreferrer" class="social-card card" data-social-story="1">
-            <div class="social-icon social-icon-dy">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.98a8.21 8.21 0 0 0 4.76 1.5V7.04a4.84 4.84 0 0 1-1-.35z"/>
-              </svg>
-            </div>
-            <div class="social-info">
-              <span class="social-name">抖音</span>
-              <span class="social-handle">@阿杰Thinking</span>
-            </div>
-            <svg class="social-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M4 12l8-8M12 4v8M12 4H4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-
-          <!-- 公众号 -->
-          <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzY5NzIzNzExMg==#wechat_redirect" target="_blank" rel="noopener noreferrer" class="social-card card" data-social-story="2">
-            <div class="social-icon social-icon-wx">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.045c.133 0 .24-.11.24-.245 0-.06-.024-.12-.04-.178l-.326-1.233a.493.493 0 0 1 .177-.554C23.216 18.504 24 16.92 24 15.176c0-3.33-3.037-6.057-7.062-6.318zm-2.89 2.065c.535 0 .969.44.969.983a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.983.97-.983zm4.844 0c.535 0 .969.44.969.983a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.983.97-.983z"/>
-              </svg>
-            </div>
-            <div class="social-info">
-              <span class="social-name">公众号</span>
-              <span class="social-handle">@阿杰Thinking</span>
-            </div>
-            <svg class="social-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M4 12l8-8M12 4v8M12 4H4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
-      </div>
+        <button type="submit" class="btn btn-primary inquiry-copy">复制这些话，去微信聊 <span aria-hidden="true">↗</span></button>
+        <p class="inquiry-status" data-inquiry-status role="status" aria-live="polite"></p>
+        <button type="button" class="text-button" data-qr-open data-after-copy hidden>查看微信二维码，添加后粘贴发送 →</button>
+        <label for="inquiry-output" data-inquiry-output-label hidden>选中下方内容，复制到微信</label>
+        <textarea id="inquiry-output" data-inquiry-output rows="10" readonly hidden></textarea>
+      </form>
+      <noscript><p>微信联系 C49909，告诉我你的业务、想解决的问题和现在的做法。</p></noscript>
+      <aside class="contact-direct" aria-labelledby="wechat-title">
+        <h3 id="wechat-title">微信上找我</h3><p>有现成的想法或截图，直接发过来也行。</p>
+        <button type="button" class="contact-qr-frame" data-qr-open aria-label="放大微信二维码"><Image src={wechatQR} alt="Liangzhenjie 的微信二维码" width={280} loading="lazy" /></button>
+        <div class="wechat-id-row"><span>微信号 <strong id="wechat-id">C49909</strong></span><button type="button" data-copy-wechat class="text-button">复制微信号</button></div>
+        <p class="copy-status" data-copy-status role="status" aria-live="polite"></p>
+        <p class="qr-hint">微信内可长按识别</p>
+      </aside>
     </div>
+    <div class="contact-reading" id="articles"><div><h3>我的日常分享</h3><p>做过的尝试，遇到的问题，写下来和你分享。</p><div class="social-links">{socials.map(item=><a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}<span aria-hidden="true">↗</span></a>)}</div></div><FeaturedArticles /></div>
   </div>
   <dialog class="qr-lightbox" data-qr-dialog aria-labelledby="qr-dialog-title">
-    <div class="qr-dialog-panel">
-      <button type="button" class="qr-dialog-close" data-qr-close aria-label="关闭微信二维码">×</button>
-      <h3 id="qr-dialog-title">微信联系 Liangzhenjie</h3>
-      <img src={wechatQR.src} alt="Liangzhenjie 的微信二维码，微信号 C49909" width={wechatQR.width} height={wechatQR.height} />
-      <p>微信号 C49909<br />微信内可长按图片识别或保存</p>
-      <a href={wechatQR.src} download="Liangzhenjie-微信二维码.png" class="btn btn-primary">保存二维码</a>
-    </div>
+    <button type="button" class="qr-dialog-close" data-qr-close aria-label="关闭微信二维码">×</button>
+    <h3 id="qr-dialog-title">微信联系 Liangzhenjie</h3>
+    <img src={wechatQR.src} alt="Liangzhenjie 的微信二维码，微信号 C49909" width={wechatQR.width} height={wechatQR.height} />
+    <p>微信号 C49909</p><a href={wechatQR.src} download="Liangzhenjie-微信二维码.png" class="text-button">保存二维码</a>
   </dialog>
 </section>
-<a href="#contact" class="mobile-contact" data-mobile-contact hidden>聊聊你的需求 <span>微信联系 →</span></a>
-
+<a href="#contact" class="mobile-contact" data-mobile-contact hidden>有个想法，想聊聊 <span>联系我 →</span></a>
 <style>
-  .assessment-contact { border: 1px solid var(--border-light); border-radius: 8px; padding: 16px; margin-bottom: 24px; }
-  .assessment-contact[hidden], .assessment-contact [hidden] { display: none; }
-  .assessment-contact > span { color: var(--text-muted); font-size: 12px; }
-  .assessment-contact > p { margin: 6px 0 10px; font-size: 14px; color: var(--accent); }
-  .assessment-contact textarea { width: 100%; padding: 12px; background: var(--bg); border: 1px solid var(--border); color: var(--text-primary); font: inherit; font-size: 13px; }
-  .contact-qr-frame { cursor: zoom-in; }
-  .wechat-id-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; font-size: 14px; }
-  .wechat-id-row strong { color: var(--text-primary); user-select: all; }
-  .wechat-copy { min-height:44px; padding: 10px 12px; border: 1px solid var(--border-light); background: transparent; color: var(--accent); border-radius: 6px; font: inherit; cursor: pointer; }
-  .wechat-copy-status { min-height: 1.5em; font-size: 12px; color: var(--accent); text-align: center; }
-  .wechat-copy-status:empty { display: none; }
-  .qr-lightbox { width: min(92vw, 420px); max-height: 92dvh; margin: auto; border: 1px solid var(--border-light); border-radius: 12px; color: var(--text-primary); background: var(--bg-card); padding: 0; overflow: auto; }
-  .qr-lightbox::backdrop { background: rgba(0,0,0,.82); }
-  .qr-dialog-panel { position: relative; padding: 48px 24px 24px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-  .qr-dialog-panel img { width: min(100%, 280px); height: auto; border-radius: 8px; }
-  .qr-dialog-panel p { font-size: 13px; color: var(--text-secondary); text-align: center; }
-  .qr-dialog-close { position: absolute; top: 8px; right: 10px; width: 44px; height: 44px; border: 1px solid var(--border-light); border-radius: 8px; background: transparent; color: var(--text-primary); font-size: 28px; cursor: pointer; }
-  :global(html.qr-lightbox-open), :global(body.qr-lightbox-open) { overflow: hidden; }
-  .mobile-contact { display: none; }
-  @media (max-width: 768px) {
-    .mobile-contact { display: flex; position: fixed; left: 16px; right: 16px; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 80; align-items: center; justify-content: space-between; padding: 15px 20px; border-radius: 8px; background: var(--accent); color: #0a0a0a; font-size: 15px; font-weight: 700; box-shadow: 0 4px 24px rgba(0,0,0,.35); }
-    .mobile-contact span { font-size: 12px; font-weight: 500; }
-    .mobile-contact[hidden], :global(body.case-drawer-open) .mobile-contact, :global(body.cert-lightbox-open) .mobile-contact, :global(body.qr-lightbox-open) .mobile-contact, :global(body.image-lightbox-open) .mobile-contact { display: none; }
-  }
-
-  .contact {
-    background: var(--bg-surface);
-    overflow: hidden;
-  }
-
-  .contact > .container {
-    position: relative;
-    z-index: 2;
-  }
-
-  .contact-convergence {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-  }
-
-  .contact.story-active .contact-convergence {
-    opacity: 1;
-  }
-
-  .contact-convergence span {
-    position: absolute;
-    left: 0;
-    width: 45%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201, 165, 92, 0.46), rgba(234, 211, 141, 0.78));
-    box-shadow: 0 0 16px rgba(201, 165, 92, 0.2);
-    transform-origin: right;
-  }
-
-  .contact-convergence span:nth-child(1) {
-    top: 32%;
-    transform: rotate(12deg);
-  }
-
-  .contact-convergence span:nth-child(2) {
-    top: 52%;
-    transform: rotate(0deg);
-  }
-
-  .contact-convergence span:nth-child(3) {
-    top: 72%;
-    transform: rotate(-12deg);
-  }
-
-  .contact-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-
-  .contact-cta .section-title {
-    text-align: left;
-  }
-
-  .contact-cta .section-label {
-    text-align: left;
-  }
-
-  .contact-desc {
-    max-width: 520px;
-  }
-
-  .contact-cta .contact-qr-hint {
-    text-align: center;
-  }
-
-  .contact-cta .section-desc {
-    margin-bottom: 32px;
-  }
-
-  .contact-qr {
-    margin-top: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: center;
-    max-width: 280px;
-    width: 100%;
-    position: relative;
-  }
-
-  .contact-qr-frame {
-    position: relative;
-    width: 100%;
-    padding: 8px;
-    border: 1px solid rgba(201, 165, 92, 0.2);
-    border-radius: 14px;
-    background: rgba(8, 8, 7, 0.72);
-    transition: transform 0.38s var(--ease-out), box-shadow 0.38s ease;
-  }
-
-  .contact-qr-img {
-    width: 100%;
-    margin-inline: auto;
-    border-radius: 12px;
-    border: 2px solid var(--border);
-    background: #fff;
-    transition: all 0.3s var(--ease-out);
-    display: block;
-    position: relative;
-    z-index: 2;
-  }
-
-  .contact-qr-frame:hover {
-    border-color: var(--accent);
-    box-shadow: 0 8px 30px rgba(201, 165, 92, 0.2);
-    transform: scale(1.02);
-  }
-
-  .contact-qr-ring {
-    position: absolute;
-    z-index: 1;
-    inset: -4px;
-    border-radius: 18px;
-    padding: 1px;
-    background: conic-gradient(
-      from 0deg,
-      transparent 0deg,
-      rgba(201, 165, 92, 0.16) 60deg,
-      rgba(234, 211, 141, 0.86) 92deg,
-      rgba(201, 165, 92, 0.12) 128deg,
-      transparent 180deg,
-      transparent 360deg
-    );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    animation: contactRingPulse 8s ease-in-out infinite;
-  }
-
-  .contact.story-active .contact-qr-ring {
-    opacity: 1;
-  }
-
-  @keyframes contactRingPulse {
-    0%, 100% {
-      filter: brightness(0.78) drop-shadow(0 0 5px rgba(201, 165, 92, 0.16));
-    }
-    50% {
-      filter: brightness(1.28) drop-shadow(0 0 13px rgba(201, 165, 92, 0.34));
-    }
-  }
-
-  .contact-qr-hint {
-    font-size: 13px;
-    color: var(--text-muted);
-    text-align: center;
-    width: 100%;
-  }
-
-  .social-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .social-desc {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 32px;
-    line-height: 1.7;
-  }
-
-  .social-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .social-card {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px;
-    min-width: 0;
-    text-decoration: none;
-    color: var(--text-primary);
-    opacity: 1;
-    transform: none;
-    transition:
-      opacity 0.45s ease,
-      transform 0.5s var(--ease-out),
-      border-color 0.3s ease,
-      background 0.3s ease;
-  }
-
-  .social-card.story-active {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .social-card:hover {
-    color: var(--text-primary);
-  }
-
-  .social-icon {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    flex-shrink: 0;
-  }
-
-  .social-icon-xhs {
-    background: rgba(255, 45, 85, 0.1);
-    color: #ff2d55;
-  }
-
-  .social-icon-dy {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-  }
-
-  .social-icon-wx {
-    background: rgba(7, 193, 96, 0.1);
-    color: #07c160;
-  }
-
-  .social-icon-x {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-  }
-
-  .social-info {
-    flex: 1;
-    min-width: 0;
-    overflow-wrap: anywhere;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .social-name {
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  .social-handle {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  .social-arrow {
-    color: var(--text-muted);
-    transition: all 0.3s var(--ease-out);
-    flex-shrink: 0;
-  }
-
-  .social-card:hover .social-arrow {
-    color: var(--accent);
-    transform: translate(2px, -2px);
-  }
-
-  @media (max-width: 1024px) {
-    .social-arrow { display: none; }
-    .social-icon { width: 28px; height: 28px; }
-    .social-icon svg { width: 20px; height: 20px; }
-    .contact-layout {
-      gap: 60px;
-    }
-
-    .contact-qr-img {
-      max-width: 240px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .contact-convergence {
-      display: none;
-    }
-
-    .contact-layout {
-      grid-template-columns: 1fr;
-      gap: 32px;
-    }
-
-    .contact-cta {
-      text-align: center;
-    }
-
-    .contact-cta .section-title,
-    .contact-cta .section-label,
-    .contact-cta .contact-qr-hint {
-      text-align: center;
-    }
-
-    .contact-cta .section-desc {
-      margin: 0 auto 32px;
-    }
-
-    .contact-qr {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .contact-qr-img {
-      max-width: 280px;
-    }
-
-    .social-card {
-      padding: 14px 16px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .contact-qr-img {
-      max-width: 240px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .contact-convergence,
-    .contact.story-active .contact-convergence {
-      display: none;
-    }
-
-    .contact-qr-ring {
-      animation: none;
-      opacity: 0.45;
-    }
-
-    .social-card,
-    .social-card.story-active {
-      opacity: 1;
-      transform: none;
-    }
-  }
+  [hidden] { display:none !important; }
+  #articles { scroll-margin-top:96px; }
+  .contact-heading { text-align:left; margin-bottom:36px; }
+  .contact-heading .section-title,.contact-heading .section-desc { text-align:left; margin-left:0; }
+  .contact-options { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:28px; }
+  .contact-options > span { color:var(--text-secondary); font-size:13px; margin-left:8px; }
+  #inquiry-form { scroll-margin-top:100px; }
+  @media(max-width:480px) { .contact-options .btn { padding:12px 16px; font-size:14px; } .contact-options > span { width:100%; margin:0; } }
+  .contact-layout { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(240px,.75fr); gap:80px; align-items:start; }
+  .inquiry-form { display:grid; gap:20px; padding:30px; border:1px solid var(--border-light); border-radius:14px; background:var(--bg-card); }
+  .inquiry-field { display:grid; gap:8px; }
+  .inquiry-help { color:var(--text-secondary);font-size:12px;line-height:1.8; }.optional { color:var(--text-muted);font-size:12px;margin-left:10px; }
+  label { color:var(--text-primary); font-size:14px; }
+  input[type=text],textarea,select { width:100%; min-width:0; border:1px solid #424239; background:#10110f; border-radius:7px; color:var(--text-primary); font:inherit; font-size:15px; line-height:1.7; padding:11px 13px; color-scheme:dark; }
+  textarea { resize:vertical; min-height:96px; }
+  select { min-height:48px; }
+  input::placeholder,textarea::placeholder { color:#8b8b83; }
+  input:focus-visible,textarea:focus-visible,select:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  [aria-invalid=true] { border-color:#df9f8d !important; }
+  .field-error,.inquiry-status { font-size:13px; line-height:1.8; }
+  .field-error { color:#efb29f; } .field-error:empty,.inquiry-status:empty { display:none; }
+  .inquiry-status { color:var(--accent-hover); }
+  .inquiry-copy { width:100%; justify-content:space-between; font-size:14px; }
+  .inquiry-source { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:12px; color:var(--text-secondary); padding-bottom:12px; border-bottom:1px solid var(--border); }
+  .inquiry-source button { color:var(--text-secondary); background:none; border:0; font:inherit; min-height:44px; cursor:pointer; flex-shrink:0; }
+  .assessment-contact { border-top:1px solid var(--border); padding-top:16px; }
+  .assessment-toggle { display:flex; align-items:center; gap:10px; cursor:pointer; min-height:44px; }
+  .assessment-toggle input { accent-color:var(--accent); width:18px; height:18px; flex-shrink:0; }
+  .assessment-contact summary { color:var(--text-secondary); cursor:pointer; font-size:13px; padding:12px 0; min-height:44px; }
+  .assessment-contact textarea { font-size:13px; }
+  .contact-direct { padding-top:6px; }
+  h3 { font-size:23px; font-weight:500; }
+  .contact-direct > p,.contact-reading p { font-size:14px; color:var(--text-secondary); line-height:1.8; margin-top:10px; }
+  .contact-qr-frame { display:block; width:226px; padding:8px; background:#fff; border:1px solid var(--border); border-radius:12px; margin-top:26px; cursor:zoom-in; }
+  .contact-qr-frame img { display:block; width:100%; height:auto; border-radius:6px; }
+  .wechat-id-row { display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px; margin-top:12px; font-size:14px; }
+  .text-button { display:inline-flex; align-items:center; min-height:44px; background:none; border:0; font:inherit; font-size:13px; color:var(--accent); cursor:pointer; }
+  .contact-direct .copy-status { font-size:12px; margin:0; } .contact-direct .qr-hint { margin-top:0; font-size:12px; }
+  .contact-note { border-top:1px solid var(--border); margin-top:28px; padding-top:24px; max-width:310px; }
+  .contact-note > span { font-size:13px; color:var(--accent); } .contact-note p { font-size:14px; color:var(--text-secondary); line-height:1.9; margin-top:10px; }
+  .contact-reading { margin-top:64px; padding-top:32px; border-top:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  .social-links { display:flex; gap:24px; flex-wrap:wrap; margin-top:14px; } .social-links a { display:inline-flex; gap:10px; align-items:center; min-height:44px; color:var(--accent); font-size:13px; }
+  .qr-lightbox { width:min(420px,calc(100vw - 32px)); margin:auto; padding:56px 24px 24px; background:var(--bg-surface); color:var(--text-primary); border:1px solid var(--border-light); border-radius:12px; text-align:center; max-height:calc(100dvh - 32px); overflow:auto; }
+  .qr-lightbox::backdrop { background:#000c; } .qr-lightbox img { display:block; width:min(100%,300px); height:auto; margin:20px auto; }
+  .qr-lightbox h3 { font-size:18px; }
+  .qr-dialog-close { position:absolute; right:8px; top:8px; width:44px; height:44px; background:none; border:0; color:var(--text-primary); font-size:28px; cursor:pointer; }
+  .mobile-contact { display:none; }
+  @media(max-width:1024px) { .contact-layout { gap:40px; } }
+  @media(max-width:768px) { .contact-layout { grid-template-columns:1fr; gap:32px; } .inquiry-form { padding:20px; gap:18px; } input[type=text],textarea,select { font-size:16px; } .contact-heading { margin-bottom:28px; } .contact-direct { border-top:1px solid var(--border); padding-top:28px; } .contact-note { display:none; } .contact-reading { grid-template-columns:1fr; gap:22px; margin-top:40px; } .mobile-contact { position:fixed; z-index:90; left:16px; right:16px; bottom:calc(12px + env(safe-area-inset-bottom,0px)); display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:52px; padding:14px 18px; border-radius:8px; background:var(--accent); color:#14130e; font-size:14px; font-weight:600; box-shadow:0 8px 26px #0006; } .mobile-contact span { font-size:12px; font-weight:400; } :global(body.case-drawer-open) .mobile-contact,:global(body.image-lightbox-open) .mobile-contact,:global(body.qr-lightbox-open) .mobile-contact,:global(body:has(dialog[open])) .mobile-contact { display:none; } }
 </style>
-
 <script>
-  const qrDialog = document.querySelector<HTMLDialogElement>('[data-qr-dialog]');
-  const qrTrigger = document.querySelector<HTMLButtonElement>('[data-qr-open]');
-  qrTrigger?.addEventListener('click', () => {
-    if (!qrDialog || qrDialog.open) return;
-    qrDialog.showModal();
-    document.documentElement.classList.add('qr-lightbox-open');
-    document.body.classList.add('qr-lightbox-open');
-  });
-  document.querySelector('[data-qr-close]')?.addEventListener('click', () => qrDialog?.close());
-  qrDialog?.addEventListener('click', event => { if (event.target === qrDialog) qrDialog.close(); });
-  qrDialog?.addEventListener('close', () => {
-    document.documentElement.classList.remove('qr-lightbox-open');
-    document.body.classList.remove('qr-lightbox-open');
-    qrTrigger?.focus();
-  });
-  document.querySelector('[data-copy-wechat]')?.addEventListener('click', async () => {
-    const status = document.querySelector<HTMLElement>('[data-copy-status]');
-    try {
-      await navigator.clipboard.writeText('C49909');
-      if (status) status.textContent = '已复制 C49909，可到微信添加好友';
-    } catch {
-      const id = document.querySelector('#wechat-id');
-      if (id) { const range = document.createRange(); range.selectNodeContents(id); const selection = window.getSelection(); selection?.removeAllRanges(); selection?.addRange(range); }
-      if (status) status.textContent = '请长按或选中微信号 C49909 手动复制';
-    }
-  });
-  const mobileContact = document.querySelector<HTMLElement>('[data-mobile-contact]');
-  const heroTarget = document.querySelector('#hero');
-  const contactTarget = document.querySelector('#contact');
-  const scenarioTarget = document.querySelector('#roi');
-  if (heroTarget && contactTarget && mobileContact) {
-    let pastHero = false;
-    let contactVisible = false;
-    let scenarioVisible = false;
-    const contactVisibility = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.target === heroTarget) pastHero = !entry.isIntersecting && entry.boundingClientRect.bottom <= 76;
-        if (entry.target === contactTarget) contactVisible = entry.isIntersecting;
-        if (entry.target === scenarioTarget) scenarioVisible = entry.isIntersecting;
-      });
-      mobileContact.hidden = !pastHero || contactVisible || scenarioVisible;
-    }, { rootMargin: '-76px 0px 0px 0px', threshold: 0 });
-    contactVisibility.observe(heroTarget);
-    contactVisibility.observe(contactTarget);
-    if (scenarioTarget) contactVisibility.observe(scenarioTarget);
-  }
-
-  const contactSection = document.querySelector<HTMLElement>('[data-story-section="contact"]');
-
-  if (contactSection && !contactSection.dataset.storyBound) {
-    contactSection.dataset.storyBound = 'true';
-    const socialCards = Array.from(contactSection.querySelectorAll<HTMLElement>('[data-social-story]'));
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    window.addEventListener('visual-story:update', (event) => {
-      const detail = (event as CustomEvent<{ section: string; progress: number }>).detail;
-      const active = detail.section === 'contact';
-      contactSection.classList.toggle('story-active', active);
-      if (!active) return;
-
-      socialCards.forEach((card, index) => {
-        card.classList.toggle('story-active', reducedMotion || detail.progress >= 0.04 + index * 0.12);
-      });
+  const form = document.querySelector<HTMLFormElement>('[data-inquiry-form]');
+  if (form) {
+    const type = form.querySelector<HTMLSelectElement>('#inquiry-type')!;
+    const help = form.querySelector<HTMLElement>('[data-inquiry-help]')!;
+    const prompts:Record<string,string> = {
+      unsure:'先说业务和想法，技术怎么选，我们一起看。',
+      enterprise:'公司做什么、想改善哪部分业务？先从这里聊。',
+      individual:'准备给谁用、想帮他做什么？有参考工具也可以说说。',
+      miniapp:'谁会用这个小程序，最需要哪几个功能？',
+      training:'哪些岗位参加、大概多少人、希望学会什么？',
+    };
+    const updateHelp=()=>{help.textContent=prompts[type.value]||prompts.unsure;};
+    type.addEventListener('change',updateHelp);
+    const sourceRow = form.querySelector<HTMLElement>('[data-inquiry-source-row]')!;
+    const sourceText = form.querySelector<HTMLElement>('[data-inquiry-source-text]')!;
+    const status = form.querySelector<HTMLElement>('[data-inquiry-status]')!;
+    const output = form.querySelector<HTMLTextAreaElement>('[data-inquiry-output]')!;
+    const outputLabel = form.querySelector<HTMLElement>('[data-inquiry-output-label]')!;
+    const assessment = form.querySelector<HTMLElement>('[data-assessment-contact]')!;
+    const assessmentText = form.querySelector<HTMLTextAreaElement>('[data-inquiry-assessment]')!;
+    const includeAssessment = form.querySelector<HTMLInputElement>('[data-include-assessment]')!;
+    const copyButton = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const afterCopy = form.querySelector<HTMLButtonElement>('[data-after-copy]')!;
+    let source = '';
+    let revision = 0;
+    const clearOutput = () => { revision++; status.textContent=''; output.hidden=true; outputLabel.hidden=true; output.value=''; afterCopy.hidden=true; };
+    const setSource = (value:string) => { source=value; sourceText.textContent=value; sourceRow.hidden=!value; clearOutput(); };
+    document.addEventListener('click', event => {
+      if (!(event.target instanceof Element)) return;
+      const trigger=event.target.closest<HTMLElement>('[data-inquiry-type]');
+      if (!trigger || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      const value=trigger.dataset.inquiryType;
+      if (Array.from(type.options).some(option=>option.value===value)) type.value=value!;
+      updateHelp();
+      setSource(trigger.dataset.inquirySource || '');
     });
+    const article=new URLSearchParams(location.search).get('article');
+    const articleTitles:Record<string,string> = {
+      'ai-project-priorities':'企业 AI 项目优先级',
+      'agent-onboarding':'Agent 上岗与团队协作',
+      'customer-followup':'客户跟进与管理',
+    };
+    if(article && articleTitles[article]) { type.value='enterprise';setSource(articleTitles[article]); }
+    updateHelp();
+    form.querySelector('[data-clear-inquiry-source]')?.addEventListener('click',()=>setSource(''));
+    window.addEventListener('scenario:result', event => {
+      const summary=(event as CustomEvent<string>).detail;
+      assessment.hidden=!summary;
+      assessmentText.value=summary || '';
+      includeAssessment.checked=true;
+      if(summary) { type.value='unsure';setSource('场景自测');updateHelp(); }
+      else if(source==='场景自测') setSource('');
+      clearOutput();
+    });
+    form.addEventListener('input',event=>{
+      clearOutput();
+      const field=event.target;
+      if(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+        field.removeAttribute('aria-invalid');
+        const error=document.getElementById(field.id+'-error'); if(error) error.textContent='';
+      }
+    });
+    form.addEventListener('change',clearOutput);
+    form.addEventListener('submit',async event=>{
+      event.preventDefault();
+      if(copyButton.disabled) return;
+      const fields=[
+        {id:'inquiry-business',label:'我在做的业务',error:'简单说说你在做什么业务。'},
+        {id:'inquiry-task',label:'这次想做的事',error:'写下你想解决的问题或想做的事。'},
+        {id:'inquiry-current',label:'现在的做法',error:'说说现在怎么做；还没开始也可以。'},
+      ];
+      let firstInvalid:HTMLElement|null=null;
+      const answers=fields.map(item=>{
+        const field=form.querySelector<HTMLInputElement|HTMLTextAreaElement>('#'+item.id)!;
+        const value=field.value.trim();
+        const valid=(!field.required || !!value) && value.length<=field.maxLength;
+        const error=document.getElementById(item.id+'-error')!;
+        field.setAttribute('aria-invalid',String(!valid));
+        error.textContent=valid?'':!value?item.error:'内容过长，请精简后再试。';
+        if(!valid && !firstInvalid) firstInvalid=field;
+        return value ? item.label+'：'+value : '';
+      }).filter(Boolean);
+      if(firstInvalid) { (firstInvalid as HTMLElement).focus();status.textContent='说说你的业务和想做的事，就可以复制了。';return; }
+      const text=['你好，我想聊聊一个想法。','想了解：'+type.selectedOptions[0].text,...(source?['我感兴趣的是：'+source]:[]),...answers,...(!assessment.hidden && includeAssessment.checked && assessmentText.value.trim()?['',assessmentText.value.trim()]:[])].join('\n');
+      const copyingRevision=revision;
+      copyButton.disabled=true;
+      try {
+        await navigator.clipboard.writeText(text);
+        if(copyingRevision===revision) { status.textContent='已复制。加微信 C49909，粘贴发给我就好。';afterCopy.hidden=false; }
+      } catch {
+        if(copyingRevision===revision) {
+          output.value=text;output.hidden=false;outputLabel.hidden=false;
+          status.textContent='请选中下方文字，手动复制到微信。';output.focus();output.select();
+        }
+      } finally { copyButton.disabled=false; }
+    });
+    form.hidden=false;
+  }
+  const qrDialog=document.querySelector<HTMLDialogElement>('[data-qr-dialog]');
+  let qrTrigger:HTMLButtonElement|null=null;
+  document.querySelectorAll<HTMLButtonElement>('[data-qr-open]').forEach(trigger=>trigger.addEventListener('click',()=>{
+    if(!qrDialog || qrDialog.open)return;
+    qrTrigger=trigger;
+    qrDialog.showModal();document.documentElement.classList.add('qr-lightbox-open');document.body.classList.add('qr-lightbox-open');
+  }));
+  document.querySelector('[data-qr-close]')?.addEventListener('click',()=>qrDialog?.close());
+  qrDialog?.addEventListener('click',event=>{if(event.target===qrDialog)qrDialog.close();});
+  qrDialog?.addEventListener('close',()=>{document.documentElement.classList.remove('qr-lightbox-open');document.body.classList.remove('qr-lightbox-open');qrTrigger?.focus();});
+  document.querySelector('[data-copy-wechat]')?.addEventListener('click',async()=>{
+    const status=document.querySelector<HTMLElement>('[data-copy-status]');
+    try {await navigator.clipboard.writeText('C49909');if(status)status.textContent='已复制微信号 C49909';}
+    catch {const id=document.querySelector('#wechat-id');if(id){const range=document.createRange();range.selectNodeContents(id);const selection=window.getSelection();selection?.removeAllRanges();selection?.addRange(range);}if(status)status.textContent='请选中微信号 C49909 手动复制';}
+  });
+  const mobileContact=document.querySelector<HTMLElement>('[data-mobile-contact]');
+  const hero=document.querySelector('#hero'), contact=document.querySelector('#contact'), scenario=document.querySelector('#roi');
+  if(hero && contact && mobileContact) {
+    let pastHero=false,contactVisible=false,scenarioVisible=false;
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{if(entry.target===hero)pastHero=!entry.isIntersecting && entry.boundingClientRect.bottom<=76;if(entry.target===contact)contactVisible=entry.isIntersecting;if(entry.target===scenario)scenarioVisible=entry.isIntersecting;});
+      mobileContact.hidden=!pastHero || contactVisible || scenarioVisible;
+    },{rootMargin:'-76px 0px 0px 0px',threshold:0});
+    observer.observe(hero);observer.observe(contact);if(scenario)observer.observe(scenario);
   }
 </script>

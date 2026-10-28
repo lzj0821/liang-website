@@ -25,7 +25,8 @@ const [yinFull, yanFull] = await Promise.all([
 ]);
 ---
 <button class="examples-trigger" type="button" data-agent-open aria-haspopup="dialog" aria-controls="agentExamples">
-  <span><span class="example-label">输入与输出</span>录音整理 · 资料调研</span><span aria-hidden="true">+</span>
+  <span class="sample-previews" aria-hidden="true"><Image src={xiaoyin} alt="" width={220} loading="lazy" /><Image src={xiaoyan} alt="" width={220} loading="lazy" /></span>
+  <span class="sample-copy"><span class="example-label">智能体使用样例 · 个人自用</span><strong>录音变清单，资料变报告</strong><span>点开看处理前后的内容，了解实际怎么用。</span><em>查看两个样例 ↗</em></span>
 </button>
 <dialog id="agentExamples" class="agent-dialog" aria-labelledby="agentExamplesTitle">
   <div class="agent-toolbar">
@@ -40,14 +41,14 @@ const [yinFull, yanFull] = await Promise.all([
     <h3>录音变成行动清单</h3>
     <div class="agent-outcome" aria-label="小音输入与输出"><div><span>输入</span><strong>工作安排录音</strong></div><i aria-hidden="true">→</i><div><span>输出</span><strong>任务清单与待确认事项</strong></div></div>
     <figure>
-      <a class="image-preview" href={yinFull.src} data-image-open data-image-caption="小音 · 合成语音演示，本地真实转写后经 Codex 校对与整理；AI 生成展示图，非产品界面" aria-label="放大小音案例展示图" aria-haspopup="dialog" aria-controls="imageLightbox">
+      <a class="image-preview" href={yinFull.src} data-image-open data-image-caption="小音 · 录音整理示意" aria-label="放大小音案例展示图" aria-haspopup="dialog" aria-controls="imageLightbox">
         <Image src={xiaoyin} alt="小音案例示意：46 秒合成录音，经真实转写和两处校对，整理为工作安排与待确认事项" width={760} loading="lazy" />
       </a>
-      <figcaption>AI 生成展示图，非产品界面。</figcaption>
+      <figcaption>录音整理示意</figcaption>
     </figure>
     <details class="evidence-detail">
       <summary>查看输入、原始转写与校对</summary>
-      <p class="evidence-note">演示录音经本地转写，再由 AI 校对并整理。此处展示输入与输出，不包含飞书交付。</p>
+      <p class="evidence-note">合成录音 → 转写与校对 → 任务整理</p>
       <h4>输入原稿</h4><p class="transcript">{inputScript}</p>
       <h4>原始转写 · 保留错误</h4><p class="transcript">{rawTranscript}</p>
       <p class="corrections">校对：“摆底图” → “白底图”；“标程待确认” → “标成待确认”。</p>
@@ -59,10 +60,10 @@ const [yinFull, yanFull] = await Promise.all([
     <h3>有来源的报告，可以继续追问</h3>
     <p class="agent-intro">查找公开资料，整理依据与结论；收到追加要求后，继续修改同一份报告。</p>
     <figure>
-      <a class="image-preview" href={yanFull.src} data-image-open data-image-caption="小研 · 2026-10-14 个人项目历史验收，AI 重新排版展示图；新增账号演练记录为虚构示例，非实际账号测试" aria-label="放大小研报告修改对照图" aria-haspopup="dialog" aria-controls="imageLightbox">
+      <a class="image-preview" href={yanFull.src} data-image-open data-image-caption="小研 · 报告修改示意" aria-label="放大小研报告修改对照图" aria-haspopup="dialog" aria-controls="imageLightbox">
         <Image src={xiaoyan} alt="小研历史报告对照：版本 3 到版本 4，保留原内容与引用，仅增加一段虚构演练记录；5 份官方原文、6 条证据" width={760} loading="lazy" />
       </a>
-      <figcaption>AI 排版展示，非产品截图。</figcaption>
+      <figcaption>报告修改示意</figcaption>
     </figure>
     <dl class="revision-overview">
       <div><dt>问题</dt><dd>Google 与 GitHub 用了通行密钥，还要留恢复码吗？</dd></div>
@@ -71,13 +72,13 @@ const [yinFull, yanFull] = await Promise.all([
     </dl>
     <details class="evidence-detail">
       <summary>查看追问新增的段落</summary>
-      <p class="evidence-note">历史报告包含 5 份官方原文、6 条证据。新增段落为虚构演练示例，不代表真实账号测试。</p>
+      <p class="evidence-note">5 份官方原文 · 6 条证据 · 新增一段虚构演练示例</p>
       <p class="transcript">小演练记录（虚构示例，非实际测试）：日期：2026-10-14；测试账号（脱敏）：Google个人账号A；备用方式：密码＋纸质备用码；验证结果：不使用主手机成功登录，已标记用过的码并退出测试会话；发现的问题：纸质备份不易找到，需调整存放位置。记录不含密码或恢复码明文。某一种备用方式演练成功，不代表所有账号都已验证；应按“账号＋备用方式”分别记录。</p>
     </details>
     <details class="evidence-detail"><summary>阅读修改前报告 · 版本 3</summary><div class="evidence-prose" set:html={beforeHtml} /></details>
     <details class="evidence-detail"><summary>阅读修改后报告 · 版本 4</summary><div class="evidence-prose" set:html={afterHtml} /></details>
   </section>
-  <a class="btn btn-primary agent-contact" href="#contact" data-agent-contact>聊聊我的重复工作</a>
+  <a class="btn btn-primary agent-contact" href="#contact" data-agent-contact data-inquiry-type="individual" data-inquiry-source="录音整理与资料调研">聊聊我的重复工作</a>
 </dialog>
 
 <style>
@@ -90,9 +91,12 @@ const [yinFull, yanFull] = await Promise.all([
   @media (max-width:380px) { .agent-outcome { grid-template-columns:1fr; gap:8px; } .agent-outcome > div { display:grid; grid-template-columns:32px minmax(0,1fr); align-items:baseline; gap:8px; } .agent-outcome span { margin:0; } .agent-outcome i { display:none; } }
 
   [hidden] { display:none !important; }
-  .examples-trigger { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; min-height:48px; padding:8px 0 12px; background:none; border:0; border-bottom:1px solid var(--border); color:var(--text-primary); font:inherit; font-size:13px; cursor:pointer; text-align:left; }
-  .examples-trigger > span:first-child { display:flex; flex-wrap:wrap; gap:4px 12px; }
-  .examples-trigger > span:last-child { color:var(--accent); font-size:20px; }
+  .examples-trigger { display:grid; grid-template-columns:220px minmax(0,1fr);align-items:center;gap:24px;width:100%;margin-top:20px;padding:20px;background:#10110f;border:1px solid var(--border);border-radius:10px;color:var(--text-primary);font:inherit;cursor:pointer;text-align:left; }
+  .examples-trigger:hover { border-color:var(--accent); }
+  .sample-previews { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+  .sample-previews img { display:block;width:100%;height:112px;object-fit:cover;object-position:top;border-radius:6px; }
+  .sample-copy { display:grid;gap:8px; }.sample-copy strong { font-size:19px;font-weight:500; }.sample-copy > span:not(.example-label) { color:var(--text-secondary);font-size:14px;line-height:1.8; }.sample-copy em { color:var(--accent);font-size:13px;font-style:normal; }
+  @media(max-width:640px) { .examples-trigger { grid-template-columns:1fr;gap:18px;padding:18px; }.sample-previews img { height:120px; }.sample-copy strong { font-size:18px; } }
   .example-label { color:var(--text-muted); font-size:12px; }
   .agent-dialog { width:min(760px,calc(100% - 32px)); max-height:calc(100dvh - 32px); margin:auto; padding:28px; border:1px solid var(--border-light); border-radius:14px; background:var(--bg-surface); color:var(--text-primary); overscroll-behavior:contain; }
   .agent-dialog::backdrop { background:#000c; }
@@ -171,7 +175,12 @@ const [yinFull, yanFull] = await Promise.all([
       });
     });
     dialog.querySelector('[data-agent-close]')?.addEventListener('click', () => dialog.close());
-    dialog.querySelector('[data-agent-contact]')?.addEventListener('click', () => dialog.close());
+    dialog.querySelector('[data-agent-contact]')?.addEventListener('click', () => {
+      dialog.close();
+      // Unlock before the anchor is followed; the dialog close event is asynchronous.
+      document.documentElement.classList.remove('agent-example-open');
+      document.body.classList.remove('agent-example-open');
+    });
     dialog.addEventListener('close', () => {
       document.documentElement.classList.remove('agent-example-open');
       document.body.classList.remove('agent-example-open');

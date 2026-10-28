@@ -10,7 +10,7 @@
   --border-light: #2a2a2a;
 
   --text-primary: #f0f0f0;
-  --text-secondary: #a0a0a0;
+  --text-secondary: #b2b2ab;
   --text-muted: #858585;
 
   --accent: #c9a55c;
@@ -23,7 +23,7 @@
   --font-mono: 'Cascadia Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
 
   /* Spacing */
-  --section-padding: 120px 0;
+  --section-padding: 88px 0;
   --container-width: 1200px;
   --container-padding: 0 24px;
 
@@ -40,7 +40,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -74,6 +74,16 @@ body > footer {
 
 #main-content[data-visual-story] > .section:nth-of-type(even) {
   background: rgba(17, 17, 17, 0.92);
+}
+
+#main-content[data-visual-story] > .services {
+  position: relative;
+  isolation: isolate;
+  background: rgba(13, 13, 12, 0.94);
+}
+
+#main-content[data-visual-story] > .services .individual-service {
+  background: rgba(17, 17, 17, 0.82);
 }
 
 #main-content[data-visual-story] > .hero {
@@ -349,7 +359,7 @@ img {
 /* Tablet landscape */
 @media (max-width: 1024px) {
   :root {
-    --section-padding: 100px 0;
+    --section-padding: 76px 0;
   }
 }
 
@@ -451,12 +461,12 @@ img {
   height: 300px;
 }
 
-/* Mobile reading: preserve the nine sections with less vertical padding. */
+/* Keep section spacing compact without reducing reading or touch sizes. */
 @media (min-width: 769px) {
-  #whyme, #certs, #faq { padding-block: 88px; }
+  #about, #faq { padding-block: 72px; }
 }
 @media (max-width: 768px) {
-  .section { padding-block: 56px; }
+  .section { padding-block: 44px; }
   .section-header { margin-bottom: 28px; }
   .section-header::after { bottom: -14px; }
   .reveal { transition-delay: 0s; }

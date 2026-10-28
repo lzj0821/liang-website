@@ -1,6 +1,5 @@
 ---
 import TaskIcon from './TaskIcon.astro';
-import DeliveryGlyph from './DeliveryGlyph.astro';
 import { scenarioQuestions } from '../data/scenario-check';
 import { featuredCases } from '../data/featured-cases';
 ---
@@ -9,8 +8,8 @@ import { featuredCases } from '../data/featured-cases';
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">AI 场景自测</span>
-      <h2 class="section-title">哪件事，值得交给 AI？</h2>
-      <p class="section-desc">最多 4 个问题，找到适合你的起点。</p>
+      <h2 class="section-title">你的业务，适合怎么用 AI？</h2>
+      <p class="section-desc">选一下业务环节、使用频率和准备情况，看看下一步可以怎么做。</p>
     </div>
     <div class="scenario-card reveal" data-scenario-card>
       <form data-scenario-form hidden novalidate>
@@ -41,15 +40,13 @@ import { featuredCases } from '../data/featured-cases';
       <div class="scenario-result" data-scenario-result hidden>
         <span class="scenario-eyebrow">建议起点</span>
         <h3 tabindex="-1" data-scenario-title></h3>
+        <p class="result-reason" data-scenario-reason></p>
         <div class="scenario-next"><span>第一步</span><p data-scenario-next-action></p></div>
-        <template data-flow-glyph="0"><DeliveryGlyph kind="input" /></template>
-        <template data-flow-glyph="1"><DeliveryGlyph kind="ai" /></template>
-        <template data-flow-glyph="2"><DeliveryGlyph kind="check" /></template>
         <ol class="scenario-flow" aria-label="可以尝试的协作方式" data-scenario-flow></ol>
-        <div class="scenario-result-actions"><a href="#contact" class="btn btn-primary">聊聊这个场景</a><button type="button" class="text-button" data-copy-assessment>复制结果</button></div>
+        <div class="scenario-result-actions"><a href="#contact" class="btn btn-primary">带着结果聊聊</a><button type="button" class="text-button" data-copy-assessment>复制结果</button></div>
         <p class="scenario-status copy-status" data-assessment-copy-status role="status"></p>
         <textarea data-assessment-copy-fallback hidden readonly aria-label="自测结果，可选中复制" rows="6"></textarea>
-        <details class="scenario-details"><summary>查看判断依据</summary><div class="scenario-signals" data-scenario-signals></div><p data-scenario-reason></p><p><strong>由你确认：</strong><span data-scenario-human></span></p><div class="scenario-related" data-scenario-related><span>参考案例</span>{featuredCases.map(item=><a href={'#case-'+item.id} data-scenario-case={item.id} data-case-detail-trigger={item.id} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false" hidden>{item.title} →</a>)}</div><dl data-scenario-answers></dl></details>
+        <details class="scenario-details"><summary>查看我的回答与相关项目</summary><div class="scenario-signals" data-scenario-signals></div><p><strong>需要你来把关：</strong><span data-scenario-human></span></p><div class="scenario-related" data-scenario-related><span>参考案例</span>{featuredCases.map(item=><a href={'#case-'+item.id} data-scenario-case={item.id} data-case-detail-trigger={item.id} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false" hidden>{item.title} →</a>)}</div><dl data-scenario-answers></dl></details>
         <div class="scenario-edit"><button type="button" class="text-button" data-scenario-edit>修改回答</button><button type="button" class="text-button" data-scenario-reset>重新开始</button><span>仅作起点参考，需实际试做。</span></div>
       </div>
       <noscript><p>从重复、耗时、结果能核对的工作开始，例如报表汇总或资料整理。</p><a href="#contact" class="btn btn-primary">聊聊你的场景</a></noscript>
@@ -150,8 +147,8 @@ import { featuredCases } from '../data/featured-cases';
 
   .scenario-flow { gap:18px; border:0; padding:0; }
   .scenario-flow :global(li) { position:relative; display:flex; flex-direction:column; justify-content:flex-end; min-height:210px; border:1px solid #c9a55c26; border-radius:10px; background:radial-gradient(ellipse at 50% 20%,#c9a55c13,transparent 75%),#191917; padding:0; }
-  .scenario-flow :global(.flow-illustration) { width:100px; margin:0 auto; }
-  .scenario-flow :global(.flow-caption) { padding:6px 16px 18px; }
+  .result-reason { color:var(--text-secondary);font-size:15px;line-height:1.8;margin-bottom:20px;max-width:40em; }
+  .scenario-flow :global(.flow-caption) { padding:16px; }
   .scenario-flow :global(small) { font-size:14px; color:#b8b3a8; margin-bottom:7px; }
   .scenario-flow :global(strong) { display:block; color:#e7e2d7; font-size:16px; line-height:1.6; font-weight:500; }
   .scenario-flow :global(li:nth-child(2)) { background:radial-gradient(ellipse at 50% 20%,#c9a55c20,transparent 75%),#222018; border-color:#c9a55c66; }
@@ -159,9 +156,8 @@ import { featuredCases } from '../data/featured-cases';
   .scenario-flow :global(li:not(:last-child)::after) { right:-17px; top:50%; }
   @media(max-width:600px) {
     .scenario-flow { grid-template-columns:1fr; gap:12px; }
-    .scenario-flow :global(li) { display:grid; grid-template-columns:76px minmax(0,1fr); align-items:center; min-height:108px; gap:4px; }
-    .scenario-flow :global(.flow-illustration) { width:76px; }
-    .scenario-flow :global(.flow-caption) { padding:16px 14px 16px 0; }
+    .scenario-flow :global(li) { min-height:0; }
+    .scenario-flow :global(.flow-caption) { display:grid;grid-template-columns:64px minmax(0,1fr);align-items:baseline;gap:12px;padding:14px; }
     .scenario-flow :global(small) { margin-bottom:5px; }
     .scenario-flow :global(li:not(:last-child)::after) { content:none; }
   }
@@ -225,6 +221,7 @@ import { featuredCases } from '../data/featured-cases';
       steps.forEach((step,i)=>step.hidden=i!==index);
       form.hidden=false;panel.hidden=true;
       if(contact) contact.hidden=true;
+      window.dispatchEvent(new CustomEvent('scenario:result', { detail: '' }));
       summary='';clearCopy();error.textContent='';
       back.disabled=index===0;
       hint.textContent=index===steps.length-1?'点选即查看建议':'点选即进入下一题';
@@ -252,12 +249,10 @@ import { featuredCases } from '../data/featured-cases';
       const flow=panel.querySelector('[data-scenario-flow]')!;flow.replaceChildren();
       result.flow.forEach((text,i)=>{
         const li=document.createElement('li');
-        const glyph=panel.querySelector<HTMLTemplateElement>(`[data-flow-glyph="${i}"]`)!;
-        const illustration=document.createElement('div');illustration.className='flow-illustration';illustration.append(glyph.content.cloneNode(true));
         const caption=document.createElement('div');caption.className='flow-caption';
         const label=document.createElement('small');label.textContent=resultFlowLabels[i];
         const value=document.createElement('strong');value.textContent=text;
-        caption.append(label,value);li.append(illustration,caption);flow.append(li);
+        caption.append(label,value);li.append(caption);flow.append(li);
       });
       // When no concrete task is chosen, use preparation labels rather than implying AI has been assessed.
       if(result.kind==='explore') flow.querySelectorAll('small').forEach((el,i)=>el.textContent=['第一步','第二步','第三步'][i]);
@@ -267,7 +262,7 @@ import { featuredCases } from '../data/featured-cases';
       scenarioQuestions.forEach(q=>q.groups.forEach(g=>{if(selected[g.name]===undefined)return;const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=g.label;dd.textContent=g.options.find(([v])=>v===selected[g.name])?.[1]||'';list.append(dt,dd);}));
       panel.querySelector<HTMLDetailsElement>('details')!.open=false;
       clearCopy();summary=scenarioSummary(selected,result);
-      if(contact){contact.hidden=false;contact.querySelector<HTMLElement>('[data-assessment-contact-title]')!.textContent=result.title;}
+      window.dispatchEvent(new CustomEvent('scenario:result', { detail: summary }));
       present(panel);
     };
     const queueAdvance=()=>{

@@ -1,533 +1,100 @@
 ---
-// Hero Section
 import { Image } from 'astro:assets';
 import avatar from '../assets/refresh/portrait.jpg';
-import { selfBuiltProducts } from '../data/self-built-products';
+const titleLines = ['企业 AI 落地与内训', '智能体与工作流定制开发'];
+const typingDuration = titleLines.reduce((total, line) => total + Array.from(line).length, 0) * 85 + 220;
 ---
-
 <section class="hero" id="hero" data-story-section="hero">
-  <!-- Background gradient -->
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
   <div class="container hero-content">
-    <!-- Avatar -->
-    <div class="hero-avatar reveal">
-      <Image src={avatar} alt="Liangzhenjie" class="hero-avatar-img" width={120} height={120} loading="eager" />
-      <div class="hero-avatar-ring"></div>
+    <div class="hero-overview"><div class="hero-identity">
+      <Image src={avatar} alt="Liangzhenjie" width={288} height={288} loading="eager" />
+      <div class="identity-copy"><span class="identity-name">Liangzhenjie</span><span class="identity-role">AI 落地顾问</span></div>
     </div>
-
-    <div class="hero-badge reveal">
-      <span class="hero-badge-dot"></span>
-      Liangzhenjie · AI 落地顾问
+    <div class="hero-positioning">
+    <h1 aria-label={titleLines.join('，')} style={'--typing-duration:'+typingDuration+'ms'}>{titleLines.map((line,lineIndex)=><span class:list={['title-line',{'title-accent':lineIndex===1}]} aria-hidden="true">{Array.from(line).map((letter,index)=><span class="type-letter" style={'--type-delay:'+((index+(lineIndex===1?Array.from(titleLines[0]).length:0))*85+220)+'ms'}>{letter===' '?'\u00a0':letter}</span>)}{lineIndex===1 && <i class="typing-cursor" />}</span>)}</h1>
+    <p class="hero-intro">你熟悉自己的业务，我来帮你选办法、做开发。<br class="desktop-break" />一起把工具做出来，也让用它的人学会怎么用。</p>
     </div>
-
-    <div class="hero-credentials reveal" aria-label="专业资质">
-      <span>人工智能应用工程师（高级）</span>
-      <span>人工智能训练师（高级）</span>
     </div>
-
-    <h1 class="hero-title" aria-label="帮企业与个人，用 AI 解决真问题">
-      <span id="heroTypewriter" aria-hidden="true">帮企业与个人</span><br />
-      <span class="hero-title-accent" id="heroTypewriterAccent" aria-hidden="true">用 AI 解决真问题</span>
-    </h1>
-
-    <p class="hero-desc reveal reveal-delay-2">
-        企业 AI 落地，涵盖内部培训、流程与工具。<br />
-        为个人与小团队搭建智能体、定制工作流。
-    </p>
-
-    <div class="hero-actions reveal reveal-delay-4">
-      <a href="#cases" class="btn btn-primary">
-        查看案例
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <div class="audience-grid">
+      <a class="audience-entry audience-enterprise" href="#enterprise">
+        <div class="entry-top"><span class="entry-index">01</span><span>企业负责人 · 业务团队</span></div>
+        <h2>企业 AI 落地与内训</h2>
+        <p>想用 AI 改进经营，却不知道从哪里开始？我帮你找值得做的项目、开发需要的工具，也带团队学会在岗位上使用。</p>
+        <span class="entry-action">了解企业服务 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" /></svg></span>
       </a>
-      <a href="#contact" class="btn btn-outline">联系咨询</a>
+      <a class="audience-entry" href="#individual">
+        <div class="entry-top"><span class="entry-index">02</span><span>个人 · 小团队</span></div>
+        <h2>智能体与工作流定制开发</h2>
+        <p>业务想做大，却总被人手和时间卡住？把你做生意、做服务的经验做成工具，让一个人或小团队也能接得住更多业务。</p>
+        <span class="entry-action">了解个人定制 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" /></svg></span>
+      </a>
     </div>
-
-
-    <!-- Key numbers -->
-    <div class="hero-stats reveal reveal-delay-5">
-      <div class="hero-stat">
-        <span class="hero-stat-number">省时间</span>
-        <span class="hero-stat-label">数据整理：2 小时 → 10 分钟</span>
-      </div>
-      <div class="hero-stat-divider"></div>
-      <div class="hero-stat">
-        <span class="hero-stat-number">管客户</span>
-        <span class="hero-stat-label">多平台线索，汇入自己的 CRM</span>
-      </div>
-      <div class="hero-stat-divider"></div>
-      <div class="hero-stat">
-        <span class="hero-stat-number">做产品</span>
-        <span class="hero-stat-label">把具体需求，做成能用的小程序</span>
-      </div>
-    </div>
-    <div class="hero-products reveal">
-      <span>精选产品</span>
-      <div>
-        {selfBuiltProducts.map(product => (
-          <a href="#case-jutu" data-case-detail-trigger="jutu" data-product-open={product.id} aria-haspopup="dialog" aria-controls="caseStudyDrawer" aria-expanded="false">{product.name}<span aria-hidden="true"> ↗</span></a>
-        ))}
-      </div>
-    </div>
-  </div>
-
-  <!-- Scroll indicator -->
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
+    <div class="hero-bottom"><a href="#roi">还没想清楚？做一次场景自测 <span aria-hidden="true">↓</span></a><span>最多 4 个问题 · 无需留联系方式</span></div>
   </div>
 </section>
-
 <style>
-  .hero .hero-badge { margin-bottom:12px; }
-  .hero .hero-credentials { display:flex;flex-wrap:wrap;gap:6px 22px;margin:0 0 30px;padding:0;min-height:0;font-size:14px;line-height:1.8;color:#aaa79e; }
-  .hero-credentials > span::before { content:'◇';margin-right:7px;color:#c9a55c; }
-  .hero .hero-stats { margin-top:38px;gap:28px; }
-  .hero .hero-stat-label { font-size:14px;line-height:1.7;max-width:200px; }
-  .hero .hero-stat-number { font-size:28px; }
-  @media(max-width:768px) { .hero .hero-credentials { display:grid;gap:3px;font-size:13px;margin-bottom:24px; } .hero .hero-stat-number { font-size:23px; } .hero .hero-stats { gap:12px; } .hero .hero-stat-label { font-size:13px; } }
-
-  .hero-credentials { display:flex; width:fit-content; align-items:center; gap:10px; min-height:44px; padding:8px 0; margin:12px 0 48px; color:var(--text-secondary); font-size:13px; font-weight:400; line-height:1.6; text-decoration:none; }
-  .hero-credentials svg { width:16px; height:16px; flex-shrink:0; color:var(--accent); }
-  .credential-separator { color:var(--text-muted); margin:0 6px; }
-  .credential-arrow { color:var(--text-muted); }
-  .hero-credentials:hover { color:var(--accent-hover); }
-  .hero-products { display:flex; flex-wrap:wrap; align-items:center; gap:4px 16px; margin-top:16px; font-size:12px; }
-  .hero-products > span { color:var(--text-muted); }
-  .hero-products > div { display:flex; flex-wrap:wrap; gap:0 16px; }
-  .hero-products a { display:inline-flex; align-items:center; min-height:44px; color:var(--accent); }
-  @media (max-width:480px) { .hero-credentials { gap:8px; margin:8px 0 28px; } }
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding: 120px 0 80px;
+  .hero { position:relative; isolation:isolate; padding:142px 0 42px; }
+  .hero::before { content:''; position:absolute; z-index:-1; inset:40px 10% 20%; pointer-events:none; background:radial-gradient(ellipse at 50% 30%,#c9a55c0c,transparent 65%); }
+  .hero-content { position:relative; z-index:2; width:100%; max-width:1160px; }
+  .hero-overview { display:grid; grid-template-columns:246px minmax(0,max-content); justify-content:center; align-items:center; gap:52px; margin:0 auto 42px; }
+  .hero-identity { display:flex; flex-direction:column; align-items:flex-start; gap:20px; padding-right:28px; border-right:1px solid #c9a55c35; }
+  .hero-identity img { width:144px; height:144px; border-radius:18px; object-fit:cover; object-position:50% 32%; border:1px solid #c9a55c70; }
+  .identity-copy { display:grid; gap:8px; }
+  .identity-name { font-size:29px; font-weight:600; letter-spacing:-.035em; color:var(--text-primary); }
+  .identity-role { font-size:18px; color:var(--accent-hover); }
+  .hero-positioning { min-width:0; }
+  h1 { font-size:clamp(34px,3.8vw,48px); font-weight:700; line-height:1.55; letter-spacing:-.035em; margin:0 0 22px; }
+  .title-line { display:block; position:relative; width:max-content; max-width:100%; }
+  .title-accent { color:var(--accent-hover); }
+  .type-letter { position:relative; display:inline-block; animation:type-in 85ms linear var(--type-delay) both; }
+  .type-letter::after { content:''; position:absolute; width:2px; height:.8em; top:.36em; left:100%; background:var(--accent-hover); animation:letter-caret 85ms step-end var(--type-delay) both; }
+  .typing-cursor { position:absolute; left:calc(100% + 6px); top:.36em; height:.8em; width:2px; background:var(--accent-hover); animation:cursor-finish 700ms step-end var(--typing-duration) 4 both; }
+  @keyframes type-in { 0% { opacity:0; } 1%,100% { opacity:1; } }
+  @keyframes letter-caret { 0%,90%,100% { opacity:0; } 1%,80% { opacity:1; } }
+  @keyframes cursor-finish { 0%,90%,100% { opacity:0; } 10%,60% { opacity:1; } }
+  .hero-intro { color:var(--text-secondary); font-size:16px; line-height:1.9; }
+  .audience-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+  .audience-entry { display:flex; flex-direction:column; padding:26px 28px 22px; background:#141411e8; border:1px solid #c9a55c35; border-radius:12px; color:var(--text-primary); transition:border-color .2s,background .2s; }
+  .audience-enterprise { background:linear-gradient(125deg,#c9a55c13,#141411ee); }
+  .audience-entry:hover { border-color:var(--accent); background-color:#1b1a15; }
+  .entry-top { display:flex; align-items:center; gap:12px; color:var(--text-secondary); font-size:12px; margin-bottom:16px; }
+  .entry-index { color:var(--accent); font-family:var(--font-mono); }
+  h2 { font-size:25px; font-weight:600; letter-spacing:-.02em; margin-bottom:12px; }
+  .audience-entry p { color:var(--text-secondary); font-size:15px; line-height:1.9; max-width:29em; margin-bottom:22px; }
+  .entry-action { display:flex; align-items:center; justify-content:space-between; color:var(--accent-hover); font-size:14px; margin-top:auto; padding-top:16px; border-top:1px solid #ffffff12; }
+  .entry-action svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.5; }
+  .hero-bottom { display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 20px; align-items:center; margin-top:16px; font-size:13px; }
+  .hero-bottom a { display:inline-flex; gap:12px; align-items:center; min-height:44px; color:var(--text-secondary); }
+  .hero-bottom a:hover { color:var(--accent-hover); }
+  .hero-bottom > span { color:var(--text-muted); font-size:12px; }
+  @media(max-width:1024px) {
+    .hero-overview { grid-template-columns:minmax(0,1fr); gap:28px; text-align:center; }
+    .hero-identity { flex-direction:row; justify-content:center; align-items:center; gap:22px; padding:0; border:0; text-align:left; }
+    .title-line { margin-inline:auto; }
+    .hero-intro { margin-inline:auto; }
+    .hero-identity img { width:88px; height:88px; border-radius:14px; }
+    h1 { font-size:clamp(32px,5vw,46px); }
   }
-
-  .hero-bg {
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201, 165, 92, 0.08), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 50%, rgba(201, 165, 92, 0.03), transparent);
-    pointer-events: none;
+  @media(max-width:768px) {
+    .hero { padding:102px 0 32px; }
+    .hero-overview { gap:26px; margin-bottom:28px; }
+    .hero-identity { gap:18px; }
+    .hero-identity img { width:76px; height:76px; }
+    .identity-name { font-size:27px; }
+    .identity-role { font-size:16px; }
+    h1 { font-size:clamp(23px,6.5vw,40px); margin-bottom:16px; line-height:1.6; }
+    .hero-intro { font-size:14px; line-height:1.85; max-width:35em; }
+    .desktop-break { display:none; }
+    .audience-grid { grid-template-columns:1fr; gap:12px; }
+    .audience-entry { padding:18px 20px; }
+    .entry-top { margin-bottom:9px; }
+    h2 { font-size:21px; margin-bottom:8px; }
+    .audience-entry p { font-size:14px; line-height:1.75; margin-bottom:12px; max-width:none; }
+    .entry-action { padding-top:12px; }
+    .hero-bottom { margin-top:12px; display:block; }
+    .hero-bottom > span { display:block; }
   }
-
-  .hero-grid {
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black, transparent);
-    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black, transparent);
-    pointer-events: none;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-avatar {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    margin-bottom: 32px;
-  }
-
-  .hero-avatar-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: 50% 32%;
-    border: 3px solid var(--accent);
-  }
-
-  .hero-avatar-ring {
-    position: absolute;
-    inset: -8px;
-    border-radius: 50%;
-    border: 1px solid rgba(201, 165, 92, 0.3);
-    animation: ringPulse 3s ease-in-out infinite;
-  }
-
-  @keyframes ringPulse {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.05); opacity: 1; }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: var(--accent-subtle);
-    border: 1px solid rgba(201, 165, 92, 0.15);
-    border-radius: 100px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--accent);
-    margin-bottom: 32px;
-    font-family: var(--font-body);
-  }
-
-  .hero-badge-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  .hero-title {
-    font-size: clamp(36px, 7vw, 72px);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 24px;
-  }
-
-  .hero-title-accent {
-    color: var(--accent);
-    text-shadow: 0 0 34px rgba(201, 165, 92, 0.18);
-  }
-
-  @supports (background-clip: text) or (-webkit-background-clip: text) {
-    .hero-title:not([data-typing='running']) .hero-title-accent {
-      background: linear-gradient(135deg, var(--accent) 0%, #e8d5a3 50%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  }
-
-  /* Characters are only hidden while the typing run is active, so a script
-     failure can never leave the headline invisible. */
-  .hero-title[data-typing='running'] :global(.typewriter-char) { opacity: 0; position: relative; }
-  .hero-title[data-typing='running'] :global(.typewriter-char.is-visible) { opacity: 1; }
-  .hero-title[data-typing='running'] :global(.typewriter-char.is-caret)::after {
-    content: '';
-    position: absolute;
-    right: -0.06em;
-    top: 0.15em;
-    bottom: 0.05em;
-    width: 2px;
-    background: var(--accent);
-  }
-
-  .hero-desc {
-    font-size: clamp(16px, 2vw, 18px);
-    color: var(--text-secondary);
-    line-height: 1.8;
-    max-width: 560px;
-    margin-bottom: 40px;
-  }
-
-  .hero-brands {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-
-  .hero-brands-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-family: var(--font-mono);
-    white-space: nowrap;
-  }
-
-  .hero-brands-list {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .hero-brand {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    padding: 6px 16px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    letter-spacing: 0.5px;
-    transition: all 0.3s var(--ease-out);
-  }
-
-  .hero-brand:hover {
-    border-color: var(--brand-color, var(--accent));
-    color: var(--text-primary);
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 0;
-  }
-
-  .hero-actions .btn-primary::before {
-    content: '';
-    position: absolute;
-    z-index: 0;
-    top: -70%;
-    left: -45%;
-    width: 30%;
-    height: 240%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 249, 220, 0.62),
-      transparent
-    );
-    opacity: 0;
-    transform: rotate(18deg) translateX(0);
-    pointer-events: none;
-  }
-
-  @media (hover: hover) {
-    .hero-actions .btn-primary:hover::before {
-      animation: heroButtonSweep 0.58s var(--ease-out) 1;
-    }
-  }
-
-  @keyframes heroButtonSweep {
-    0% {
-      opacity: 0;
-      transform: rotate(18deg) translateX(0);
-    }
-    22% {
-      opacity: 0.58;
-    }
-    100% {
-      opacity: 0;
-      transform: rotate(18deg) translateX(520%);
-    }
-  }
-
-  .hero-stats {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    padding-top: 40px;
-    border-top: 1px solid var(--border);
-  }
-
-  .hero-stat {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .hero-stat-number {
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 800;
-    color: var(--text-primary);
-    letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .hero-stat-label {
-    font-size: 13px;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  .hero-stat-divider {
-    width: 1px;
-    height: 40px;
-    background: var(--border);
-  }
-
-  .hero-scroll {
-    position: absolute;
-    z-index: 3;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 48px;
-    overflow: hidden;
-  }
-
-  .hero-scroll-line {
-    width: 100%;
-    height: 100%;
-    background: var(--accent);
-    animation: scrollDown 2s ease-in-out infinite;
-  }
-
-  @media (max-width: 768px) {
-    .hero {
-      padding: 100px 0 60px;
-    }
-
-    .hero-avatar {
-      width: 96px;
-      height: 96px;
-    }
-
-    .hero-title {
-      font-size: clamp(28px, 8vw, 48px);
-    }
-
-    .hero-actions {
-      flex-direction: column;
-      margin-bottom: 0;
-    }
-
-    .hero-actions .btn {
-      justify-content: center;
-      width: 100%;
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      align-items: start;
-      gap: 16px;
-    }
-
-    .hero-stat-divider {
-      display: none;
-    }
-
-    .hero-stat {
-      min-width: 0;
-    }
-
-    .hero-scroll {
-      display: none;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .hero {
-      padding-top: 80px;
-    }
-
-    .hero-avatar {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 16px;
-    }
-
-    .hero-badge {
-      margin-bottom: 20px;
-    }
-
-    .hero-title {
-      font-size: clamp(24px, 8vw, 36px);
-      margin-bottom: 16px;
-    }
-
-    .hero-desc {
-      font-size: 15px;
-      margin-bottom: 24px;
-    }
-
-    .hero-brands {
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .hero-brands-list {
-      gap: 8px;
-    }
-
-    .hero-brand {
-      font-size: 12px;
-      padding: 6px 10px;
-    }
-
-    .hero-actions {
-      gap: 12px;
-      margin-bottom: 0;
-    }
-
-    .hero-stats {
-      gap: 16px;
-    }
-
-    .hero-stat-number {
-      font-size: 24px;
-    }
-  }
+  @media(max-width:360px) { .hero-identity img { width:64px; height:64px; } .identity-name { font-size:24px; } .identity-role { font-size:15px; } }
+  @media(prefers-reduced-motion:reduce) { .audience-entry { transition:none; } .type-letter { animation:none; opacity:1; } .type-letter::after,.typing-cursor { display:none; } }
+  @media(max-width:1024px) and (min-width:769px) { h2 { font-size:22px; } }
 </style>
-
-<script>
-  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const title = document.querySelector<HTMLElement>('.hero-title');
-  const lines = [document.getElementById('heroTypewriter'), document.getElementById('heroTypewriterAccent')];
-
-  // Keep the published two-line sequence and its original pacing.
-  if (title && lines.every(Boolean) && !motionPreference.matches) {
-    // Split first while the text is still fully visible, then switch the
-    // hiding rule on. If anything throws before this point, the text stays.
-    const characters = lines.flatMap(line => {
-      const spans = Array.from(line!.textContent || '').map(character => {
-        const span = document.createElement('span');
-        span.className = 'typewriter-char';
-        span.textContent = character;
-        return span;
-      });
-      line!.replaceChildren(...spans);
-      return spans;
-    });
-    title.dataset.typing = 'running';
-
-    let frame = 0;
-    let shown = 0;
-    let watchdog = 0;
-    const start = performance.now() + 500;
-
-    const finish = () => {
-      cancelAnimationFrame(frame);
-      clearTimeout(watchdog);
-      characters.forEach(character => {
-        character.classList.add('is-visible');
-        character.classList.remove('is-caret');
-      });
-      title.dataset.typing = 'complete';
-      motionPreference.removeEventListener('change', onMotionChange);
-      window.removeEventListener('pagehide', finish);
-    };
-    function onMotionChange() { if (motionPreference.matches) finish(); }
-    function type(now: number) {
-      const count = Math.min(characters.length, Math.max(0, Math.floor((now - start) / 110) + 1));
-      if (count !== shown) {
-        characters.forEach((character, index) => {
-          character.classList.toggle('is-visible', index < count);
-          character.classList.toggle('is-caret', index === count - 1);
-        });
-        shown = count;
-      }
-      if (count === characters.length) finish();
-      else frame = requestAnimationFrame(type);
-    }
-    // Safety net: even if rAF never runs (blocked main thread, odd browser),
-    // reveal the whole line shortly after load.
-    watchdog = window.setTimeout(finish, 3000);
-    motionPreference.addEventListener('change', onMotionChange);
-    window.addEventListener('pagehide', finish);
-    frame = requestAnimationFrame(type);
-  }
-</script>

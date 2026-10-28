@@ -1,192 +1,73 @@
 ---
-const questions = [
-  { question: '怎么收费？工具费用另算吗？', answer: '首次需求沟通免费。培训或实施按范围报价，工具订阅、模型调用、设备与维护费用分别说明，确认后再开始。' },
-  { question: '项目要多久？交付后怎么支持？', answer: '工具类项目通常参考 1–4 周，具体按方案约定，培训另约时间。交付后 30 天内提供答疑和约定范围内的小调整，新增功能与长期维护另行评估。' },
-  { question: '智能体和工作流，分别能做什么？', answer: '智能体可以围绕任务整理资料、生成内容或调用工具；工作流把多个操作按步骤串起来。按需选择或组合，关键步骤保留人工核对。' },
-  { question: '内部资料怎么处理？能在本地用吗？', answer: '先确认可用资料、访问人员和外部服务范围。可根据任务与设备评估本地、云端或组合方案。' },
-  { question: '什么情况先不需要定制？', answer: '偶尔才做、现成工具已经够用的任务，可以先试用。是否定制，要看实际投入和使用价值。' },
+const groups = [
+  { id: 'enterprise', label: '企业', questions: [
+    { question: '公司想用 AI，但不知道先做什么？', answer: '可以先聊。你说说公司怎么做业务、最近最想改善什么，我再和你看哪里用得上 AI、要花多少精力。先挑值得做的，再决定是买现成工具、定制开发，还是先培训。' },
+    { question: '怎么判断一个项目值不值得做？', answer: '一起看使用频率、现在花的人力和时间，以及做好后能改善什么。再拿实际业务试一遍，比较效果和成本。能沿用的软件尽量沿用，先验证，再决定投入多少。' },
+    { question: '团队没用过 AI，也能参加培训吗？', answer: '可以。先了解哪些人来、平时做什么，再安排内容和练习。有基础的和刚开始接触的，讲法会不一样。最好有一位业务负责人一起准备材料，让大家练完就知道回去怎么用。' },
+    { question: '只做内训，还是也能帮我们开发？', answer: '两种都做。可以单独安排培训，也可以从业务问题聊起，再做工具或系统。具体需要哪一部分，我们一起看公司的情况，不必一次全做。' },
+    { question: '内部资料不方便发出来，怎么沟通？', answer: '先用去掉姓名、联系方式等信息的样本，或虚构一份同样格式的资料。正式做之前，再确认哪些资料能用、放在哪里、谁能查看；需要本地处理的，也先评估。' },
+  ] },
+  { id: 'individual', label: '个人与小团队', questions: [
+    { question: '不懂代码，也分不清智能体和工作流，怎么办？', answer: '先说你想做什么就行，我来评估怎么实现。工具会按实际使用的人设计，交付时带你用一遍。哪些内容能自己改，做之前也会说清楚。' },
+    { question: '有现成的工具，还值得定制吗？', answer: '现成工具够用，可以直接用。做法比较特别、要连接几个软件，或者想做自己的产品，再考虑定制。先看看你已经试过什么，哪里不合适，避免花钱重做。' },
+    { question: '只有一个想法，还没写清楚，能找你吗？', answer: '可以。说说准备给谁用、帮他做什么，有参考产品或截图也可以发来。我们先把第一版要做什么聊清楚，再看费用和时间。' },
+  ] },
+  { id: 'cooperation', label: '合作与费用', questions: [
+    { question: '第一次聊，需要准备什么？', answer: '告诉我你的业务、希望解决的问题和现在的做法。有一份不含敏感信息的样例更好；还没想清楚，也可以先做页面上的场景自测。' },
+    { question: '怎么收费？还有其他费用吗？', answer: '首次需求沟通免费。先说清楚要做什么，再按范围报价。工具订阅、AI 使用费、设备和维护费用会分别说明，确认后再开始。' },
+    { question: '多久能做好？做好后不会用怎么办？', answer: '工具类项目通常参考 1–4 周，具体按方案约定；培训另约时间。交付后 30 天内提供答疑和约定范围内的小调整，新增功能与长期维护另外商量。' },
+  ] },
 ];
 ---
 <section class="section faq" id="faq" data-story-section="faq">
   <div class="container">
-    <div class="section-header reveal">
-      <span class="section-label">常见问题</span>
-      <h2 class="section-title">你可能想问的</h2>
-    </div>
-    <div class="faq-list reveal">
-      {questions.map((item, index) => (
-        <div class="faq-item card">
-          <button class="faq-question" id={'faq-q-' + (index + 1)} aria-expanded="false" aria-controls={'faq-' + (index + 1)}>
-            <span>{item.question}</span>
-            <svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="faq-answer" id={'faq-' + (index + 1)} role="region" aria-labelledby={'faq-q-' + (index + 1)} aria-hidden="true"><p>{item.answer}</p></div>
-        </div>
-      ))}
+    <div class="section-header"><span class="section-label">常见问题</span><h2 class="section-title">你可能还想问</h2></div>
+    <div class="faq-content">
+      <div class="faq-filters" role="group" aria-label="按关注的问题筛选" data-faq-filters hidden>
+        {groups.map((group,index)=><button type="button" data-faq-filter={group.id} aria-pressed={index===0?'true':'false'} aria-controls={'faq-group-'+group.id}>{group.label}</button>)}
+      </div>
+      {groups.map(group=><div class="faq-group" id={'faq-group-'+group.id} data-faq-group={group.id}>
+        <h3>{group.label}</h3>
+        {group.questions.map((item,index)=><details class="faq-item" name={'faq-accordion-'+group.id} id={'faq-'+group.id+'-'+index}>
+          <summary>{item.question}<span aria-hidden="true">+</span></summary>
+          <div class="faq-answer"><p>{item.answer}</p></div>
+        </details>)}
+      </div>)}
     </div>
   </div>
 </section>
-
 <style>
-  .faq {
-    background: var(--bg-surface);
-    overflow: hidden;
-  }
-
-  .faq-list {
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .faq-item {
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .faq-item::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 1px solid transparent;
-    border-radius: inherit;
-    background: linear-gradient(90deg, transparent, rgba(234, 211, 141, 0.72), transparent) border-box;
-    -webkit-mask:
-      linear-gradient(#fff 0 0) padding-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transform: translateX(-100%);
-    pointer-events: none;
-  }
-
-  .faq-item.story-flow::after {
-    animation: faqEdgeFlow 0.78s var(--ease-out) 1;
-  }
-
-  @keyframes faqEdgeFlow {
-    0% {
-      opacity: 0;
-      transform: translateX(-100%);
-    }
-    28% {
-      opacity: 0.72;
-    }
-    100% {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-  }
-
-  .faq-question {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 24px 28px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    text-align: left;
-    font-family: var(--font-body);
-    transition: color 0.3s var(--ease-out);
-  }
-
-  .faq-question:hover {
-    color: var(--accent);
-  }
-
-  .faq-icon {
-    flex-shrink: 0;
-    color: var(--text-muted);
-    transition: transform 0.3s var(--ease-out), color 0.3s var(--ease-out);
-  }
-
-  .faq-item.open .faq-icon {
-    transform: rotate(180deg);
-    color: var(--accent);
-  }
-
-  .faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s var(--ease-out), padding 0.4s var(--ease-out);
-    padding: 0 28px;
-  }
-
-  .faq-item.open .faq-answer {
-    max-height: 500px;
-    padding: 0 28px 24px;
-  }
-
-  .faq-answer p {
-    font-size: 15px;
-    color: var(--text-secondary);
-    line-height: 1.8;
-  }
-
-  @media (max-width: 768px) {
-    .faq-question {
-      font-size: 15px;
-      padding: 20px 20px;
-    }
-
-    .faq-answer {
-      padding: 0 20px;
-    }
-
-    .faq-item.open .faq-answer {
-      padding: 0 20px 20px;
-    }
-  }
+  [hidden] { display:none !important; }
+  .faq { background:var(--bg-surface); }
+  .faq-content { max-width:800px; margin:0 auto; }
+  .faq-filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
+  .faq-filters button { border:1px solid var(--border-light); background:transparent; color:var(--text-secondary); padding:12px 18px; border-radius:7px; min-height:46px; font:inherit; font-size:14px; cursor:pointer; }
+  .faq-filters button[aria-pressed=true] { color:var(--accent-hover); background:#c9a55c12; border-color:var(--accent); }
+  .faq-group + .faq-group { margin-top:24px; }
+  .faq-group h3 { font-size:17px; font-weight:500; margin:0 0 14px; }
+  .faq-content.enhanced .faq-group { margin-top:0; }
+  .faq-content.enhanced h3 { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+  .faq-item { border:1px solid var(--border); border-radius:10px; background:var(--bg-card); margin-bottom:12px; }
+  summary { display:flex; align-items:center; justify-content:space-between; gap:18px; list-style:none; padding:18px 24px; font-size:16px; line-height:1.7; color:var(--text-primary); cursor:pointer; }
+  summary::-webkit-details-marker { display:none; }
+  summary > span { font-size:22px; color:var(--accent); font-weight:300; flex-shrink:0; }
+  details[open] summary > span { transform:rotate(45deg); }
+  .faq-answer { padding:0 24px 22px; }
+  .faq-answer p { color:var(--text-secondary); font-size:15px; line-height:1.9; }
+  @media(max-width:768px) { .faq-filters { gap:6px; } .faq-filters button { flex:1; padding:10px 8px; font-size:13px; white-space:nowrap; } summary { padding:18px; font-size:15px; } .faq-answer { padding:0 18px 18px; font-size:14px; } }
 </style>
-
 <script>
-  document.querySelectorAll('.faq-question').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const answer = item?.querySelector('.faq-answer');
-      const isOpen = item?.classList.contains('open');
-
-      // Close all others
-      document.querySelectorAll('.faq-item.open').forEach((openItem) => {
-        if (openItem !== item) {
-          openItem.classList.remove('open');
-          openItem.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false');
-          openItem.querySelector('.faq-answer')?.setAttribute('aria-hidden', 'true');
-        }
-      });
-
-      // Toggle current
-      item?.classList.toggle('open');
-      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-      answer?.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
-
-      if (!isOpen && item && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        item.classList.remove('story-flow');
-        requestAnimationFrame(() => item.classList.add('story-flow'));
-        window.setTimeout(() => item.classList.remove('story-flow'), 820);
-      }
-    });
-
-    // Keyboard support — Escape to close
-    btn.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const item = btn.closest('.faq-item');
-        if (item?.classList.contains('open')) {
-          item.classList.remove('open');
-          btn.setAttribute('aria-expanded', 'false');
-          item.querySelector('.faq-answer')?.setAttribute('aria-hidden', 'true');
-        }
-      }
-    });
-  });
+  const filters = document.querySelector<HTMLElement>('[data-faq-filters]');
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-faq-group]'));
+  if (filters && groups.length) {
+    const buttons = Array.from(filters.querySelectorAll<HTMLButtonElement>('[data-faq-filter]'));
+    const select = (id:string) => {
+      buttons.forEach(button=>button.setAttribute('aria-pressed', String(button.dataset.faqFilter===id)));
+      groups.forEach(group=>group.hidden=group.dataset.faqGroup!==id);
+    };
+    buttons.forEach(button=>button.addEventListener('click',()=>select(button.dataset.faqFilter!)));
+    select('enterprise');
+    filters.hidden=false;
+    filters.parentElement?.classList.add('enhanced');
+  }
 </script>

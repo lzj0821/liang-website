@@ -13,9 +13,10 @@ const year = new Date().getFullYear();
       </div>
 
       <nav class="footer-nav" aria-label="页脚导航">
+        <a href="#enterprise">企业服务</a>
+        <a href="#individual">个人定制</a>
         <a href="#cases">案例</a>
-        <a href="#certs">认证</a>
-        <a href="#services">服务</a>
+        <a href="#about">关于我</a>
         <a href="#process">流程</a>
         <a href="#faq">答疑</a>
         <a href="#contact">联系</a>
@@ -188,6 +189,6 @@ const year = new Date().getFullYear();
   const backToTop = document.getElementById('backToTop');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   backToTop?.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion || scrollY > innerHeight ? 'instant' : 'smooth' });
   });
 </script>

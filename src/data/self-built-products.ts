@@ -1,4 +1,14 @@
-export const selfBuiltProducts = [
+interface SelfBuiltProduct {
+  id: string;
+  name: string;
+  shortName: string;
+  benefit: string;
+  description: string;
+  features: string[];
+  // Add only an owner-provided, verified release code. Never synthesize a mini-program code.
+  experienceCode?: string;
+}
+export const selfBuiltProducts: SelfBuiltProduct[] = [
   {
     id: 'jutu',
     name: '居图 AI',
@@ -12,7 +22,7 @@ export const selfBuiltProducts = [
     name: 'AI 重置（Reset）',
     shortName: 'AI 重置',
     benefit: '模型重置动态，一处查看',
-    description: '关注 OpenAI、Claude、Grok 的公开额度重置动态，集中查看消息与来源。',
+    description: '常用 AI 的使用额度什么时候恢复？集中查看重置消息和历史记录。',
     features: ['重置动态', '历史记录', '消息来源'],
   },
   {

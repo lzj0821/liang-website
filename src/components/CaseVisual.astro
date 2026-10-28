@@ -6,16 +6,18 @@ const art = caseArt[id];
 const visualCopy = {
  crm:['汇集线索','集中跟进'], automation:['整理报表','辅助录入'],
  jutu:['实际需求','微信里的工具'],workbench:['分散素材','成套内容'],
- youtube:['系列创作','500 万+ 播放'],growth:['2 小时','10 分钟'],
+ youtube:['系列创作','制作与发布'],growth:['重复整理','汇总与核对'],
 };
 const labels=visualCopy[id];
 ---
-<figure class="case-visual">
+<figure class:list={['case-visual',{'case-visual-interface':id==='crm'}]}>
   <Image src={art.image} alt={art.alt} width={800} loading="lazy" />
-<figcaption><span>{labels[0]}</span><i aria-hidden="true">→</i><strong>{labels[1]}</strong></figcaption></figure>
+{id!=='crm' && <figcaption><span>{labels[0]}</span><i aria-hidden="true">→</i><strong>{labels[1]}</strong></figcaption>}</figure>
 <style>
   .case-visual { position:relative; margin:0; aspect-ratio:16/10; overflow:hidden; border:1px solid #ffffff09; border-radius:10px; background:#111; }
   .case-visual img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .45s ease; }
+  .case-visual-interface { background:#f6f8fc; }
+  .case-visual-interface img { object-fit:contain; }
   @media(hover:hover) { .case-visual:hover img { transform:scale(1.025); } }
   @media(prefers-reduced-motion:reduce) { .case-visual img { transition:none; } }
 
